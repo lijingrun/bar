@@ -1,0 +1,50 @@
+<meta charset="UTF-8">
+{include file=member.header.html}
+<div class="content">
+    <div class="totline"></div>
+    <div class="botline"></div>
+    {include file=member.menu.html}
+    <div id="right">
+        {include file=member.curlocal.html}
+        <div>
+            请填写下面客户可以联系到您的联系方式
+            <form method="post">
+                <table>
+                    <tr>
+                        <td>QQ:</td>
+                        <td><input type="text" value="{$oem.qq}" name="qq"/></td>
+                    </tr>
+                    <tr>
+                        <td>固话：</td>
+                        <td><input type="text" value="{$oem.phone}" name="phone" /></td>
+                    </tr>
+                    <tr>
+                        <td>手机：</td>
+                        <td><input type="text" value="{$oem.telephone}" name="telephone" /></td>
+                    </tr>
+                    <tr>
+                        <td>email：</td>
+                        <td><input type="text" value="{$oem.email}" name="email" /></td>
+                    </tr>
+                    <tr>
+                        <td>微信号：</td>
+                        <td>
+                            <input type="text" value="{$oem.weixin}" name="weixin" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><input type="submit" value="提交" /></td>
+                    </tr>
+                    
+                </table>
+               
+            </form>
+        </div>
+    </div>
+
+    <div class="clear"></div>
+</div>
+<iframe name="iframe_post" id="iframe_post" width="0" height="0"></iframe>
+{include file=footer.html}
+
+

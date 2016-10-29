@@ -1,0 +1,121 @@
+{include file=member.header.html}
+<div class="content">
+    <div class="totline"></div>
+    <div class="botline"></div>
+    {include file=member.menu.html}
+    <div id="right"> 
+        {include file=member.curlocal.html}
+		{include file=member.submenu.html}
+
+		<script>
+		$(function() {
+			// default time value
+			$('input[type="date"]').each( function() { 
+				$(this)[0].valueAsDate = new Date(); } );
+
+			$('input[name="available"]').change( function() { 
+				if( $('input[name="enabled"]').attr("checked") ) $(this).val(1); 
+				else $(this).val(0); 
+			});
+			$('input[name="available"]').change();
+
+		});
+		</script>
+
+		<style type="text/css">
+			.p{
+				padding-left:10px;
+				padding-top: 10px;
+			}
+			#args_list p {
+				padding-bottom: 5px;
+			}
+			.args_input, .p input {
+				border: 1px solid silver;
+				border-width: 0 0 1px 0;
+			}
+
+			.rule_table td {
+				font-size: 12px;
+				padding: .5em 1em;
+			}
+
+			input { padding: 0 .5em; }
+			input[type='text'] { width: 180px; font-size: 12px!important; }
+		</style>
+
+        <div class="wrap">
+			 <form method="post" id="form">
+				<h2>奖品信息</h2>
+				<div style="width: 100%; border-bottom: 1px solid silver; padding: 0 0 10px 0; margin-bottom: 10px;"></div>
+
+				<table class="rule_table">
+					<tr>
+						<td>所属大转盘：</td>
+						<td>
+							<input type="text" name="fw_id" id="fw_id" value="{$fw_id}"
+							{if $fw_id != '' }
+								readonly
+							{/if}
+							/>
+						</td>
+					</tr>
+					<tr>
+						<td>名称：</td>
+						<td>
+							<input type="text" name="name" id="name" value="{$prize.name}" />
+						</td>
+					</tr>
+					<tr>
+						<td>产品名称：</td>
+						<td>
+							<input type="text" name="product_name" id="product_name"  value="{$prize.product_name}" />
+						</td>
+					</tr>
+					<tr>
+						<td>产品数量：</td>
+						<td>
+							<input type="text" name="product_quantity" id="product_quantity" value="{$prize.product_quantity}" />
+						</td>
+					</tr>
+					<tr>
+						<td>关联URL：</td>
+						<td>
+							<input type="text" name="relate_url" id="relate_url" value="{$prize.relate_url}" />
+						</td>
+					</tr>
+					<tr>
+						<td>等级（几等奖）：</td>
+						<td>
+							<input type="text" name="level" id="level" value="{$prize.level}" />
+						</td>
+					</tr>
+
+					<tr>
+						<td>中奖概率：</td>
+						<td>
+							<input type="text" name="rate" id="rate" value="{$prize.rate}" />(0.01表示1%)
+							<input type="hidden" name="prize_id" value="{$prize.id}" />
+						</td>
+					</tr>
+
+					<tr>
+						<td valign="top">信息：</td>
+						<td>
+							<textarea name="info" id="info" rows="5" cols="80" style="resize: both;"> {$prize.info}</textarea>
+						</td>
+					</tr>	
+				</table>
+
+				<div align="center">
+					<input type="submit" value="提交" /> 
+				</div>
+            </form>
+
+		</div>
+
+	</div>
+	<div class="clear"></div>
+</div>
+{include file=footer.html}
+

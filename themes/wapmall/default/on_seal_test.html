@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>126墙纸商城</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="keywords" content="126墙纸商城" />
+    <meta http-equiv="description" content="126墙纸商城" />
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="shortcut icon" href="{res file=images/images-517/favicon.ico}" />
+    <title>126墙纸商城</title>
+    <link rel="stylesheet" type="text/css" href="{res file=css/css-517/style.css}" />
+    <link rel="stylesheet" type="text/css" href="{res file=css/css-517/index.css}" />
+    <script type="text/javascript" src="{res file=js/js-517/jquery-1.8.3.min.js}"></script>
+    <script type="text/javascript" src="{res file=js/js-517/jquery.SuperSlide.js}"></script>
+    <script type="text/javascript" src="{res file=js/js-517/scrolltopcontrol.js}"></script>
+
+
+</head>
+<body>
+<script>
+    function searchShop(){
+        var key_word = $("#skeyword").val().trim();
+        location.href="index.php?app=promotion&act=on_seal&key_word="+key_word;
+    }
+</script>
+<header class="seaTop2">
+    <div class="topFix">
+        <section>
+            <div class="topBack">
+                <a href="javascript:history.go(-1);" class="backBtn">&nbsp;</a> <div class="seaBox">
+                <input id="skeyword" type="text" placeholder="搜索你想要的促销产品">
+                <em onclick="searchShop()"></em>
+            </div>
+                <a href="index.php" style="float:right; margin-right: 1.5rem;
+    margin-top: 0.45rem;">
+                    <img src="{res file=images/images-517/home_icon.png}" width="25" height="25" alt="主页"></a></ul>
+
+
+            </div>
+        </section>
+    </div>
+
+</header>
+
+<div class="mod-cross-banner ">
+    	<span>
+        <img src="{res file=images/images-517/mod-cross-banner.jpg}">
+          </span>
+</div>
+
+<div class="timer-box">
+    <div class="t">
+        <span class="timer-text" data-end="本活动已结束" data-last="距活动结束还剩">离促销结束还剩</span>
+        <!-- <p class="timer-tip" data-end="下次尽早来" data-last="20号0点结束，赶紧下单">15号9点开抢，抢先收藏</p> -->
+
+
+          <span class="left_time">
+        <span id="t_d">00天</span>
+        <span id="t_h">00时</span>
+        <span id="t_m">00分</span>
+        <span id="t_s">00秒</span>
+    </span>
+
+    </div>
+</div>
+
+
+
+
+<article class="jpBox">
+    <ul class="proList">
+        <!-- {foreach from=$goods item=good} -->
+        <li>
+            <div class="jpImgBox">
+
+                <div class="seckill-tip tagType-seckill-2 tagCount-seckill-3">在线支付专享</div>
+                <a href="index.php?app=goods&amp;id={$good.goods_id}">
+
+                    <img src="{$good.default_image}">
+
+                    <p class="item-favorite-02">在线支付最高优惠14%</p>
+                </a>
+
+
+            </div>
+
+
+            <p class="jpName"><a href="index.php?app=goods&amp;id=2389">{$good.goods_name}</a></p>
+            <!-- {if $is_distributor} -->
+            <p class="jpPrice2" style="color:red;">线上支付:{$good.min|price} - {$good.max|price}</p>
+            <p class="of-old-price">线下支付:{$good.price_distributor|price}</p>
+            <!-- {else} -->
+            <p class="jpPrice2">{$good.price|price}</p>
+            <!-- {/if} -->
+
+            <p class="btns">
+                <a class="soon-view-link" href="#" target="_blank">立即购买</a>
+            </p>
+        </li>
+        <!-- {/foreach} -->
+
+    </ul>
+</article>
+
+
+
+
+<div id="opacity_body" style="display: none;"></div>
+<script type="text/javascript" src="{res file=js/js-517/special.js}"></script>
+<script type="text/javascript" src="{res file=js/js-517/time_left.js}"></script>
+
+
+
+<div id="topcontrol" style="width:3.333rem; height:3.333rem; border:0; bottom:4.333rem;right: 0.7407rem;position: fixed;display: block; opacity: 0; cursor: pointer;border-radius:50px;">
+    <img totop="" src="{res file=images/images-517/topback.png}" style="width:3.333rem; height:3.333rem; border-radius:50px; border:0;" title="返回顶部" />
+</div>
+
+
+
+</body>
+</html>

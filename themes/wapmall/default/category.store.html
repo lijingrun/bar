@@ -1,0 +1,21 @@
+{include file='header_search.html'}
+
+<!--{foreach from=$scategorys item=scategory}-->
+<div class="radius arrow_left border_grey" style="padding-left:20px">
+    <h3><a href='{url app=search&act=store&cate_id=$scategory.id}' class="font_blue">{$scategory.value|escape}</a></h3>
+    <!--{foreach from=$scategory.children item=child}-->
+    <a href='{url app=search&act=store&cate_id=$child.id}' style="display: inline-table;width: 30%;padding: 10px 0;text-align: center;color: #546280;font-size:12px;">{$child.value|escape}</a> 
+    <!--{/foreach}-->
+</div>
+<!--{foreachelse}-->
+<div class="radius">
+    暂无分类
+</div>
+<!--{/foreach}-->
+
+
+</div>
+<div style="height:60px"></div>
+{include file='footer_nav.html'}
+</body>
+</html>

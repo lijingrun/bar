@@ -1,0 +1,17 @@
+@charset "utf-8";
+/* CSS Document */
+/* 收藏 */
+.bm_tab{ overflow:hidden;}
+.bm_tab li{ width:50%; text-align:center; background:#fff;  float:left; font-size:14px; border-bottom:#ccc solid 1px;}
+.bm_tab li a{ display:block; padding:10px 0; color:#1E1E1E;}
+.bm_tab li.cur{ border-bottom: 2px solid #066FED; color:#0050CD;}
+.bm_tab li.cur a{ color:#0050CD;}
+.mark{}
+
+.marklist{ margin:10px 0; padding:0;}
+.marklist li{ overflow:hidden; background:#fff; border:1px solid #CECECE; border-left:2px solid #066FED; border-right:2px solid #066FED; margin-bottom:7px; position:relative;}
+.marklist li img{ width:90px; height:90px; float:left; margin-right:10px;}
+.marklist li  p{height:20px; line-height:20px; overflow:hidden; }
+.marklist li span{ color:#333; }
+.marklist li strong{ color:#b20005;}
+.marklist li .close{ position:absolute; right:10px; top:10px; font-size:20px; }

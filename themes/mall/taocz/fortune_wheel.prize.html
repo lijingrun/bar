@@ -1,0 +1,86 @@
+{include file=member.header.html}
+<div class="content">
+    <div class="totline"></div>
+    <div class="botline"></div>
+    {include file=member.menu.html}
+    <div id="right"> 
+        {include file=member.curlocal.html}
+		{include file=member.submenu.html}
+		<style type="text/css">
+			.p{
+				padding-left:10px;
+				padding-top: 10px;
+			}
+			#args_list p {
+				padding-bottom: 5px;
+			}
+			.args_input, .p input {
+				border: 1px solid silver;
+				border-width: 0 0 1px 0;
+			}
+
+			.rule_table td {
+				font-size: 12px;
+				padding: .5em 1em;
+			}
+
+			input { padding: 0 .5em; }
+			input[type='button'] {padding: .5em 1em;}
+			input[type='text'] { width: 180px; font-size: 12px!important; }
+		</style>
+
+        <div class="wrap">
+
+			 <table style="width: 100%;" class="rule_table">
+                <tr style="background-color: #D4E7FF;">
+                    <th style="width: 5%;">ID</th>
+                    <th style="width: 15%;">名称</th>
+                    <th style="width: 15%;">大转盘ID</th>
+                    <th style="width: 15%;">产品名称</th>
+                    <th style="width: 7%;">产品总量</th>
+                    <th style="width: 7%;">产品余量</th>
+                    <th style="width: 7%;">等级</th>
+                    <th style="width: 7%;">中奖几率</th>
+                    <th style="width: 20%;">操作</th>
+
+                </tr>
+                <!-- {foreach from=$fw_prizes item=fwp} -->
+                <tr>
+                    <td>
+                        <p>{$fwp.id}</p>
+                    </td>
+                    <td>
+                        <a href="#">
+                            {$fwp.name}
+                        </a>
+                    </td>
+					<td align="center">{$fwp.fw_id}</td>
+					<td align="center">{$fwp.product_name}</td>
+					<td align="center">{$fwp.product_quantity}</td>
+					<td align="center">{$fwp.product_remain}</td>
+					<td align="center">{$fwp.level}</td>
+					<td align="center">{$fwp.rate}</td>
+                    <td align="center">
+                        <a href="index.php?app=fortune_wheel&act=prize_edit&fwp_id={$fwp.id}">编辑</a> | 
+                        <a href="index.php?app=fortune_wheel&act=prize_delete&fwp_id={$fwp.id}">删除</a>
+                    </td>
+                </tr>
+                <!-- {/foreach} -->
+            </table>
+            <div class="wrap_bottom"></div>
+
+		</div>
+
+		<!-- {if $fw_id != '' } -->
+		<p align="center">
+			<input type="button" value="添加大转盘(ID:{$fw_id})下的奖品" style="margin-top: 20px;" 
+				onclick="location='?app=fortune_wheel&act=prize_form&fw_id={$fw_id}';" />
+			<input type="button" value="返回列表" style="margin-top: 20px;" 
+				onclick="location='?app=fortune_wheel';" />
+		</p>
+		<!-- {/if} -->
+
+	</div>
+	<div class="clear"></div>
+</div>
+{include file=footer.html}

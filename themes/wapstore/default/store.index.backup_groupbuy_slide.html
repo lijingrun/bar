@@ -1,0 +1,293 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <base href="{$site_url}/" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        {$page_seo}
+        <link href="{res file=css/common.css}" rel="stylesheet" type="text/css" />
+        <link href="{res file=css/flexslider.css}" rel="stylesheet" type="text/css" />
+        <link href="{res file=css/main.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/rmc-common.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/bootstrap.min.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/font-awesome.css}" type="text/css" rel="stylesheet" />
+        <script type="text/javascript" src="{res file=js/jquery-1.8.0.min.js}"></script>
+        <script type="text/javascript" src="{res file=js/jquery.flexslider.js}"></script>
+        <script type="text/javascript" src="{res file=js/touchslider.dev.js}"></script>
+        <script type="text/javascript" src="{res file=js/sub_menu.js}"></script>
+        <script type="text/javascript" src="{lib file=ecmall.js}" charset="utf-8"></script>
+        <script>
+			//<!CDATA[
+			var SITE_URL = "{$site_url}";
+			var REAL_SITE_URL = "{$real_site_url}";
+			var PRICE_FORMAT = '{$price_format}';
+
+            $(window).load(function() {
+                $('.flexslider').flexslider({
+                    animation: "slide"
+                });
+            });
+
+			$( function() {
+				$('.fa-phone').click( function() {
+					$('.store_info').slideToggle();	
+				});
+
+				setTimeout( function() { $('section.slider img').css( {display: 'block'} ); }, 1000 );
+			});
+        </script>
+    </head>
+
+    <body>
+        <header class="region container-fluid bg_blue fixed" align="center"> 
+            <div class="content row header_search" align="center">
+                <a href="javascript:history.back()">
+                    <div class="banner_left col-xs-2 font_white">
+                        <span class="fa fa-angle-left"></span>
+                    </div>
+                </a>
+                <div class="banner_middle col-xs-6 font_white font_xl" style="margin-top:10px">
+                    
+                </div>
+                <a class="menu" href="javascript:;">
+                    <div class="banner_right col-xs-2 font_white">
+                        <span class="fa fa-list"></span>
+                    </div>
+                </a>
+                <a href="javascript:;">
+                    <div class="banner_right col-xs-2 font_white">
+                        <span class="fa fa-phone"></span>
+                    </div>
+                </a>
+            </div> 
+        </header>
+        <div class="searchBar fixed_header_search">
+            <form id="" name="" method="get" action="index.php">
+                <input type="hidden" name="app" value="store" />
+                <input type="hidden" name="act" value="search" />
+                <input type="hidden" name="id" value="{$store.store_id}" />
+                <input name="keyword"  type="text" placeholder="搜搜看吧" class="search_text" /><input type="submit" value="搜索" class="search_btn" />
+            </form>
+        </div>
+        <!--下拉二级菜单-->
+        <div class="sub_menu">
+            <div class="font_white font_l" style="padding:10px 20px; height:45px; border-bottom:1px solid silver;">本店商品分类</div>
+            <ul class="font_m" style="padding:10px;border-bottom:1px solid silver">
+                <!--{foreach from=$store.store_gcates item=gcategory}-->
+                <li>
+                    <!--{if $gcategory.children}-->
+                    <h2>{$gcategory.value|escape}</h2>
+                    <ol  class="sub_menu_list">
+                        <!--{foreach from=$gcategory.children item=child_gcategory}-->
+                        <a href="{url app=store&id=$store.store_id&act=search&cate_id=$child_gcategory.id}"><li>{$child_gcategory.value|escape}</li></a>
+                        <!--{/foreach}-->
+                    </ol>
+                    <!--{else}-->
+                    <a href="{url app=store&id=$store.store_id&act=search&cate_id=$gcategory.id}"><h2>{$gcategory.value|escape}</h2></a>
+                    <!--{/if}-->
+                </li>
+                <!--{/foreach}-->
+
+            </ul>
+            <div class="fun">
+                <a href="javascript:collect_store({$store.store_id});" class="fav"><img src="{res file=images/favorite.png}"/>收藏本店</a>
+            </div>
+        </div>
+        <script>
+            $(function() {
+                publicmain();
+            });
+
+            $(window).resize(function() {
+                publicmain();
+            });
+
+            function publicmain() {
+                var h = document.documentElement.clientHeight - 45;
+                $('.sub_menu').css({'height': h});
+            }
+        </script> 
+        
+		<div class="store_info" style="display: none;">
+            <div class="rmc_shop bg_white">
+                <div class="rmc_shop_icon">
+                    <img src="http://cloud/wapmall/data/system/default_store_logo.gif">
+                </div>
+                <div style="width: 70%;margin-left: 30%;padding-left: 20px;">
+                    <div class="font_blue font_l">{$store.store_name|escape}</div>
+                    <div style="margin-bottom:15px">
+                        <div style="">{$lang.credit_value}: {$store.credit_value}</div>
+                        <div style="">{$lang.store_grade}: {$store.sgrade}</div>
+                    </div>
+                    <div>{$lang.address}: {$store.address}</div>
+                </div>
+            </div>
+            <div class="rmc_phone bg_white" style="border-left:5px solid #066FED;border-right:5px solid #066FED">
+				<div class="call_number font_xl"><marquee>{$lang.tel}: {$store.tel|escape}</marquee></div>
+                <div class="call_icon font_xl font_blue"><a href="tel:{$store.tel|escape}"><span class="glyphicon glyphicon-earphone font_blue"></span></a></div>
+            </div>
+        </div>
+
+        <div>
+            <!---轮播------>
+            <section class="slider">
+                <div class="flexslider">
+                    <ul class="slides">
+                        <!--{foreach from=$goods_images item=goods_iamge}-->
+                        <li>
+                            <!-- {if $goods_iamge.image_link}-->
+                            <a href="{$goods_iamge.image_link}"> <img height="200px"  src="{$site_url}/{$goods_iamge.image_url}" style="display: none;"/></a>
+                            <!--{else}-->
+                            <img height="200px"  src="{$site_url}/{$goods_iamge.image_url}" style="display: none;"/>
+                            <!--{/if}-->
+
+                        </li>
+                        <!--{/foreach}-->
+
+                    </ul>
+                </div>
+            </section>
+
+            <!--分类-->
+            <div class="sort">
+                <ul style="margin-top:10px;" >
+    	 <!--{if $store.radio_new eq '1'}-->
+        	<a href="index.php?app=store&act=search&id={$store.store_id}&order=add_time%20desc">
+                <li style="width:25%;margin-left:6.2%;">
+                	<div class="imgbox"><img src="<!--{if $store.store_new_images}-->{$store.store_new_images} <!--{else}-->{res file=images/sr1.png} <!--{/if}-->"></div>
+                    <span>最新商品</span>
+                </li>
+            </a>
+                <!--{/if}-->
+                 <!--{if $store.radio_recommend eq '1'}-->
+        	<a href="index.php?app=store&act=search&id={$store.store_id}&recommended=1&order=recommended%20desc">
+                <li style="width:25%;margin-left:6.2%;">
+                	<div class="imgbox"><img src="<!--{if $store.store_recommend_images}-->{$store.store_recommend_images} <!--{else}-->{res file=images/sr2.png}<!--{/if}-->"></div>
+                    <span>推荐商品</span>
+                </li>
+            </a>
+              <!--{/if}-->
+                    <!--{if $store.radio_hot eq '1'}-->
+        	<a href="index.php?app=store&act=search&id={$store.store_id}&order=views%20desc">
+                <li style="width:25%;margin-left:6.2%;">
+                	<div class="imgbox"><img src="<!--{if $store.store_hot_images}-->{$store.store_hot_images} <!--{else}-->{res file=images/sr3.png}<!--{/if}-->"></div>
+                    <span>热门商品</span>
+                </li>
+            </a>
+              <!--{/if}-->
+                    <!--{foreach from=$store.store_gcates_image item=gcategory}-->
+
+                    <a href="<!--{if $gcategory.article_link eq ''}-->{url app=store&id=$store.store_id&act=search&cate_id=$gcategory.cate_id}  <!--{else}--> {$gcategory.article_link|escape}<!--{/if}-->">
+                        <li>
+                            <img  src=" <!--{if $gcategory.cate_images}-->{$gcategory.cate_images}<!--{else}-->{res file=images/sort_icon3.png}<!--{/if}-->" />
+                            <span>{$gcategory.cate_name|escape}</span>
+                        </li>
+                    </a>
+                    <!--{/foreach}-->
+
+                </ul>
+            </div>
+
+
+
+            <!--团购-->
+            <!--{if $groupbuy_list}-->
+            <h4 class="tuan-title">最新团购</h4>
+            <div class="tuan_box swipe">
+                <ul class="tuan_list"  id="slider1">
+                    <!-- {foreach from=$groupbuy_list item=group} -->
+
+                    <li>
+                        <a href="{url app=groupbuy&id=$group.group_id}">
+                            <div class="con">
+                                <div class="tuan_imgbox">
+                                    <img src="{$group.default_image}">
+                                        <p>{$group.group_name|escape}</p>
+                                </div>
+                                <span class="tuan_price font_grey_dark">团购价：<strong>{$group.group_price|price}</strong></span>
+                                <!--{if $group.state eq 1}-->
+                                <span class="s_time"><img src="{res file=images/time.png}">剩余：{$group.lefttime}</span>
+                                <!--{elseif $group.state eq 2}-->
+                                <span class="s_time">活动已结束</span>
+                                <!--{elseif $group.state eq 3}-->
+                                <span class="s_time">活动已完成</span>
+                                <!--{elseif $group.state eq 4}-->
+                                <span class="s_time">活动已取消</span>
+                                <!--{/if}-->
+                            </div>
+                        </a>
+                    </li>
+                    <!-- {/foreach} -->
+                </ul>
+                <span onClick="t1.prev();" class="prenext pre"></span>
+                <span onClick="t1.next();" class="prenext next"></span>
+            </div>
+            <!--{/if}-->
+
+            <!--列表-->
+            <!--{if $recommended_goods}-->
+            <div class="lists">
+                <h4>商品促销<a href="index.php?app=store&act=search&id={$store.store_id}&recommended=1&order=recommended%20desc">more+</a></h4>
+                <ul style="margin-left:2%">
+                    <!--{foreach from=$recommended_goods item=rgoods}-->
+                    <a href="{url app=goods&id=$rgoods.goods_id}" class="font_grey_dark">
+                        <li>
+							<img src="{$site_url}/onsale.png" style="width:10%;position:absolute;">
+                            <div style="padding:10px;"><img src="{$rgoods.default_image}" /></div>
+                            <div class="font_s" style="padding">
+                                <p >
+									<!-- RIN -->
+									<recommend_goods style="color: red; font-weight: bold; clear: both;">[促销]</recommend_goods>
+									<!-- RIN -->
+								{$rgoods.goods_name|escape}</p>
+                                <span >{$rgoods.price|price}</span>
+                            </div>
+                        </li>
+                    </a>
+                    <!-- {/foreach} -->
+
+                </ul>
+            </div>
+            <!--{/if}-->
+
+            <!--{if $new_goods}-->
+            <div class="lists">
+                <h4>新品上市<a href="index.php?app=store&act=search&id={$store.store_id}&order=add_time%20desc">more+</a></h4>
+                <ul style="margin-left:2%">
+                    <!--{foreach from=$new_goods item=ngoods}-->
+                    <a href="{url app=goods&id=$ngoods.goods_id}">
+                        <li>
+							{if $ngoods.recommended neq 0 } 
+							<img src="{$site_url}/onsale.png" style="width:10%;position:absolute;">
+							{/if}
+                            <div style="padding:10px;"><img src="{$ngoods.default_image}" /></div>
+                            <div class="font_s" style="padding=">
+                            <p>
+								{if $ngoods.recommended neq 0 } 
+									<!-- RIN -->
+									<recommend_goods style="color: red; font-weight: bold; clear: both;">[促销]</recommend_goods>
+									<!-- RIN -->
+								{/if}
+								{$ngoods.goods_name|escape}
+							</p>
+                            <span>{$ngoods.price|price}</span>
+                            </div>
+                        </li>
+                    </a>
+                    <!--{/foreach}-->
+
+                </ul>
+            </div>
+        </div>
+        <!--{/if}-->
+        <!------底部-------->
+        <div style="height:60px"></div>
+        {include file=footer_nav.html}
+        <script>
+    var t1 = new TouchSlider('slider1', {'auto': true, speed: 600, timeout: 6000})
+        </script>
+    </body>
+</html>

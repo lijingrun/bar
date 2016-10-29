@@ -1,0 +1,462 @@
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.1.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+<script type="text/javascript" src="{lib file=jqm-datebox-1.4.5.core.js}"></script>
+<script type="text/javascript" src="http://cdn.jtsage.com/datebox/1.4.5/jqm-datebox-1.4.5.mode.calbox.min.js"></script>
+
+<link href="{res file=css/doc.min.css}" type="text/css" rel="stylesheet" />
+<link rel="stylesheet" href="http://dev.jtsage.com/jQM-DateBox/css/jquery.mobile.icons.min.css" />
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css" />
+<link rel="stylesheet" href="http://cdn.jtsage.com/datebox/1.4.5/jqm-datebox-1.4.5.min.css" />
+<link rel="stylesheet" href="http://dev.jtsage.com/jQM-DateBox/css/syntax.css" />
+
+<script type="text/javascript" src="{lib file=goodsinfo.js}" charset="utf-8"></script>
+<script type="text/javascript" src="{lib file=ecmall.js}" charset="utf-8"></script>
+<script type="text/javascript">
+//<!CDATA[
+
+	$(document).ready(function() { 
+		jQuery.mobile.ajaxEnabled = false; 
+	}); 
+
+
+	$.fn.serializeObject = function()
+	{
+		var o = {};
+		var a = this.serializeArray();
+		$.each(a, function() {
+			if (o[this.name] !== undefined) {
+				if (!o[this.name].push) {
+					o[this.name] = [o[this.name]];
+				}
+				o[this.name].push(this.value || '');
+			} else {
+				o[this.name] = this.value || '';
+			}
+		});
+		return o;
+	};
+
+    /* buy */
+    function buy()
+    {
+        if (goodsspec.getSpec() == null)
+        {
+            alert(lang.select_specs);
+            return;
+        }
+        var spec_id = goodsspec.getSpec().id;
+
+        var quantity = $("#quantity").val();
+        if (quantity == '')
+        {
+            alert(lang.input_quantity);
+            return;
+        }
+        if (parseInt(quantity) < 1)
+        {
+            alert(lang.invalid_quantity);
+            return;
+        }
+
+        add_to_cart(spec_id, quantity);
+    }
+
+    /* add cart */
+    function add_to_cart(spec_id, quantity)
+    {
+        var url = '{$site_url}/index.php?app=cart&act=add';
+
+        $.getJSON(url, {'spec_id': spec_id, 'quantity': quantity, 
+					'additional_info': JSON.stringify( $('.job_info_confirm form').serializeObject() )
+				}, function(data) {
+
+            if (data.done)
+            {
+                $('.bold_num').text(data.retval.cart.kinds);
+                $('.bold_mly').html(price_format(data.retval.cart.amount));
+                $(".buynow .msg").slideDown().delay(5000).slideUp();
+                // $('.msg').slideDown('slow');
+                // setTimeout(slideUp_fn, 5000);
+            }
+            else
+            {
+                alert(data.msg);
+            }
+        });
+    }
+
+    function to_shop()
+    {
+        if (goodsspec.getSpec() == null)
+        {
+            alert(lang.select_specs);
+            return;
+        }
+        var spec_id = goodsspec.getSpec().id;
+
+        var quantity = $("#quantity").val();
+        if (quantity == '')
+        {
+            alert(lang.input_quantity);
+            return;
+        }
+        if (parseInt(quantity) < 1)
+        {
+            alert(lang.invalid_quantity);
+            return;
+        }
+
+        add_to_shop(spec_id, quantity);
+    }
+    function add_to_shop(spec_id, quantity)
+    {
+        var url = '{$site_url}/index.php?app=cart&act=to_shop';
+
+        $.getJSON(url, {'spec_id': spec_id, 'quantity': quantity, 
+					'additional_info': JSON.stringify( $('.job_info_confirm form').serializeObject() )		   
+				}, function(data) {
+            if (data.done)
+            {
+                window.location.href = '{$site_url}/index.php?app=cart';
+                // $('.bold_num').text(data.retval.cart.kinds);
+                // $('.bold_mly').html(price_format(data.retval.cart.amount));
+                // $(".buynow .msg").slideDown().delay(5000).slideUp();
+            }
+            else
+            {
+                alert(data.msg);
+            }
+        });
+    }
+
+	console.log( "*** Rin Debug ***: sgrade " + '{$user_sgrade|escape} | {$user_info.sgrade|escape}' );
+
+	var specs = new Array();
+	<!--{foreach from=$goods._specs item=spec}-->
+	<!--{if $spec.spec_2 == $user_info.sgrade || ( $spec.spec_2==1 && $user_info.sgrade == '' ) }-->
+	//specs.push(new spec({$spec.spec_id}, '{$spec.spec_1|escape}', '{$spec.spec_2|escape}', {$spec.price}, {$spec.stock}));
+	specs.push(new spec({$spec.spec_id}, '{$spec.spec_1|escape}', '{$spec.spec_2|escape}', {$spec.price}, {$spec.stock}, {$spec.original_price}, {$spec.point}));
+	<!--{/if}-->
+	<!--{/foreach}-->
+	var specQty = {$goods.spec_qty};
+	var defSpec = {$goods.default_spec|escape};
+	var goodsspec = new goodsspec(specs, specQty, defSpec);
+	//]]>
+
+Date.prototype.format = function (format) {
+	/*
+	 * eg:format="YYYY-MM-dd hh:mm:ss";
+	 */
+	var o = {
+		"M+" : this.getMonth() + 1, // month
+		"d+" : this.getDate(), // day
+		"h+" : this.getHours(), // hour
+		"m+" : this.getMinutes(), // minute
+		"s+" : this.getSeconds(), // second
+		"q+" : Math.floor((this.getMonth() + 3) / 3), // quarter
+		"S" : this.getMilliseconds()
+		// millisecond
+	}
+
+	if (/(y+)/.test(format)) {
+		format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+	}
+
+	for (var k in o) {
+		if (new RegExp("(" + k + ")").test(format)) {
+			format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length));
+		}
+	}
+	return format;
+};
+
+function getAllDates( begin, end )
+{
+	var date = Array();
+	
+	if( String(begin)==String(end)) {
+		date.push(String(begin));
+		return date;
+	}
+	else {
+		date.push(String(begin));date.push(String(end));
+	}
+	
+	var ab = begin.split("-");
+	var ae = end.split("-");
+	var db = new Date();
+	db.setUTCFullYear(ab[0], ab[1]-1, ab[2]);
+	var de = new Date();
+	de.setUTCFullYear(ae[0], ae[1]-1, ae[2]);
+	var unixDb=db.getTime();
+	var unixDe=de.getTime();
+	for(var k=unixDb+24*60*60*1000;k<unixDe;){
+		date.push((new Date(parseInt(k))).format('yyyy-MM-dd'));
+		k=k+24*60*60*1000;
+	}
+	return date;
+}
+
+
+function getFormatedDates( ftimes ) {
+	var fdates=Array();
+
+	$.each( ftimes.split('0,'), function() { 
+		date = Array(); 
+		$.each( this.replace(' 24:00','').replace(' 00:00','').split('|'), 
+			function() { 
+				date.push( this );
+			} 
+		); 
+		if( date[0] != '' && date[1] != '' ) fdates.push.apply( fdates, getAllDates(date[0],date[1]) );
+	});
+
+	return fdates;
+}
+
+
+
+	$( function() {
+		$('.buynow a.buy, .buynow a.add').each( function() {
+			$(this)
+				.bind( 'click', function() { 
+					$('.job_info_confirm a.submit')
+						.attr( 'href', $(this).attr('rel') )
+						.click( function() {
+							$('.job_info_confirm').hide();
+							$('.goods, .detail_con').show();
+						} );
+					$('.job_info_confirm').show(); 
+					$('html, body').animate({scrollTop:0}, 'slow');
+					$('.goods, .detail_con').hide();
+				})
+				.attr( { 
+					'rel': $(this).attr('href'), 
+					'href': 'javascript:void(0);'
+				})
+		});
+
+		fdates = "{$goods.ftimes}";
+		$('input[name="job_date"]').datebox({
+			mode: "calbox",
+			afterToday: true,
+			blackDates: getFormatedDates(fdates).sort(
+				function(d1,d2) {
+					return Date.parse(d1)-Date.parse(d2);
+				}		
+			),
+			// ...etc...
+		});
+	});
+        function addone(){
+            var num = parseInt($("#quantity").val());
+            var nums = num+1
+            $("#quantity").val(nums);
+        }
+        function redone(){
+            var num = parseInt($("#quantity").val());
+            if(num <=1){
+                $("#quantity").val(1);
+            }else{
+                var nums = num-1;
+                $("#quantity").val(nums);
+            }
+        }
+        
+$( function () {
+//load完之后点击第一个来改变价钱
+var solid = $(".solid");//$(".dotted").click();
+solid[0].click();
+});
+
+</script>
+
+<div class="goods">
+
+<div class="detail_img">
+    <div id="slider" class="slider" >
+        <ul id="sliderlist" class="sliderlist" >
+            <!--{foreach from=$goods._images item=goods_image name=fe_goods_image}-->
+            <li><img src="{$goods_image.thumbnail}"></li>
+
+            <!--{/foreach}-->
+        </ul>
+    </div>
+    <script type="text/javascript">
+        var t2 = new TouchSlider({id: 'sliderlist', speed: 600, timeout: 3000, before: function(index) {
+            }});
+    </script>
+    <div class="fav">
+        <a href="javascript:collect_goods({$goods.goods_id});">
+            <img src="{res file=images/favorite.png}"/><span>收藏</span>
+        </a>
+    </div>
+    
+</div>
+
+<div class="detail_tit">
+    <p>{$goods.goods_name|escape}</p>
+    <!--{if $goods.cost_price neq '0'}-->
+    <p>原价：<strong  style="text-decoration:line-through;">{$goods.cost_price|price}/卷</strong></p>
+    <!--{/if}-->
+    <p>价格：<strong ectype="goods_price">{$goods._specs.0.price|price}</strong><strong>/卷</strong></p>
+<!--    <p>销量：{$sales_info}{$comments}</p>-->
+    <p><span>所在地区：{$store.region_name|escape}</span><!--<span>快递：10.00</span>--></p>
+    <!--{if $shipping}-->
+    <p>物流运费：
+        <!--{foreach from=$shipping item=shippings }-->
+        <span>{$shippings.shipping_name}：¥{$shippings.first_price}</span>
+        <!--{/foreach}-->
+    </p>
+    <!--{/if}-->
+</div>
+
+<div class="detail_size">
+    <div class="size_con">
+        <div class="handle">
+            <!--{if $goods.spec_qty gt 0}-->
+            <ul>
+                <li class="handle_title">墙纸类型: </li><br />
+            </ul>
+            <!--{/if}-->
+            <!--{if $goods.spec_qty gt 1}-->
+            <ul style="display: none;">
+                <li class="handle_title">{$goods.spec_name_2|escape}: </li>
+            </ul>
+            <!--{/if}-->
+            <ul class="quantity">
+                <li class="handle_title">施工卷数: </li>
+                <li>
+                    <span style="padding-right: 15px;padding-left: 15x;font-size: 30px;" onclick='redone();'>-</span>
+                    <input type="text" class="text width1" name="" id="quantity" value="1" data-role="none" />
+                    <span style="padding-right: 15px;padding-left: 15px;font-size:25px;" onclick='addone();'>+</span>
+                    卷 (请输入需要施工的墙纸卷数)
+                </li>
+            </ul>
+            <!--{if $goods.spec_qty gt 0}-->
+            <ul class="selected">
+                <li class="handle_title">{$lang.your_select}: </li>
+                <li class="aggregate" ectype="current_spec"></li>
+            </ul>
+            <!--{/if}-->
+        </div>
+    </div>
+    <div class="buynow">
+        <a href="javascript:to_shop();" class="buy">立即购买</a>
+		<a href="javascript:buy();" class="add">加入购物车</a>
+		
+        <div class="msg" style="display:none;">
+            <p><b></b>购物车内共有<span class="bold_num"></span>种商品 共计 <span class="bold_mly" style="color:#8D0303;"></span>！</p>
+            <a href="{url app=cart}" class="white_btn">查看购物车</a>
+            <a  onclick="$('.msg').css({'display': 'none'});" class="white_btn">继续购物</a>
+        </div>
+    </div>
+	<div>
+		<div class="rmc_shop bg_white">
+			<div class="rmc_shop_icon">
+				<img src="{$store.store_logo}">
+			</div>
+			<div style="width: 70%;margin-left: 30%;padding-left: 20px;">
+				<div class="font_blue font_l">{$store.store_name|escape}</div>
+				<div style="margin-bottom:15px">
+					<div style="">{$lang.credit_value}: <!-- {if $store.praise_rate != 0.00} -->{$store.praise_rate}<!-- {else} -->100<!-- {/if} -->%</div>
+					<div style="">{$lang.store_grade}: {$store.sgrade}</div>
+				</div>
+				<div style="display: none;">{$lang.region}: {$store.region_name|escape}</div>
+				<div>{$lang.address}: {$store.address|escape}</div>
+			</div>
+		</div>
+		<div class="rmc_phone bg_white">
+			<div class="call_number font_xl">电话: {$store.tel|escape}</div>
+			<div class="call_icon font_xl font_blue"><a href="tel:{$store.tel|escape}"><span class="glyphicon glyphicon-earphone font_blue"></span></a></div>
+		</div>
+	</div>
+    
+
+</div>
+<!--
+<div>
+    <div class="rmc_shop bg_white">
+        <div class="rmc_shop_icon">
+            <img src="http://cloud/wapmall/data/system/default_store_logo.gif">
+        </div>
+        <div style="width: 70%;margin-left: 30%;padding-left: 20px;">
+            <div class="font_blue font_l">{$store.store_name|escape}</div>
+            <div style="margin-bottom:15px">
+                <div style="">{$lang.credit_value}: {$store.credit_value}</div>
+                <div style="">{$lang.store_grade}: {$store.sgrade}</div>
+            </div>
+            <div style="display: none;">{$lang.region}: {$store.region_name|escape}</div>
+            <div>{$lang.address}: {$store.address|escape}</div>
+        </div>
+    </div>
+    
+    <div class="rmc_phone bg_white">
+        <div class="call_number font_xl">{$lang.tel}: {$store.tel|escape}</div>
+        <div class="call_icon font_xl font_blue"><a href="tel:{$store.tel|escape}"><span class="glyphicon glyphicon-earphone font_blue"></span></a></div>
+    </div>
+    
+</div>
+-->
+
+</div>
+
+
+<div class="job_info_confirm" style="top:0;margin-top:0px;width:100%;background-color:#0050CD;height:auto;display:none">
+    <div class="bg_white" style="padding:20px;width:100%">
+        <div style="text-align:center;margin-bottom:10px">委托工程信息确认</div><br>
+		<div>尊敬的客户：<br>您好，请填写以下表格后点击提交按钮，我司将有专人与您联系，并为您预约施工人员上门服务时间！</div></br>
+        <div>
+            <form>
+                壁纸购买店面:<br>
+                <input type="text" name="wallpaper_shop" class="text"><br>
+                <!--
+                施工负责人姓名:<br>
+                <input type="text" name="charger_name" class="text"><br>
+                联系电话:<br>
+                <input type="text" name="charger_number" class="text"><br>
+                施工地点:<br>
+                <input type="text" name="job_address" class="text"><br>
+                壁纸类型:<br>
+                <select name="wallpaper_type">
+                  <option value ="PVC纸">PVC纸</option>
+                  <option value ="无纺纸">无纺纸</option>
+                  <option value="无纺布">无纺布</option>
+                  <option value="纯纸">纯纸</option>
+                  <option value="墙布">墙布</option>
+                  <option value="特殊材质">特殊材质</option>
+                </select><br>
+                -->
+                涂层基膜:<br>
+                <select name="wallpaper_base">
+                  <option value ="需要涂刷">需要涂刷</option>
+                  <option value ="不需要">不需要</option>
+                </select><br>
+                计划施工日期:<br>
+                <input type="text" name="job_date" class="text" data-role="datebox" data-options='{"mode":"calbox"}'>
+				<style>
+				.fade { opacity: 1!important }
+				</style>
+				
+				<br>
+                留言给师傅:<br>
+                <textarea name="other"></textarea><br>
+				<a href="javascript:void(0);" class="submit"><div class="submit bg_blue font_white font_l" style="margin-top:10px;border:0;height:40px;text-align:center;line-height:40px">确 认</div></a>
+
+            </form>
+        </div>
+    </div>  
+</div>
+<style type="text/css">
+    .job_info_confirm input,select,textarea{
+        width: 100%;
+        margin-bottom: 10px;
+    } 
+    .job_info_confirm textarea{
+        height: 150px;
+    }
+
+	.ui-mobile .ui-page {
+		min-height: auto;
+	}
+</style>

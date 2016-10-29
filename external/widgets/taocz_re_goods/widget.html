@@ -1,0 +1,35 @@
+<!--{foreach from=$widget_data.goods_list item=goods name=fe_goods}-->
+<a href="{url app=goods&id=$goods.goods_id}">
+    <div class="index_product_item">
+        <div class="index_product_item_pic">
+            <!-- {if $goods.recommended neq 0 } -->
+            <img src="{$site_url}/onsale.png" style="width:10%;position:absolute;" />
+            <!-- {/if} -->
+            <!-- {if $goods.stock == 0} -->
+            <img src="{$site_url}/sold_out.jpg" />
+            <!-- {else} -->
+            <img src="{$goods.default_image}" />
+            <!-- {/if} -->
+        </div>
+        <div class="index_product_item_info">
+            <div class="index_product_item_name" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+                {$goods.goods_name}
+            </div>
+            <div class="index_product_item_price">
+                <!-- 如果是经销商，就显示经销商价钱，否则，显示零售价-->
+                <!-- {if $is_jingxiaoshang} -->
+                {$goods.price_distributor|price}
+                <!-- {else} -->
+                {$goods.price|price}
+                <!-- {/if} -->
+            </div>
+        </div>
+    </div>
+</a>
+<!--{/foreach}-->
+
+
+
+
+
+

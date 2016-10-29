@@ -1,0 +1,60 @@
+{include file=member.header.html}
+<div class="content">
+    <div class="totline"></div>
+    <div class="botline"></div>
+    {include file=member.menu.html}
+    <script>
+        function find_by_fw(){
+            var fw_id = $("#fw_id").val();
+            location.href="index.php?app=fortune_wheel&act=sign&fw_id="+fw_id;
+        }
+    </script>
+    <div id="right"> 
+        {include file=member.curlocal.html}
+		{include file=member.submenu.html}
+        <div class="wrap">
+            <select id="fw_id" onchange="find_by_fw();">
+                <option>请选择活动</option>
+                <!-- {foreach from=$all_fws item=fw} -->
+                <option value="{$fw.id}">{$fw.name}</option>
+                <!-- {/foreach} -->
+            </select>
+			 <table style="width: 100%;" class="rule_table">
+                <tr style="background-color: #D4E7FF;">
+                    <!--<th style="width: 5%;">ID</th>-->
+                    <th style="width: 15%;">活动名称</th>
+                    <th style="width: 15%;">会员名称</th>
+                    <th style="width: 15%;">收货人</th>
+                    <th style="width: 15%;">收货地址</th>
+                    <th style="width: 15%;">收货电话</th>
+                    <th style="width: 15%;">剩余次数</th>
+					<th style="width: 15%;">增长概率</th>
+                </tr>
+                <!-- {foreach from=$fw_signs item=fws} -->
+                <tr>
+                    <!--<td><p>{$fws.id}</p></td>-->
+                    <td>{$fws.fw.name}</td>
+					<td align="center">{$fws.member.user_name}</td>
+					<td align="center">{$fws.name}</td>
+					<td align="center">{$fws.address}</td>
+					<td align="center">{$fws.phone}</td>
+					<td align="center">{$fws.remain_times}</td>
+					<td align="center">{$fws.addition_rate}</td>
+                </tr>
+                <!-- {/foreach} -->
+                 <tr>
+                     <td colspan="4" align="right">
+                         <a href="index.php?app=fortune_wheel&act=sign&page={$pev_page}&fw_id={$fw_id}">上一页</a>
+                         第{$page}页/共{$count}个客户报名
+                         <a href="index.php?app=fortune_wheel&act=sign&page={$next_page}&fw_id={$fw_id}">下一页</a>
+                     </td>
+                 </tr>
+            </table>
+            <div class="wrap_bottom"></div>
+
+		</div>
+
+	</div>
+	<div class="clear"></div>
+</div>
+{include file=footer.html}

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .num-input{
+            width:50px;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <!-- {if $policy_types} -->
+            <!-- {foreach from=$policy_types item=policy} -->
+            <div style="margin:20px;float: left;background-color: #7d7d7d;padding:10px;color:white;">
+                <div>
+                    单笔买满{$policy.coe}件送{$policy.give}件
+                </div>
+                <div>
+                    {$policy.content}
+                </div>
+            </div>
+            <!-- {/foreach} -->
+        <!-- {/if} -->
+    </div>
+    <div style="width:100%;float: left">
+    <form method="post">
+        <div style="padding:10px;">
+            <p>名称：<input type="text" name="name" /> </p>
+            <p> 买满：<input type="text" name="coe" class="num-input" />
+                赠送<input type="text" name="give" class="num-input" />
+            </p>
+            <p>内容：</p>
+            <p><textarea name="content" cols="30" rows="5"></textarea></p>
+            <input type="submit" value="确定" />
+        </div>
+    </form>
+    </div>
+</body>
+</html>

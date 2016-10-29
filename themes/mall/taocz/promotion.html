@@ -1,0 +1,40 @@
+{include file=member.header.html}
+<script>
+    function del_promotion(id){
+        if(confirm('是否确定删除该产品的活动？')){
+            window.location.href="index.php?app=promotion&act=del_promotion&id="+id;
+        }
+    }
+</script>
+<div class="content">
+    <div class="totline"></div>
+    <div class="botline"></div>
+    {include file=member.menu.html}
+    <div id="right"> 
+        {include file=member.curlocal.html}
+        {include file=member.submenu.html}
+        <div class="wrap">
+            <a href="index.php?app=promotion&act=add">添加新的限时促销活动</a>
+            <table style="width:100%;">
+                <tr>
+                    <th>活动产品</th>
+                    <th>日期</th>
+                    <th>活动规格</th>
+                    <th>单价原价</th>
+                    <th>活动价格</th>   
+                    <th>操作</th>
+                </tr>
+                <!-- {foreach from=$promotions item=promotion} -->
+                <tr>
+                    <th>{$promotion.goods_name}</th>
+                    <th>{$promotion.date|date}</th>
+                    <th>{$promotion.spec_1}</th>
+                    <th>{$promotion.b_price}</th>
+                    <th>{$promotion.price}</th>
+                    <th><input type="button" value="删除" Onclick="del_promotion({$promotion.id});" /></th>
+                </tr>
+                <!-- {/foreach} -->
+            </table>
+        </div>
+    </div>
+</div>

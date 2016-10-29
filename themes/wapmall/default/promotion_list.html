@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <base href="{$site_url}/" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <link href="{res file=css/common.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/index.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/main.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/rmc-common.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/bootstrap.min.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/font-awesome.css}" type="text/css" rel="stylesheet" />
+        <script type="text/javascript" src="{lib file=jquery.js}" charset="utf-8"></script>
+        <!-- 下面是活动倒计时的样式+js -->
+        <script type="text/javascript" src="{res file=js/jquery.countdown.js}"></script>
+        <!--<script type="text/javascript" src="{res file=js/script.js}"></script>-->
+        <link type="text/css" rel="stylesheet" href="{res file=css/jquery.countdown.css}" />
+        <title></title>
+        <style>
+            .no_click{
+                border : solid #fff 1px;
+                background-color: #EEDC82;
+                color:#fff
+            }
+            .has_click{
+                border : solid #fff 1px;
+                background-color: #FFA54F;
+                color:#fff
+            }
+            a:link{
+                text-decoration:none;
+            }
+            a:visited{
+                text-decoration:none;
+            }
+            a:hover{
+                text-decoration:none;
+            }
+            a:active{
+                text-decoration:none;
+            }
+        </style>
+    </head>
+    <body>
+
+        <header class="region container-fluid bg_blue fixed"> 
+            <div class="content row header_search" align="center">
+                <a href="javascript:history.back()">
+                    <div class="banner_left col-xs-2 font_white">
+                        <span class="fa fa-angle-left"></span>
+                    </div>
+                </a>
+                <div class="banner_middle col-xs-8" style="font-size:20px;padding-top:10px;color:#fff;">
+                    特价产品
+                </div>
+            </div> 
+        </header>
+        <div style="padding-top:80px;">
+            <div align="center" style="font-size:20px;">
+                <ul>
+                    <li style="float:left;width:33%">
+                        <a href="index.php?app=promotion&act=promotion_list">
+                            <!-- {if $date_str == 'today'} -->
+                            <div class='has_click'>
+                                {$today}
+                            </div>
+                            <!-- {else} -->
+                            <div class='no_click'>
+                                {$today}
+                            </div>
+                            <!-- {/if} -->
+                        </a>
+                    </li>
+                    <li style="float:left;width:33%">
+                        <a href="index.php?app=promotion&act=promotion_list&date=tomorrow">
+                            <!-- {if $date_str == 'tomorrow'} -->
+                            <div class='has_click'>
+                                {$tomorrow}
+                            </div>
+                            <!-- {else} -->
+                            <div class='no_click'>
+                                {$tomorrow}
+                            </div>
+                            <!-- {/if} -->
+                        </a>
+                    </li>
+                    <li style="float:left;width:33%">
+                        <a href="index.php?app=promotion&act=promotion_list&date=day_after">
+                            <!-- {if $date_str == 'day_after'} -->
+                            <div class='has_click'>
+                                {$day_after}
+                            </div>
+                            <!-- {else} -->
+                            <div class='no_click'>
+                                {$day_after}
+                            </div>
+                            <!-- {/if} -->
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- {if $promotions} -->
+            <!-- {foreach from=$promotions item=promotion} -->
+            <div style="width:100%;padding-left:20px;padding-top:20px;float:left;font-size:15px;">
+                <div style="height:100px;width:30%;float:left;background-color: #fff">
+                    <img src="{$promotion.goods_image}" style="width:100px;padding:10px;" />
+                </div>
+                <div style="height:100px;;float:left;width:60%;background-color: #fff;padding-top:10px;">
+                    <p>{$promotion.goods_name}</p>
+                    <p style='padding-top: 15px;'>原价：{$promotion.b_price|price}</p>
+                    <p style='color:red'>特价：{$promotion.price|price}</p>
+                </div>
+            </div>
+            <!-- {/foreach} -->
+            <!-- {else} -->
+            <div style='font-size:20px;padding-top:50px;' align='center'>
+                当天暂时没有特价产品!    
+            </div>
+            <!-- {/if} -->
+        </div>
+
+        <div style="padding-bottom: 70px;">
+
+        </div>
+        {include file='footer_nav.html'}
+

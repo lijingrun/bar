@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <base href="{$site_url}/" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <link href="{res file=css/common.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/index.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/main.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/rmc-common.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/bootstrap.min.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/font-awesome.css}" type="text/css" rel="stylesheet" />
+        <script type="text/javascript" src="index.php?act=jslang"></script>
+        <script type="text/javascript" src="{lib file=jquery.js}" charset="utf-8"></script>
+        <script type="text/javascript" src="{lib file=ecmall.js}" charset="utf-8"></script>
+        <style>
+            ul{list-style:none;}
+            li{
+                float:left;
+                width:50%;
+                padding:10px;
+            }
+        </style>
+    </head>
+    <body id="log-reg">
+        <header class="region container-fluid bg_blue fixed"> 
+            <div class="content row header_search" align="center">
+                <a href="javascript:history.back()">
+                    <div class="banner_left col-xs-2 font_white">
+                        <span class="fa fa-angle-left"></span>
+                    </div>
+                </a>
+            </div> 
+        </header>
+        <div class="container-fluid fixed_header_search">
+            <div style="float:left;padding-right: 30px;">
+                <div style="padding:10px;" align="center">
+                    <img src="{$edition.img}" style="width:120px;height:120px;">
+                        <br/>
+                        {$edition.edition_name}
+                </div>
+            </div>
+
+            <div style="padding-top:10px;">
+                品牌：{$edition.brand} <br />
+                材质：{$edition.material}  <br />
+                工艺：{$edition.technology}<br />
+                规格：{$edition.specifications}<br />
+                克重：{$edition.weight}<br />
+                风格：{$edition.style}<br />
+            </div>
+
+        </div>
+        <div style="padding:20px;">
+            {$edition.edition_with}
+        </div>
+        <div style="float:right;">
+            <a href="#">
+                <h5 style="color:red">查看其它产品 >></h5>
+            </a>
+        </div>
+        <br />
+        <div style="padding-left: 20px;">
+            <h5 style="color:red;">产品样式</h5>
+            
+        </div>
+        <div style="padding-left: 20px;padding-right: 20px;padding-bottom:150px;">
+            <ul>
+                <!-- {foreach from=$images item=image} -->
+                <li>
+                    <img src="{$image.img}" style="width:100%;"/><br />
+                    {$image.img_model}
+                </li>
+                <!-- {/foreach} -->
+            </ul>
+        </div>
+        <div style="padding-bottom: 180px;">
+            
+        </div>
+        {include file='footer_nav.html'}
+    </body>
+</html>

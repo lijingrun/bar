@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>关联客户</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <script>
+            function del_user(id){
+                if(confirm('是否确定删除该客户的品牌保护？')){
+                    window.location.href="index.php?app=my_protect&act=del_user&id="+id;
+                }
+            }
+            function find_user(){
+                var user_name = $("#user_name").val();
+                $.ajax({
+                    type: 'post',
+                    url: 'index.php?app=my_protect&act=find_user',
+                    data : {'user_name':user_name},
+                    success : function(data){
+                        $("#find_user").remove();
+                        $("#add_user").append(data);
+                    }
+                });
+            }
+            function add_user(){
+                var user_id = $("#choose_user").val();
+                var brand_id = $("#brand_id").val();
+                if(user_id != 0){
+                    $.ajax({
+                        type : 'post',
+                        url : 'index.php?app=my_protect&act=add_user_to_brand',
+                        data : {'user_id' : user_id, 'brand_id' : brand_id},
+                        success : function(data){
+                            if(data == 1){
+                                alert("添加成功!");
+                                location.reload();
+                            }else if(data == 2){
+                                alert('该客户已经同该品牌关联了');
+                            }else if(data == 3){
+                                alert('客户未关联任何卖场，请先关联卖场');
+                            }else if(data == 4){
+                                alert('品牌不存在');
+                            }else{
+                                alert('系统错误，请稍后重试');
+                            }
+                        }
+                    });
+                }else{
+                    alert('请选择客户');
+                }
+            }
+        </script>
+        {include file=member.header.html}
+        <div class="content">
+            <div class="totline"></div>
+            <div class="botline"></div>
+            {include file=member.menu.html}
+            <div id="right">
+                {include file=member.curlocal.html}
+                {include file=member.submenu.html}
+                <div class="wrap">
+                    <div style="padding-left:30px;">
+                        <div id="add_user">
+                        <span id="find_user">添加客户
+                        <input type="text" id="user_name" /><input type="button" value="搜索" onclick="find_user();" />
+                        </span>
+                        </div>
+                        <input type="hidden" id="brand_id" value="{$brand_id}" />
+                        <!-- {if $user_brands} -->
+                        共{$count}个关联客户
+                        <ul>
+                            <!-- {foreach from=$user_brands item=user_brand} -->
+                            <li style="float: left" >
+                                <div style="padding:10px;background-color: #FFFAF0;margin:10px;">
+                                    <p style="padding-bottom: 10px;">{$user_brand.user_name}</p>
+                                    <p style="padding-bottom: 10px;">
+                                        <a href="index.php?app=seller_order&buyer_name={$user_brand.user_name}">
+                                            查看客户订单情况
+                                        </a>
+                                    </p>
+                                    <p style="padding-bottom: 10px;">
+                                        <a Onclick="del_user({$user_brand.id});">
+                                            取消该客户关联
+                                        </a>
+                                    </p>
+                                </div>
+                            </li>
+                            <!-- {/foreach} -->
+                        </ul>
+                        <!-- {else} -->
+                        该品牌暂时未关联任何客户
+                        <!-- {/if} -->
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+
+        {include file=footer.html}
+    </body>
+</html>

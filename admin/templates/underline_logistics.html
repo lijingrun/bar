@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>蓝羽物流管理</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <script type="text/javascript" src="{lib file=jquery-1.4.4.min.js}" charset="utf-8"></script>
+        <script >
+            function find_orders() {
+//                var order_type = document.getElementById('order_type').value;
+//                var status = document.getElementById('status').value;
+                var order_id = document.getElementById('order_id').value;
+                var buyer_name = document.getElementById('buyer_name').value;
+                window.location.href = "index.php?app=logistics&act=underline&order_id="+order_id+"&buyer_name="+buyer_name;
+            }
+            //修改发货资料
+            function edit(id) {
+                if (confirm("是否确定修改已发货订单的物流信息？")) {
+                    var buyer_name = $.trim($("#buyer_name" + id).val()); 
+//                    var order_id = $.trim($("#order_id" + id).val()); 
+                    var logistics_id = $.trim($("#logistics_id" + id).val()); 
+                    var phone = $.trim($("#phone" + id).val()); 
+                    var people = $.trim($("#people" + id).val()); 
+                    var l_name = $.trim($("#l_name" + id).val());
+                    var l_phone = $.trim($("#l_phone" + id).val());
+                    var l_status = $.trim($("#l_status" + id).val());
+                    var get_phone = $.trim($("#get_phone" + id).val());
+                    var num = $.trim($("#num" + id).val());
+                    var freight = $.trim($("#freight" + id).val());
+                    var deliver_price = $.trim($("#deliver_price" + id).val());
+//                    var get_time = $.trim($("#get_time" + id).val());
+                    if (buyer_name == '' || order_id == '' || logistics_id == '' || phone == '' || people == '' || l_name == '' || l_phone == '') {
+                        alert('发货内容不能为空！');
+                    } else {
+                        $.ajax({
+                            type: 'post',
+                            url: 'index.php?app=logistics&act=under_edit',
+                            data: {
+                                'id': id,
+                                'buyer_name': buyer_name,
+//                                'order_id': order_id,
+                                'logistics_id': logistics_id,
+                                'phone': phone,
+                                'people': people,
+                                'l_name': l_name,
+                                'l_phone': l_phone,
+                                'freight' : freight,
+                                'deliver_price' : deliver_price,
+                                'num' : num,
+                                'l_status': l_status,
+//                                'get_time': get_time,
+                                'get_phone' : get_phone,
+                            },
+                            success: function (data) {
+                                if (data == 111) {
+                                    alert('修改成功！');
+                                } else {
+                                    alert("服务器繁忙，请稍后重试！");
+                                }
+                            }
+                        });
+                    }
+                }
+            }
+
+        </script>
+        <div style="color:#00BFFF;padding-left:35px;border-bottom:1px solid #00BFFF;border-top:1px solid #00BFFF" >
+            <h1>蓝羽物流管理系统</h1>
+        </div>
+        <div style='padding:20px;' align='center'>
+            订单编号：<input type="text" id="order_id" value="{$order_id}"/>
+            购货单位：<input type='text' id='buyer_name' value="{$buyer_name}"/>
+            <input type="button" value="搜索" onclick='find_orders();'/>
+            <a href="index.php?app=logistics">
+                线上物流发货
+            </a>
+        </div>
+        <div style='font-size: 10px;' align='center'>
+            <form method="post">
+                <table border="1" >
+                    <tr>
+                        <!--<th style="width:100px;">订单日期</th>-->
+                        <th style="width:70px;">购货单位</th>
+                        <!--<th style="width:100px;">订单编号</th>-->
+                        <th style="width:70px;">物流单号</th>
+                        <!--
+                        <th>客服工号<br/>（K3职员代码）</th>
+                        -->
+                        <th style="width:100px;">发货电话</th>
+                        <th style="width:50px;">联系人</th>
+                        <th style="width:50px;">物流公司</th>
+                        <th style="width:100px;">物流电话</th>
+                        <th>发货箱数</th>
+                        <th>运费</th>
+                        <th>送货费</th>
+                        <th style="width:70px;">状态(由哪里发货)</th>
+                        <th style="width:70px;">发货时间</th>
+                        <th style="width:50px;">到站点电话</th>
+                        <th style="width:50px;">操作</th>
+                    </tr>
+                    <tr>
+                        <!--                    <th style="width:100px;">
+                                                <input type="text">
+                                            </th>-->
+                        <th >
+                            <input type="text" name="buyer_name" style="width:70px;"/>
+                        </th>
+<!--                        <th style="width:100px;">
+                            <input type="text" name="order_id" style="width:100px;"/>
+                        </th>-->
+                        <th style="width:70px;">
+                            <input type="text" name="logistics_id" style="width:70px;"/>
+                        </th>
+                        <!--
+                        <th>客服工号<br/>（K3职员代码）</th>
+                        -->
+                        <th style="width:100px;">
+                            <input type="text" name="phone" style="width:100px;"/>
+                        </th>
+                        <th style="width:50px;">
+                            <input type="text" name="people" style="width:50px;"/>
+                        </th>
+                        <th style="width:50px;">
+                            <input type="text" name="l_name" style="width:50px;"/>
+                        </th>
+                        <th style="width:100px;">
+                            <input type="text" name="l_phone" style="width:100px;"/>
+                        </th>
+                        <th>
+                            <input type="text" name="num" style="width:100px;"/>
+                        </th>
+                        <th>
+                            <input type="text" name="freight" style="width:100px;"/>
+                        </th>
+                        <th>
+                            <input type="text" name="deliver_price" style="width:100px;"/>
+                        </th>
+                        <th style="width:70px;">
+                            <input type="text" name="l_status" style="width:70px;"/>
+                        </th>
+                        <th style="width:70px;">
+                            <input type="text" name="addtime" style="width:70px;"/>
+                        </th>
+                        <th style="width:50px;">
+                            <input type="text" name="get_phone" style="width:50px;"/>
+                        </th>
+                        <td>
+                            <input type="submit" value="发货" />
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        
+        <div align="center" style="padding-top: 30px;">
+            已发货信息：
+            <table border="1" >
+                    <tr>
+                        <!--<th style="width:100px;">订单日期</th>-->
+                        <th style="width:70px;">购货单位</th>
+                        <!--<th style="width:100px;">订单编号</th>-->
+                        <th style="width:70px;">物流单号</th>
+                        <!--
+                        <th>客服工号<br/>（K3职员代码）</th>
+                        -->
+                        <th style="width:100px;">发货电话</th>
+                        <th style="width:50px;">联系人</th>
+                        <th style="width:50px;">物流公司</th>
+                        <th style="width:100px;">物流电话</th>
+                        <th>发货箱数</th>
+                        <th>运费</th>
+                        <th>送货费</th>
+                        <th style="width:70px;">状态(由哪里发货)</th>
+                        <th style="width:70px;">发货时间</th>
+                        <th style="width:50px;">到站点电话</th>
+                        <th style="width:50px;">操作</th>
+                    </tr>
+                    <!-- {if $order_list} -->
+                    <!-- {foreach from=$order_list item=val} -->
+                    <tr>
+                        <td>
+                            <input type="text" value="{$val.buyer_name}" id="buyer_name{$val.id}" style="width:70px;"/>
+                        </td>
+<!--                        <td>
+                            <input type="text" value="{$val.order_id}" id="order_id{$val.id}" style="width:100px;"/>
+                        </td>-->
+                        <td>
+                            <input type="text" value="{$val.logistics_id}" id="logistics_id{$val.id}" style="width:70px;"/>
+                        </td>
+                        <td>
+                            <input type="text" value="{$val.phone}" id="phone{$val.id}" style="width:100px;"/>
+                        </td>
+                        <td>
+                            <input type="text" value="{$val.people}" id="people{$val.id}" style="width:50px;"/>
+                        </td>
+                        <td>
+                            <input type="text" value="{$val.l_name}" id="l_name{$val.id}" style="width:50px;"/>
+                        </td>
+                        <td>
+                            <input type="text" value="{$val.l_phone}" id="l_phone{$val.id}" style="width:100px;"/>
+                        </td>
+                        <td>
+                            <input type="text" name="num" value="{$val.num}" id="num{$val.id}" style="width:100px;"/>
+                        </td>
+                        <td>
+                            <input type="text" name="freight" value="{$val.freight}" id="freight{$val.id}" style="width:100px;"/>
+                        </td>
+                        <td>
+                            <input type="text" name="deliver_price"  value="{$val.deliver_price}" id="deliver_price{$val.id}" style="width:100px;"/>
+                        </td>
+                        <td>
+                            <input type="text" value="{$val.l_status}" id="l_status{$val.id}" style="width:70px;"/>
+                        </td>
+                        <td>
+                            <input type="text" value="{$val.addtime|date:complete}" id="addtime{$val.id}" style="width:70px;"/>
+                        </td>
+                        <td>
+                            <input type="text" value="{$val.get_phone}" id="get_phone{$val.id}" style="width:50px;"/>
+                        </td>
+                        <td style="width:50px;">
+                            <input type="button" value="修改" onclick="edit({$val.id});" />
+                        </td>
+                    </tr>
+                    <!-- {/foreach} -->
+                    <tr>
+                        <td colspan="10">
+                            <a href="index.php?app=logistics&act=underline&page={$pev_page}&buyer_name={$buyer_name}">
+                                上一页
+                            </a>
+                            第{$page}页
+                            <a href="index.php?app=logistics&act=underline&page={$next_page}&buyer_name={$buyer_name}">
+                                下一页
+                            </a>
+                        </td>
+                    </tr>
+                    <!-- {/if} -->
+                    
+            </table>
+        </div>
+    </body>
+</html>

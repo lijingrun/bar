@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>积分商城</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        {include file=member.header.html}
+        <div class="content">
+            <div class="totline"></div>
+            <div class="botline"></div>
+            {include file=member.menu.html}
+            <div id="right">
+                {include file=member.curlocal.html}
+                {include file=member.submenu.html}
+                <div class="wrap">
+                    <div class="public_select table" >
+                        <div>
+                            <div style="width: 45%;padding-left: 25%;">
+                                <img src="{$good.img}" />
+                                <p style="padding-top:10px;font-size: 20px;">{$good.goods_name}</p>
+                                <p style="padding-left:5px;font-size: 20px ;padding-top:10px;color:red;padding-bottom: 10px;">{$good.price}分</p>
+                                <p style="font-size: 20px;padding-bottom: 10px">购买数量:</p>
+                                <div style="padding-buttom:10px;" >
+                                    <input style="font-size: 20px;width:30px;" type="button" value="-" onclick="sub();"/>
+                                    <input style="font-size: 20px;width:30px;" id="buy_num" type="text" value="1" />
+                                    <input style="font-size: 20px;width:30px;" type="button" value="+" onclick="add();"/>
+                                </div>
+                                <div style="font-size: 20px;" align="center">
+                                    <input type="hidden" value="{$user_point}" id="user_point" />
+                                    <input type="hidden" value="{$good.goods_id}" id="goods_id" />
+                                    <input type="hidden" value="{$good.price}" id="price" />
+                                    <input type="button" value="确认购买" style="font-size:20px;" onclick="to_buy();" />
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <script>
+            function sub(){
+                var buy_num = $("#buy_num").val();
+                if(buy_num <= 1){
+                    
+                }else{
+                    buy_num--;
+                    $("#buy_num").val(buy_num);
+                }
+            }
+            function add(){
+                var buy_num = $("#buy_num").val();
+                    buy_num++;
+                    $("#buy_num").val(buy_num);
+            }
+            function to_buy(){
+                var point = $("#user_point").val();
+                var price = $("#price").val();
+                var goods_id = $("#goods_id").val();
+                var buy_num = $("#buy_num").val();
+                var totalprice = price*buy_num;
+                if(totalprice > point){
+                    alert("对不起，您积分不够，不能购买！");
+                }else{
+                    window.location.href="index.php?app=redeem&act=buy_redeem_pc&goods_id="+goods_id+"&num="+buy_num;
+                }
+            }
+        </script>
+        {include file=footer.html}
+    </body>
+</html>

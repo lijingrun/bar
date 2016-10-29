@@ -1,0 +1,190 @@
+.index_top {
+	height: 250px;
+	background-color: #0050cd;
+}
+
+.index_top_search {
+	width: 90%;
+	text-align: center;
+	height: 40px;
+	font-size: 20px;
+	margin-top: 72px;
+}
+
+.index_top_item1{
+	margin-top: 8px;
+	text-align: right;
+	font-size: 14px;
+}
+
+.index_top_item2{
+	margin-top: 20px;
+	margin-bottom:10px;
+	text-align: center;
+	font-size: 14px;
+}
+
+.index_top_item2 .glyphicon{
+	font-size: 20px;
+	margin-bottom: 5px;
+}
+
+.header_search{
+	height: 50px;
+}
+
+.fixed_header_search{
+	margin-top: 50px;
+}
+
+.banner_left{
+	font-size: 30px;
+	height: 100%;
+	padding-top: 8px;
+}
+
+.banner_right{
+	font-size: 30px;
+	height: 100%;
+	padding-top: 8px;
+}
+
+.search_top {
+	width: 100%;
+	text-align: center;
+	height: 30px;
+	font-size: 15px;
+	margin-top: 10px;
+}
+
+.footer_nav{
+	height: 55px;
+	width: 100%;
+	text-align: center;
+	border-top:1px solid #8C8C8C; 
+	padding-top: 10px;
+	position: fixed;
+	bottom: 0;
+	background-color: #E8E8E8;
+
+}
+
+.footer_nav a{
+	color: #1E1E1E;
+}
+
+.footer_nav_item{
+	width: 20%;
+	float: left;
+}
+
+.footer_nav_item img{
+	width: 23%;
+}
+
+.footer_nav_item_icon{
+	font-size: 20px;
+	margin-bottom: 2px;
+}
+
+.footer_nav_item_title{
+	font-size: 15px;
+}
+
+.goods_list_text{
+	margin-left: 50px;
+}
+
+.goods_list_name{
+	margin-top: 10px;
+	font-size: 17px;
+	max-height: 2.5em;
+	overflow: hidden;
+}
+
+.goods_list_price{
+	margin-top: 5px;
+	font-size: 20px;
+}
+
+.goods_list_sellamount{
+
+}
+
+.goods_list_comment{
+	margin-left: 10px;
+}
+
+.sort {
+	width: 100%;
+	height: 44px;
+	text-align: center;
+	padding-bottom: 0;
+	
+}
+
+.sort ul{
+	width: 100%;
+	margin-bottom: 0;
+}
+
+.sort li{
+	width: 20%;
+	padding: 10px 0px;
+}
+
+.login_top {
+	height: 200px;
+	background-color: #0050cd;
+}
+
+.ghost_btn {
+	width:100%;
+	padding: 10px;
+	text-align: center;
+}
+
+.uc_item{
+	
+}
+
+.uc_item img{
+	width: 100%;
+}
+
+.uc_item2{
+	
+
+}
+
+.uc_item2 img {
+	width: 100%;
+}
+
+div#dialog_object_my_address_add {
+width: 100%!important;
+margin: 0 auto;
+left: 0!important;
+top: 20%!important;
+}
+
+div#dialog_object_my_address_edit {
+width: 100%!important;
+margin: 0 auto;
+left: 0!important;
+top: 20%!important;
+}
+
+div#dialog_object_buyer_order_confirm_order {
+width: 100%!important;
+margin: 0 auto;
+left: 0!important;
+top: 20%!important;
+}
+
+div#dialog_object_buyer_order_cancel_order {
+width: 100%!important;
+margin: 0 auto;
+left: 0!important;
+top: 20%!important;
+}

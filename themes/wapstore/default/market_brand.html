@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <base href="{$site_url}/" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <link href="{res file=css/common.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/index.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/main.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/rmc-common.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/bootstrap.min.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/font-awesome.css}" type="text/css" rel="stylesheet" />
+        <script type="text/javascript" src="index.php?act=jslang"></script>
+        <script type="text/javascript" src="{lib file=jquery.js}" charset="utf-8"></script>
+        <script type="text/javascript" src="{lib file=ecmall.js}" charset="utf-8"></script>
+        <title>营销中心</title>
+        <script>
+            function find_city(){
+                var province_id = $("#province").val();
+                if(province_id == 0){
+                    alert('请选择省份');
+                }else{
+                    $.ajax({
+                        type : 'post',
+                        url : 'index.php?app=marketing&act=find_city',
+                        data : {'province_id' : province_id},
+                        success : function(data){
+                            $("#city").remove();
+                            $("#city_list").append(data);
+                        }
+                    });
+                }
+            }
+            function find_price(){
+                var city_id = $("#city").val();
+                var province_id = $("#province").val();
+                var store_id = {$store_id};
+                if(city_id == 0){
+                    alert("请选择城市");
+                }else{
+                    $.ajax({
+                        type : 'post',
+                        url : 'index.php?app=marketing&act=find_place',
+                        data : {'city_id' : city_id, 'province_id' : province_id, 'store_id' : store_id},
+                        success : function(data){
+                            $("#place").remove();
+                            $("#place_list").append(data);
+                        }
+                    });
+                }
+            }
+            function find_brand(){
+                var place_id = $("#place").val();
+                var store_id = {$store_id};
+                if(place_id == undefined || place_id == 0){
+                    alert("请先选择卖场！");
+                }else{
+
+                    location.href="index.php?app=marketing&act=get_category&price_id="+place_id+"&store_id="+store_id;
+                }
+            }
+        </script>
+    </head>
+
+
+    <body id="log-reg">
+
+        <header class="region container-fluid bg_blue fixed"> 
+            <div class="content row header_search" align="center">
+                                <a href="javascript:history.back()">
+                                    <div class="banner_left col-xs-2 font_white">
+                                        <span class="fa fa-angle-left"></span>
+                                    </div>
+                                </a>
+                <div class="banner_middle col-xs-8 font_white font_xl" style="margin-top:10px" align="center">
+                    按卖场查看可投放品牌
+                </div>
+            </div>
+        </header>
+
+        <div class="container-fluid fixed_header_search">
+            <div align="center" style="padding:20px;font-size:25px;">
+                <select id="province" onchange="find_city();">
+                    <option value="0">请选择省份</option>
+                    <!-- {foreach from=$provinces item=province} -->
+                    <option value="{$province.id}">{$province.name}</option>
+                    <!-- {/foreach} -->
+                </select>
+            </div>
+            <div align="center" style="padding:20px;font-size:25px;" id="city_list">
+                
+            </div>
+            <div align="center" style="padding:20px;font-size:25px;" id="place_list">
+                
+            </div>
+            <div  align="center">
+                <input type="button" value="查找" onclick="find_brand();"  style="font-size:25px;width:150px;" />
+            </div>
+            <div align="center" style="padding:20px;font-size:25px;" id="brand_list"></div>
+            
+        </div>
+
+        <div style="height: 100px;">
+
+        </div>
+    </body>
+</html>

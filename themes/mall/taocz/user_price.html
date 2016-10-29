@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>关联客户</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <script>
+            function find_brands(user_id) {
+                if (user_id != '') {
+                    $.ajax({
+                        type: 'post',
+                        url: 'index.php?app=my_protect&act=find_brands',
+                        data: {'user_id': user_id},
+                        success: function (data) {
+                            alert(data);
+                        }
+                    });
+                }
+            }
+            function find_user() {
+                var user_name = $("#user_name").val();
+                $.ajax({
+                    type: 'post',
+                    url: 'index.php?app=my_protect&act=find_user',
+                    data: {'user_name': user_name},
+                    success: function (data) {
+                        $("#find_user").remove();
+                        $("#add_user").append(data);
+                    }
+                });
+            }
+            function add_user(){
+                var user_id = $("#choose_user").val();
+                var price_id = $("#price_id").val();
+                if(user_id != 0){
+                    $.ajax({
+                        type : 'post',
+                        url : 'index.php?app=my_protect&act=add_user_to_price',
+                        data : {'user_id' : user_id, 'price_id' : price_id},
+                        success : function(data){
+                            if(data == 2){
+                                alert('该客户已经与该卖场关联了');
+                            }else if(data == 1){
+                                alert("操作成功！");
+                                location.reload();
+                            }else{
+                                alert('系统繁忙，请稍后重试！');
+                            }
+                        }
+                    });
+                }else{
+                    alert('请选择客户');
+                }
+            }
+            function del_price(id){
+                if(confirm("是否确定取消客户与卖场关联？")){
+                    $.ajax({
+                        type : 'post',
+                        url : 'index.php?app=my_protect&act=del_price',
+                        data : {'id' : id},
+                        success : function(data){
+                            if(data == 111){
+                                alert("操作成功！");
+                                location.reload();
+                            }else{
+                                alert("系统繁忙！");
+                            }
+                        }
+                    });
+                }
+            }
+            function find_brand(){
+                var price_id = {$price_info.price_id};
+                $.ajax({
+                    type : 'post',
+                    url : 'index.php?app=my_protect&act=find_brand',
+                    data : {'price_id' : price_id},
+                    success : function(data){
+                        $("#brand_list").append(data);
+                    }
+                });
+            }
+        </script>
+        {include file=member.header.html}
+        <div class="content">
+            <div class="totline"></div>
+            <div class="botline"></div>
+            {include file=member.menu.html}
+            <div id="right">
+                {include file=member.curlocal.html}
+                {include file=member.submenu.html}
+                <div class="wrap">
+                    <div style="padding-left:30px;">
+                        
+                        <h3 align="center">
+                            {$price_info.province_name}{$price_info.city_name}{$price_info.price_name}
+                        </h3>
+                        <p style="padding:10px;">
+                            <input type="button" value="查看本卖场可投放品牌" onclick="find_brand();" />
+                        </p>
+                        <div id="brand_list">
+                            
+                        </div>
+                        <div id="add_user">
+                            <span id="find_user">添加客户
+                                <input type="text" id="user_name" /><input type="button" value="搜索" onclick="find_user();" />
+                            </span>
+                        </div>
+                        <input type="hidden" value="{$price_info.price_id}" id="price_id" />
+                        <!-- {if $user_price} -->
+                        <ul>
+                            <!-- {foreach from=$user_price item=price} -->
+                            <li style="float: left" >
+                                <div style="padding:10px;background-color: #EED2EE;margin:10px;">
+                                    <p style="padding-bottom: 10px;">{$price.user_name}</p>
+                                    <p style="padding-bottom: 10px;">
+                                        <a href="index.php?app=seller_order&buyer_name={$price.user_name}">
+                                            查看客户订单情况
+                                        </a>
+                                    </p>
+                                    <p>
+                                        <input type="button" value="查看已做品牌" Onclick="find_brands({$price.user_id});" />
+                                        <input type="button" value="取消关联" Onclick="del_price({$price.id});" />
+                                    </p>
+                                </div>
+                            </li>
+                            <!-- {/foreach} -->
+                        </ul>
+                        <!-- {else} -->
+                        该地区暂时未关联任何客户
+                        <!-- {/if} -->
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+
+        {include file=footer.html}
+    </body>
+</html>

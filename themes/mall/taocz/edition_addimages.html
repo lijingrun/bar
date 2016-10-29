@@ -1,0 +1,158 @@
+
+<title>增加产品展示页面</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script type="text/javascript" src="{lib file=jquery-1.4.4.min.js}" charset="utf-8"></script>
+<script>
+            function addoneline() {
+            $("#addone").before("<br/><input type='file' name='effectimgs[]'>");
+//                alert($("#addone").prev().val());
+//                var tasd = "<span>对应型号</span>";
+//                $("#addone").prev().after(tasd);
+//        $("#addone").prev().after("<p>图片：<input type='file' name='img[]'/>对应型号：<input type='text' name='model[]' /></p>");
+            }
+            function addoneline2() {
+                $("#addone2").before("<p>图片：<input type='file' name='img[]'/>对应型号：<input type='text' name='model[]' /></p>");
+            }
+    //删除图片
+    function delimg(id) {
+    if (confirm('是否确定删除版本展示图片？')) {
+    window.location.href = "index.php?app=edition&act=delimg&id=" + id;
+    }
+    }
+</script>
+<style>
+    .ul{list-style:none;}
+    .li{
+        float:left;
+        padding:10px;
+    }
+</style>
+{include file=member.header.html}
+<div class="content">
+    <div class="totline"></div>
+    <div class="botline"></div>
+    {include file=member.menu.html}
+    <div id="right">
+        {include file=member.curlocal.html}
+        <div class="wrap">
+            <div align="center" >
+                <div class="public_select table">
+                    <table border="1" style="border:solid #add9c0;">
+                        <tr style="border:solid #add9c0;">
+                            <th style="width:100px;">产品</th>
+                            <th style="width:100px;">品牌</th>
+                            <th style="width:100px;">材质</th>
+                            <th style="width:100px;">工艺</th>
+                            <th style="width:100px;">规格</th>
+                            <th style="width:100px;">克重</th>
+                            <th style="width:100px;">风格</th>
+                        </tr>
+                        <tr style="border:solid #add9c0;">
+                            <td style="width:100px;border:solid #add9c0; ">
+                                <img src="{$edition.img}" style="width:100%" /><br />
+                                {$edition.edition_name}
+                            </td>
+                            <td style="width:100px;border:solid #add9c0; ">
+                                {$edition.brand}
+                            </td>
+                            <td style="width:100px;border:solid #add9c0; ">
+                                {$edition.material}
+                            </td>
+                            <td style="width:100px;border:solid #add9c0; ">
+                                {$edition.technology}
+                            </td>
+                            <td style="width:100px;border:solid #add9c0; ">
+                                {$edition.specifications}
+                            </td>
+                            <td style="width:100px;border:solid #add9c0; ">
+                                {$edition.weight}
+                            </td>
+                            <td style="width:100px;border:solid #add9c0; ">
+                                {$edition.style}
+                            </td>
+                        </tr>
+                    </table>
+                    <!-- {if !empty($images)} -->
+                    <div align="center" style="width:800px;height: 100px;">
+
+                        <ul class="ul">
+                            <!-- {foreach from=$images item=image} -->
+                            <li class="li">
+                                <div>
+                                    <div style="width: 100px;">
+                                        <img src="{$image.img}" style="width:100px;"/>
+                                        <p>
+                                            {$image.img_model}
+                                            <input type="button" value="删除" onclick="delimg({$image.id});"/>
+                                        </p>
+                                    </div>
+                                </div>
+                            </li>
+                            <!-- {/foreach} -->
+                        </ul>
+                    </div>
+                    <!-- {/if} -->
+                    <br />
+
+                    <br />
+                    <div style="padding-top: 80px;">
+                        <form method="post" enctype="multipart/form-data">
+                            <div>
+                                <table border='1'>
+                                    <tr>
+                                        <td>
+                                            <div>
+                                                <p>图片：<input type='file' name='img[]'/>对应型号：<input type='text' name='model[]' /></p>
+                                                <input type="button" id="addone2" value="增加" onclick="addoneline2();" style='float: left;'/>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div style="padding-top:30px;">
+                                <input type="submit" value="上传型号图" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div style="padding-top:50px;padding-bottom: 50px;">
+                <ul class="ul">
+                    <!-- {foreach from=$effect_imgs item=image} -->
+                    <li class="li">
+                        <div>
+                            <div >
+                                <img src="{$image.img}" style="width:100px;"/>
+                                <p>
+                                    {$image.img_model}
+                                    <input type="button" value="删除" onclick="delimg({$image.id});"/>
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                    <!-- {/foreach} -->
+                </ul>
+            </div>
+
+            <div class="clear"></div>
+            <div style="padding-top: 50px;float:left;" >
+                <p style="color:red;">*请上传2:1的图片*</p>
+                <form action="index.php?app=edition&act=addeffect&id={$id}" method="post" enctype="multipart/form-data">
+                    <input type="file" name="effectimgs[]" /> 
+                    <input type="button" value="增加一张" id="addone" onclick="addoneline();" />
+                    <div align="center">
+                        <input type="submit" value="上传效果图" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+
+
+</script>
+<iframe name="iframe_post" id="iframe_post" width="0" height="0"></iframe>
+{include file=footer.html}
+

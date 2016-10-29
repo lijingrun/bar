@@ -1,0 +1,77 @@
+{include file="header.html"}
+<script type="text/javascript">
+function insert_editor(file_name, file_path){
+    tinyMCE.execCommand('mceInsertContent', false, '<img src="'+ SITE_URL +'/' + file_path + '" alt="'+ file_name + '">');
+}
+</script>
+{$build_editor}
+<div id="rightTop">
+    <p>规则编辑</p>
+    <ul class="subnav">
+        <li><a class="btn1" href="index.php?app=order_rule">{$lang.manage}</a></li>
+        {if $order_rule.id}
+        <li><a class="btn1" href="index.php?app=order_rule&amp;act=add">{$lang.add}</a></li>
+        {else}
+        <li><span>{$lang.add}</span></li>
+        {/if}
+    </ul>
+</div>
+
+<div class="info">
+    <form method="post" enctype="multipart/form-data" id="article_form">
+        <table class="infoTable">
+            <tr>
+                <th class="paddingT15">
+                    Name:</th>
+                <td class="paddingT15 wordSpacing5">
+                    <input class="infoTableInput" id="name" type="text" name="name" value="{$order_rule.name|escape}" />
+                </td>
+            </tr>
+            <tr>
+                <th class="paddingT15">
+                    <label for="article">(1)Arguments List:</label></th>
+                <td class="paddingT15 wordSpacing5">
+                    <textarea id="arguments" name="arguments" style="width:650px;height:80px;">{$order_rule.arguments|escape}</textarea>
+                </td>
+            </tr>
+            <tr>
+                <th class="paddingT15">
+                    <label for="article">(2)Item Cycle:</label></th>
+                <td class="paddingT15 wordSpacing5">
+                    <textarea id="item_cycle" name="item_cycle" style="width:650px;height:200px;">{$order_rule.item_cycle|escape}</textarea>
+                </td>
+            </tr>
+            <tr>
+                <th class="paddingT15">
+                    <label for="article">(3)Main Condition:</label></th>
+                <td class="paddingT15 wordSpacing5">
+                    <textarea id="condition" name="condition" style="width:650px;height:80px;">{$order_rule.condition|escape}</textarea>
+                </td>
+            </tr>
+            <tr>
+                <th class="paddingT15">
+                    <label for="article">(4)Operation:</label></th>
+                <td class="paddingT15 wordSpacing5">
+                    <textarea id="operation" name="operation" style="width:650px;height:200px;">{$order_rule.operation|escape}</textarea>
+                </td>
+            </tr>
+            </td>
+            </tr>
+            <tr>
+                <th class="paddingT15">
+                    Priority:</th>
+                <td class="paddingT15 wordSpacing5">
+                    <input class="sort_order" id="priority" type="text" name="priority" value="{$order_rule.priority|default:1}" />
+                </td>
+            </tr>
+        <tr>
+            <th></th>
+            <td class="ptb20">
+                <input class="formbtn" type="submit" name="Submit" value="{$lang.submit}" />
+                <input class="formbtn" type="reset" name="Submit2" value="{$lang.reset}" />
+            </td>
+        </tr>
+        </table>
+    </form>
+</div>
+{include file="footer.html"}

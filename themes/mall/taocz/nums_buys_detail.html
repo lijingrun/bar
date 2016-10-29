@@ -1,0 +1,51 @@
+{include file=member.header.html}
+<div class="content">
+    <div class="totline"></div>
+    <div class="botline"></div>
+    {include file=member.menu.html}
+    <div id="right"> 
+        {include file=member.curlocal.html}
+        {include file=member.submenu.html}
+        <div class="wrap">
+            <table style="width:100%;">
+                <tr>
+                    <th>购买客户</th>
+                    <th>购买数量</th>
+                    <th>订单编号</th>
+                    <th>订单状态</th>
+                </tr>
+                <!-- {foreach from=$buys item=buy} -->
+                <tr>
+                    <th>{$buy.member.user_name}</th>
+                    <th>{$buy.nums}</th>
+                    <th>
+                        <!-- {if $buy.order_sn} -->
+                        <a href="index.php?app=seller_order&order_sn={$buy.order_sn}">
+                            {$buy.order_sn}
+                        </a>
+                        <!-- {else} -->
+                        未生成订单
+                        <!-- {/if} -->
+                    </th>
+                    <th>
+                        <!-- {if $buy.order_sn} -->
+                        {$buy.order.status|modifier:order_status}
+                        <!-- {else} -->
+                        未生成订单
+                        <!-- {/if} -->
+                    </th>
+                </tr>
+                <!-- {/foreach} -->
+            </table>
+            
+            
+        </div>
+        <div class="clear"></div>
+        <div class="adorn_right1"></div>
+        <div class="adorn_right2"></div>
+        <div class="adorn_right3"></div>
+        <div class="adorn_right4"></div>
+    </div>
+    <div class="clear"></div>
+</div>
+{include file=footer.html}

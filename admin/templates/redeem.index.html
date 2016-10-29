@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <script>
+            function delete_goods(id){
+                if(confirm('是否确定删除？')){
+                    window.location.href="index.php?app=redeem&act=delete_goods&id="+id;
+                }
+            }
+            function go_page(){
+                var page = document.getElementById("page").value;
+                window.location.href="index.php?app=redeem&page="+page;
+            }
+        </script>
+        <div style="padding-left: 30px;">
+            <a href="index.php?app=redeem&act=addtype">
+                <input type="button" value="产品类型设置" />
+            </a>
+            <a href="index.php?app=redeem&act=add">
+                <input type="button" value="添加新产品" />
+            </a>
+            <a href="index.php?app=redeem&act=orders">
+                <input type="button" value="商品订单"/>
+            </a>
+        </div>
+        <div align="center" style="padding-top: 20px;">
+            <form method="post">
+                产品名称：<input type="text" name="goods_name" value="{$goods_name}" />
+                <input type="submit" value="搜索" />
+            </form>
+        </div>
+        <div style="padding-top:35px;">
+            <table style="width:100%;" border="1">
+                <tr>
+                    <th style="width:100px;">
+
+                    </th>
+                    <th>
+                        名称
+                    </th>
+                    <th>
+                        品牌
+                    </th>
+                    <th>
+                        积分价格
+                    </th>
+                    <th>
+                        库存
+                    </th>
+                    <th>
+                        操作
+                    </th>
+                </tr>
+                <!--{foreach from=$goods item=val}-->
+                <tr>
+                    <td>
+                        <img src={$val.img} style="width:100%;"/>
+                    </td>
+                    <td>
+                        {$val.goods_name}
+                    </td>
+                    <td>
+                        {$val.brand}
+                    </td>
+                    <td>
+                        {$val.price}
+                    </td>
+                    <td>
+                        {$val.nums}
+                    </td>
+                    <td>
+                        <a href="{url app=redeem&act=edit&id=$val.goods_id}&page={$page}">编辑</a>
+                        <a href="#" onclick="delete_goods({$val.goods_id});">删除</a>
+                    </td>
+                </tr>
+                <!--{/foreach}-->
+                
+                <tr>
+                    <td colspan="6">
+                        <p style='float:right;padding-right: 20px;'>
+                            共{$pages}页{$count}条数据 
+                            <a href='{url app=redeem&page=$prev_page&goods_name=$goods_name }' >上一页</a>
+                            第<input type="text" value="{$page}" style="width:20px;" id="page" onBlur="go_page();" />
+                            <a href='{url app=redeem&page=$next_page&goods_name=$goods_name }' >下一页</a>
+                        </p>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>

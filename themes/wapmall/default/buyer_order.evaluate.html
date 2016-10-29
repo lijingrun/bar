@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+	{include file=public_header.html}
+	<link type="text/css" rel="stylesheet" href="{res file=css/pinjia.css}">
+	<script type="text/javascript" src="{res file=js/jquery.raty.min.js}"></script>
+	<script type="text/javascript" src="{res file=js/pinjia.js}"></script>
+
+</head>
+<body style="background:#ffffff">
+<header  class="ly-header2">    <div class="ly-header-bar">        <div id="m_common_header_goback" class="ly-header-icon-back"><a href="javascript:;" onclick="javascript:history.back(-1);" ><span> </span></a></div>        <div class="ly-header-title">商品评价</div>            </div>    </header>
+<script>
+	function submitPayment(){
+		var goods = $("#function-demo > input[name='score']").val();
+		var service = $("#function-demo2 > input[name='score']").val();
+		var log = $("#function-demo3 > input[name='score']").val();
+		var comment = $("#outPut").val();
+		var order_id = {$order_id};
+		$.ajax({
+			type : 'post',
+			url : 'index.php?app=buyer_order&act=evaluation_ajax',
+			data : {'goods' : goods , 'service' : service , 'log' : log , 'comment' : comment , 'order_id' : order_id},
+			success : function(data){
+//				alert(data);
+				if(data == 111){
+					alert("评价成功！");
+					location.href="index.php?app=member";
+				}
+			}
+		});
+	}
+</script>
+<form id="form" method="post">
+	<!--{foreach from=$goods_list item=goods}-->
+<div id="J_rate_plugin">
+	<input type="hidden"  id="J_orderId" />
+	<section class="oc-m">
+		<div class="oc-info">
+			<div class="oc-info-l">
+				<img src="{$goods.goods_image}" />
+			</div>
+			<div class="oc-info-r">
+				<h2>{$goods.goods_name|escape}</h2>
+				<div>
+					￥
+					<strong class="red">{$goods.price}</strong>
+				</div>
+			</div>
+		</div>
+		<!-- {/foreach} -->
+		<script language="javascript" type="text/javascript">
+			function setVar(){
+				var ev = $("#sel").val();
+				$("#outPut").val(ev);
+			}
+		</script>
+		<div class="oc-comm">
+			<p> 快捷评价：
+				<select id="sel" onchange="setVar();">
+					<option value="商家发货很快，对商品非常满意，五星好评。">商家发货很快，对商品非常满意，五星好评。</option>
+					<option value="配货很快，一直很信赖这个品牌！">配货很快，一直很信赖这个品牌！</option>
+					<option value="这款产品真好，性价比很高，很适合我！">这款产品真好，性价比很高，很适合我！</option>
+				</select>
+			</p>
+		</div>
+			<div class="oc-text">
+				<span class="c-f-textarea">
+					<textarea maxlength="500" id="outPut" name="comment" >商家发货很快，对商品非常满意，五星好评。</textarea>
+				</span>
+			</div>
+		<!--<div class="oc-star-inp">-->
+			<!--<input type="checkbox" class="c-f-checkbox"  value="0" />-->
+			<!--<label> 匿名评价 </label>-->
+		<!--</div>-->
+		<input type="hidden" nullable="false"  />
+		<input type="hidden" />
+	</section>
+	<input type="hidden" value="1"  />
+
+	<div class="clear space10 bg001"></div>
+	<section class="oc-star">
+		<div class="oc-star-f" id="J_star">
+			<div class="oc-star-fc">
+				<label>描述相符： </label>
+				<div class="demo">
+					<div id="function-demo" class="target-demo"></div>
+					<div id="function-hint" class="hint"></div>
+				</div>
+
+
+				<input type="hidden" nullable="true"  />
+			</div>
+			<div class="oc-star-fc">
+				<label> 客服态度： </label>
+				<div class="demo">
+					<div id="function-demo2" class="target-demo"></div>
+					<div id="function-hint2" class="hint"></div>
+				</div>
+				<input type="hidden" nullable="true" />
+			</div>
+			<div class="oc-star-fc">
+				<label> 物流服务： </label>
+
+				<div class="demo">
+					<div id="function-demo3" class="target-demo"></div>
+					<div id="function-hint3" class="hint"></div>
+				</div>
+				<input type="hidden" nullable="true" />
+			</div>
+		</div>
+
+	</section>
+</div>
+</form>
+<div class="order_total2" style="padding-top:0px">
+	<a class="payBtn" href="javascript:submitPayment()">提交评价</a>
+</div>
+
+{include file="footer_nav.html"}
+
+
+</body>
+</html>

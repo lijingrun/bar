@@ -1,0 +1,253 @@
+{include file='public_header.html'}
+
+<script>
+	function find(){
+		var key_word = $("#keyword").val().trim();
+		location.href="index.php?keyword="+key_word+"&app=search&act=index";
+	}
+	function add_condition(key ,value){
+		var brand = '{$brand}';
+		var price = '{$price}';
+		var cate_id = '{$cate_id}';
+		data = '';
+		if(brand != ''){
+			data += "&brand="+brand;
+		}
+		if(price != ''){
+			data += '&price='+price;
+		}
+		if(cate_id != ''){
+			data += '&cate_id='+cate_id;
+		}
+		data += "&"+key+"="+value;
+		location.href="index.php?keyword={$keyword}&app=search"+data;
+	}
+	function for_seal(){
+		var brand = '{$brand}';
+		var price = '{$price}';
+		var cate_id = '{$cate_id}';
+		var order = '{$order}';
+		data = '';
+		if(brand != ''){
+			data += "&brand="+brand;
+		}
+		if(price != ''){
+			data += '&price='+price;
+		}
+		if(cate_id != ''){
+			data += '&cate_id='+cate_id;
+		}
+		if(order == 'sales desc'){
+			data += "&order=sales asc";
+		}else{
+			data += "&order=sales desc";
+		}
+		location.href="index.php?keyword={$keyword}&app=search"+data;
+	}
+	function for_price(){
+		var brand = '{$brand}';
+		var price = '{$price}';
+		var cate_id = '{$cate_id}';
+		var order = '{$order}';
+		data = '';
+		if(brand != ''){
+			data += "&brand="+brand;
+		}
+		if(price != ''){
+			data += '&price='+price;
+		}
+		if(cate_id != ''){
+			data += '&cate_id='+cate_id;
+		}
+		if(order == 'price desc'){
+			data += "&order=price asc";
+		}else{
+			data += "&order=price desc";
+		}
+		location.href="index.php?keyword={$keyword}&app=search"+data;
+	}
+	function for_comments(){
+		var brand = '{$brand}';
+		var price = '{$price}';
+		var cate_id = '{$cate_id}';
+		var order = '{$order}';
+		data = '';
+		if(brand != ''){
+			data += "&brand="+brand;
+		}
+		if(price != ''){
+			data += '&price='+price;
+		}
+		if(cate_id != ''){
+			data += '&cate_id='+cate_id;
+		}
+		if(order == 'comments desc'){
+			data += "&order=comments asc";
+		}else{
+			data += "&order=comments desc";
+		}
+		location.href="index.php?keyword={$keyword}&app=search"+data;
+	}
+	function gotoDetailPage(id){
+		location.href="index.php?app=goods&id="+id;
+	}
+</script>
+<header class="ly-header2 topFix">
+	<div class="ly-header-bar">
+		<div id="m_common_header_goback" class="ly-header-icon-back">
+			<a href="javascript:;" onclick="javascript:history.back(-1);"> <span></span> </a>
+		</div>
+		<form action="" class="ly-header-search-form">
+			<div class="ly-header-search-box">
+				<div class="ly-header-search-input">
+					<input maxlength="20" id="keyword" type="text" cleardefault="no" autocomplete="off" value="{$keyword}" placeholder="搜索你想要的产品" class="hilight1" />
+				</div>
+			</div>
+		</form>
+		<div class="ly-header-icon-shortcut J_ping" onclick="find();">
+			<span></span>
+		</div>
+	</div>
+</header>
+<p style="margin-top:44px;"></p>
+<div class="gNavi">
+	<ul class="list_navi clearfix">
+		<li class="hassub"><a href="javascript:void(0)"><span class="nav_red">综合</span></a></li>
+		<li class="hassub"><a href="javascript:void(0)" onclick="for_seal();"><span >销量</span><!--<em></em>--></a></li>
+		<li class="hassub"><a href="javascript:void(0)" onclick="for_price();"><span >价格</span><!--<em></em>--></a></li>
+		<li class="hassub"><a href="javascript:void(0)" onclick="for_comments();"><span>评论</span></a></li>
+		<li class="hassub"><a href="javascript:void(0)"><span>最新</span></a></li>
+	</ul>
+</div>
+<div id="wrapper">
+	<div id="scroller">
+		<ul class="list_goods clearfix">
+			<!--{foreach from=$goods_list item=goods name=fe_goods}-->
+			<li onclick="gotoDetailPage('{$goods.goods_id}');">
+				<div class="photo">
+					<a href="javascript:void(0);"><img src="{$goods.default_image}" alt="" /></a>
+				</div>
+				<div class="goods_info">
+					<h2 class="title"><i>{$goods.store_name}</i> <span>{$goods.goods_name}</span></h2>
+					<i class="price_i">
+						<!-- {if $goods.spec_price != 0} -->
+						{$goods.spec_price|price}
+						<!-- {else} -->
+						{$goods.point_price}金币
+						<!-- {/if} -->
+					</i>
+       <span class="pos_span">
+        <!-- 团购图标显示 -->
+		   <!-- {if $goods['recommended']  == 1} -->
+		   <span class="yellow_ico">促销活动中</span>
+		   <!-- {/if} -->
+		   <br/></span>
+					<div class="clearfix hei_div">
+						<div class="txt_num">
+							<i>售出</i>{$goods.sales}件&nbsp;&nbsp;<i>评论</i>{$goods.comments}
+						</div>
+						<!--<a id="w-list-acart-972682" href="javascript:void(0)" class="user_add_cart" itemid="972682" >-->
+						<!--购物车-->
+						<!--</a>-->
+					</div>
+				</div>
+			</li>
+			<!-- {/foreach} -->
+		</ul>
+	</div>
+</div>
+
+
+
+
+
+<a href="javascript:void(0)" onclick="document.getElementById('shaixuan_tc').style.display='block';document.getElementById('fade').style.display='block'">
+	<div class="single">
+		<em></em>
+	</div>
+</a>
+<section id="shaixuan_tc">
+
+	<div class="yListr">
+		<ul>
+			<!--{if $filters}-->
+			<span class="yListr_span">您已选择条件</span>
+			<li>
+				<!--{foreach from=$filters item=filter}-->
+				<em>{$filter.name}{$lang.colon}{$filter.value}<i></i></em>
+				<input type='hidden' value="{$filter.value}" id="{$filter.key}" />
+				<!--{/foreach}-->
+			<li>
+			<!--{/if}-->
+
+
+			<!-- 按照品牌 -->
+			<!-- {if $brands && !$filters.brand} -->
+			<span class="yListr_span">按品牌</span>
+			<li>
+			<!--{foreach from=$brands item=row name=fe_row}-->
+				<em onclick="add_condition('brand','{$row.brand}');">{$row.brand|escape}({$row.count})<i></i></em>
+			<!-- {/foreach} -->
+			</li>
+			<!-- {/if} -->
+
+			<!-- 按照价钱 -->
+			<!--{if $price_intervals && !$filters.price}-->
+			<span class="yListr_span">按价格</span>
+			<li>
+				<!--{foreach from=$price_intervals item=row name=fe_row}-->
+				<em onclick="add_condition('price','{$row.min} - {$row.max}')">{$row.min|price} - {$row.max|price}({$row.count})<i></i></em>
+				<!-- {/foreach} -->
+			</li>
+			<!-- {/if} -->
+			<!--<li> <span>按地区</span> <em class="yListrclickem">广东省（111）<i></i></em> </li>-->
+			<!--<li> <span>按厂商</span> <em class="yListrclickem">蓝羽（111）<i></i></em> <em>中博（11）<i></i></em> </li>-->
+
+			<!-- 下级分类 -->
+			<!--{if $categories}-->
+			<span class="yListr_span">下级分类</span>
+			<li>
+				<!--{foreach from=$categories item=gcategory name=fe_gcategory}-->
+				<em onclick="add_condition('cate_id','{$gcategory.cate_id}')">{$gcategory.cate_name}({$gcategory.count})<i></i></em>
+				<!-- {/foreach} -->
+			</li>
+			<!-- {/if} -->
+		</ul>
+
+
+
+		<a class="confirm-btn mlr-10" href="index.php?app=search&cate_id={$cate_id}" >重置查询条件</a>
+		<a class="confirm-btn mlr-10" href="javascript:void(0)" onclick="CloseDiv('shaixuan_tc','fade')">取消</a>
+	</div>
+</section>
+<script type="text/javascript">
+	$(function(){
+		$(".yListr ul li em").click(function(){
+			$(this).addClass("yListrclickem").siblings().removeClass("yListrclickem");
+		})
+	})
+</script>
+
+<div id="fade" class="black_overlay2">
+</div>
+<script type="text/javascript">
+	function CloseDiv(shaixuan_tc,fade)
+	{
+		document.getElementById(shaixuan_tc).style.display='none';
+		document.getElementById(fade).style.display='none';
+	};
+</script>
+<div id="topcontrol" style="width:3.333rem; height:3.333rem; border:0; bottom:4.333rem;right: 0.7407rem;position: fixed;display: block; opacity: 0; cursor: pointer;border-radius:50px;">
+	<img totop="" src="images/topback.png" style="width:3.333rem; height:3.333rem; border-radius:50px; border:0;" title="返回顶部" />
+</div>
+
+{include file='page.bottom.html'}
+
+
+
+
+</div>
+<div style="height:60px"> </div>
+{include file='footer_nav.html'}
+</body>
+</html>

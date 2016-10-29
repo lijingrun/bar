@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Mobile detected</title>
+<script>
+document.ready = function (callback) {
+	if (document.addEventListener) {
+		document.addEventListener('DOMContentLoaded', function () {
+			document.removeEventListener('DOMContentLoaded', arguments.callee, false);
+			callback();
+		}, false);
+	}
+	else if (document.attachEvent) {
+		document.attachEvent('onreadytstatechange', function () {
+			if (document.readyState == "complete") {
+				document.detachEvent("onreadystatechange", arguments.callee);
+				callback();
+			}
+		});
+	}
+	else if (document.lastChild == document.body) {
+		callback();
+	}
+}
+document.ready( function() {
+	var IOS_REDIRECT = "https://itunes.apple.com/cn/app/328shang-cheng/id1119500022?ls=1&mt=8",
+		ANDROID_REDIRECT = "/lanyu-mall.apk",
+		PC_REDIRECT = "https://itunes.apple.com/cn/app/328shang-cheng/id1119500022?ls=1&mt=8";
+
+	var is_weixin = function() {
+		var ua = navigator.userAgent.toLowerCase();
+		if (ua.match(/MicroMessenger/i)=="micromessenger") {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) { 
+		// ios agent
+//		alert(navigator.userAgent);
+		window.location.href = IOS_REDIRECT; 
+	} 
+	else if (/(Android)/i.test(navigator.userAgent)) { 
+		// android agent
+//		alert(navigator.userAgent);
+		if ( is_weixin() ) {
+			// show some images
+			alert('We show some images here for helping customers find the download.');
+		}
+		else {
+			window.location.href = ANDROID_REDIRECT;
+		}
+	} else { 
+		// pc agent
+//		alert(navigator.userAgent);
+		window.location.href = PC_REDIRECT; 
+	};
+
+});
+</script>
+</head>
+
+<body>
+正在下载...
+</body>
+</html>

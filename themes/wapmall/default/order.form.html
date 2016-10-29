@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {include file=public_header.html}
+    <link rel="stylesheet" type="text/css" href="{res file=css/switch-buttons.css}" />
+    <link rel="stylesheet" type="text/css" href="{res file=css/ui-choose.css}" />
+</head>
+
+<body >
+<header class="ly-header2">
+    <div class="ly-header-bar">
+        <div id="m_common_header_goback" class="ly-header-icon-back">
+            <a href="javascript:;" onclick="javascript:history.back(-1);">
+            <span>
+            </span>
+            </a>
+        </div>
+        <div class="ly-header-title">
+            订单确认
+        </div>
+    </div>
+</header>
+<h6 class="receive-tips distant " id="J_errorMsg2">
+    确保您能够顺利收到货物，请务必核对清楚地址！
+</h6>
+<div class="address">
+    <a href="javascript:void(0)" onclick="document.getElementById('address_log').style.display='block';document.getElementById('fade').style.display='block'">
+        <i class="iCar">
+        </i>
+        <div class="adInfo" id="addr_list">
+            <p class="adProvice" id="realy_region_name">
+            </p>
+            <p class="adDetail" id="realy_address">
+            </p>
+            <p class="receive" >
+            <span id="realy_consignee"></span>
+            <span class="recPhone" id="realy_phone">
+            </span>
+            <span class="change_ad">
+              更换地址
+            </span>
+            </p>
+        </div>
+    </a>
+</div>
+<div>
+    <section id="address_log">
+        <div class="modify-con">
+            <div class="bot-80">
+                <!-- {if $my_address} -->
+                <!--{foreach from=$my_address item=address name=address_select}-->
+                <div class="modify-con-solo J_modify_cont" onclick="CloseDiv('address_log','fade',{$address.addr_id})" {if $smarty.foreach.address_select.iteration == 1} id="need_choose" {/if} >
+                    <div class="modify-solo-msg">
+                        <p class="modify-solo-addr" style="padding-bottom: 5px;padding-top: 5px;">
+                            {$address.region_name|escape}&nbsp;{$address.address|escape}
+                        </p>
+                        <p class="clearfix">
+                          <span class="modify-solo-name">
+                            {$address.consignee|escape}
+                          </span>
+                          <span class="modify-solo-phone">
+                            <!--{if $address.phone_mob}-->{$address.phone_mob}<!--{else}-->{$address.phone_tel}<!--{/if}-->
+                          </span>
+                        </p>
+                    </div>
+                    <div class="modify-solo-modify J_modify_btn" >
+                        选择
+                    </div>
+                    <input type="hidden" id="region_name{$address.addr_id}" value="{$address.region_name}"/>
+                    <input type="hidden" id="region_id{$address.addr_id}" value="{$address.region_id}" />
+                    <input type="hidden" id="address{$address.addr_id}" value="{$address.address}" />
+                    <input type="hidden" id="consignee{$address.addr_id}" value="{$address.consignee}" />
+                    <input type="hidden" id="phone_tel{$address.addr_id}" value="{$address.phone_tel}" />
+                    <input type="hidden" id="phone_mob{$address.addr_id}" value="{$address.phone_mob}" />
+                    <input type="hidden" id="phone{$address.addr_id}" value="<!--{if $address.phone_mob}-->{$address.phone_mob}<!--{else}-->{$address.phone_tel}<!--{/if}-->" />
+
+                </div>
+                <!-- {/foreach} -->
+            <!-- {/if} -->
+            </div>
+            <a href = "javascript:void(0)" onclick = "document.getElementById('address_log2').style.display='block';document.getElementById('fade').style.display='block'"> <div  class="modify-new-built">+&nbsp;新建地址</div></a>
+        </div>
+
+
+
+        <div id="address_log2" class="u-panel u-panel-default st-b-tb">
+            <div class="u-panel-list">
+                <div class="u-panel-list-hd st-b-b">
+                    <label class="so-form-label">
+                        收货人
+                    </label>
+                    <input class="so-form-ipt J_user" type="text" maxlength="20" placeholder="收货人"
+                           id="input_consignee" >
+                </div>
+            </div>
+            <div class="u-panel-list">
+                <div class="u-panel-list-hd st-b-b">
+                    <label class="so-form-label">
+                        手机号码
+                    </label>
+                    <input class="so-form-ipt J_phone er" type="text" maxlength="11" placeholder="手机号码"
+                            id="input_phone_tel" >
+                </div>
+            </div>
+            <div class="u-panel-list">
+                <div class="u-panel-list-hd st-b-b">
+                    <label class="so-form-label">
+                        电话号码
+                    </label>
+                    <input class="so-form-ipt J_phone er" type="text" maxlength="11" placeholder="电话号码"
+                            id="input_phone_mob" >
+                </div>
+            </div><div class="u-panel-list">
+                <div class="u-panel-list-hd st-b-b">
+                    <label class="so-form-label">
+                        邮政编码
+                    </label>
+                    <input class="so-form-ipt J_phone er" type="text" maxlength="11" placeholder="邮政编码"
+                            id="input_zipcode" >
+                </div>
+            </div>
+            <div class="receive-cont clearfix addr-w">
+                <div class="u-panel-list">
+                    <div class="u-panel-list-hd st-b-b">
+                        <label class="so-form-label">
+                            省份：
+                        </label>
+                            <select class="select" id="input_region" id="s1">
+                                <option value="0">--请选择省份--</option>
+                                {html_options options=$regions}
+                            </select>
+                    </div>
+                </div>
+                <div class="u-panel-list addr-detail">
+                    <div class="u-panel-list-hd st-b-b">
+                        <label class="so-form-label" style=" position: absolute;">
+                            详细地址
+                        </label>
+              <textarea class="so-form-textarea J_addr" type="text" maxlength="100" placeholder="详细地址" id="input_address"></textarea>
+                    </div>
+                </div>
+                <input type="hidden" id="address_id" value="557646">
+                <div class="receive-cont mlr-10 J_setDefault cur bg" dft="1">
+                    <input type="checkbox" id="to_save_address" checked>
+            <span class="title-detail">
+              保存该收货地址
+            </span>
+                </div>
+          <span class="confirm-btn mlr-10" onclick="save_new_address();">
+
+            保存并使用
+          </span>
+          <span class="confirm-btn mlr-10" onclick="cencle_choose();">
+
+            取消
+          </span>
+            </div>
+        </div>
+
+
+
+    </section>
+
+
+    <script type="text/javascript">
+        function CloseDiv(address_log,fade,address_id)
+        {
+            var region_name = $("#region_name"+address_id).val();
+            var region_id = $("#region_id"+address_id).val();
+            var address = $("#address"+address_id).val();
+            var phone = $("#phone"+address_id).val();
+            var phone_tel = $("#phone_tel"+address_id).val();
+            var phone_mob = $("#phone_mob"+address_id).val();
+            var consignee = $("#consignee"+address_id).val();
+            $("#realy_region_name").html(region_name);
+            $("#realy_address").html(address);
+            $("#realy_phone").html(phone);
+            $("#realy_consignee").html(consignee);
+
+            $("#region_id").val(region_id);
+            $("#consignee").val(consignee);
+            $("#phone_mob").val(phone_mob);
+            $("#phone_tel").val(phone_tel);
+            $("#address").val(address);
+            $("#address_options").val(address_id);
+
+            $("#address_log").hide();
+            $("#fade").hide();
+            $("#address_log2").hide();
+        }
+        function cencle_choose(){
+            $("#address_log").hide();
+            $("#fade").hide();
+            $("#address_log2").hide();
+        }
+        function save_new_address(){
+            var consignee = $("#input_consignee").val().trim();
+            var phone_tel = $("#input_phone_tel").val().trim();
+            var phone_mob = $("#input_phone_mob").val().trim();
+            var region_id = $("#input_region").val();
+            var region_name = $("#input_region").find("option:selected").text();
+            var address = $("#input_address").val().trim();
+            var to_save_address = $("#to_save_address").is(':checked');
+            var zipcode = $("#input_zipcode").val();
+            if(to_save_address){
+                var to_save = 1;
+            }else{
+                var to_save = 0;
+            }
+            if(consignee == '' || phone_tel == '' || region_id == 0 || address == ''){
+                alert("请填写所需内容！");
+            }else{
+                $("#realy_region_name").html(region_name);
+                $("#realy_address").html(address);
+                $("#realy_phone").html(phone_tel);
+                $("#realy_consignee").html(consignee);
+
+                $("#region_id").val(region_id);
+                $("#consignee").val(consignee);
+                $("#phone_tel").val(phone_tel);
+                $("#phone_mob").val(phone_mob);
+                $("#address").val(address);
+                $("#zipcode").val(zipcode);
+                $("#save_address").val(to_save);
+                $("#address_options").val(0);
+                $("#region_name").val(region_name);
+
+                $("#address_log").hide();
+                $("#fade").hide();
+                $("#address_log2").hide();
+            }
+        }
+        function change_shipping(){
+            var shipping_id = $("#shipping_select").val();
+            var price = $("#shipping"+shipping_id).attr("price");
+            alert(price);
+            $("#shipping_price").html("￥"+price);
+        }
+    </script>
+    <div id="fade" class="black_overlay">
+    </div>
+<form method="post" id="order_form">
+    <section>
+        <ul class="odList">
+            <li>
+                <a href="index.php?app=store&id={$goods_info.store_id}" class="orderHd">
+                    店铺：{$goods_info.store_name|escape}
+                </a>
+                <div class="orderBox" style="display: block;">
+                    <dl>
+                        <!--{foreach from=$goods_info.items item=goods}-->
+                        <dd>
+                            <a href="index.php?app=goods&id={$goods.goods_id}">
+                                <img class="op_pic" src="{$goods.goods_image}" width="70" height="70">
+                            </a>
+                            <div class="op_detail">
+                                <h3>
+                                    {$goods.goods_name|escape}
+                                </h3>
+                                <p class="op_standard">
+                                    产品规格（型号）:{$goods.spec_1}
+                                </p>
+                                <p class="op_producer">
+                                    数量：
+                                <span class="cl_red">
+                                  {$goods.quantity}{$lang.goods_unit}
+                                </span>
+                                </p>
+                                <p class="op_producer">
+                                    单价：
+                                    <span class="cl_red">
+                                      <!-- {if $goods.point_price != 0} -->
+                                    {$goods.point_price}金币
+                                        <!-- {else} -->
+                                    {$goods.price|price}
+                                        <!-- {/if} -->
+                                    </span>
+                                </p>
+                                <p class="op_merchant">
+                                    合计：
+                                    <span class="cl_red">
+                                       <strong>
+                                           <!-- {if $goods.point_price != 0} -->
+                                           {$goods.subtotal}金币
+                                           <!-- {else} -->
+                                           {$goods.subtotal|price}
+                                           <!-- {/if} -->
+                                       </strong>
+                                    </span>
+                                </p>
+                            </div>
+                        </dd>
+                        <!-- {/foreach} -->
+                    </dl>
+                        <!-- {if $member_mount_policy} -->
+                        <span style="padding-left: 20px;color:red;">*本月等级优惠*</span>
+                            <div class="orderMode">
+                                <h3>
+                                    <ul class="ui-choose" multiple="multiple" id="uc_03" >
+                                        <!-- {foreach from=$member_mount_policy item=val} -->
+                                        <li onclick="choose_mount({$val.id})">满{$val.coe}送{$val.give}</li>
+                                        <!-- {/foreach} -->
+                                    </ul>
+                                </h3>
+                            </div>
+                        <div id="policy_list"></div>
+                        <!-- {/if} -->
+                    <div class="orderMode">
+                        <h3>
+                        <select  class="select-area" id="shipping_select" name="shipping_id" onchange="change_shipping();">
+                            <!--{foreach from=$store_shippings item=shipping}-->
+                            <option value="{$shipping.shipping_id}" id="shipping{$shipping.shipping_id}" price="{$shipping.first_price}" >
+                                {$shipping.shipping_name|escape}
+                            </option>
+                            <!-- {/foreach} -->
+                        </select>
+                        </h3>
+                        <div class="chosen chooseOpen">
+                <span class="cl_red" id="shipping_price">
+                  ￥0.00
+                </span>
+                            (配送费用)
+                        </div>
+
+                    </div>
+                    <!-- {if $use_coin == aaa} -->
+                    <!--<div class="orderMode"><h3>用<span class="cl_red">{$use_coin}</span>金币抵消<span class="cl_red">{/$to_price}</span>元</h3><div class="chosen chooseOpen">-->
+                        <!--<label class="switch-btn circle-style">-->
+                            <!--<input class="checked-switch" type="checkbox" name="use_coin" value="{$to_price}" />-->
+                            <!--<span class="text-switch" data-yes="使用" data-no="不用"></span>-->
+                            <!--<span class="toggle-btn"></span>-->
+                        <!--</label>-->
+                    <!--</div></div>-->
+                    <!-- {/if} -->
+                    <div class="orderMode">
+                        <h3>
+                            留言
+                        </h3>
+                        <div class="chosen">
+                            <input class="messageBox" name="postscript" type="text" placeholder="请写下特殊购买要求">
+                        </div>
+                    </div>
+                        <input name="address_options" id="address_options" type="hidden"/>
+                        <input name="consignee" id="consignee" type="hidden" />
+                        <input name="phone_tel" id="phone_tel" type="hidden" />
+                        <input name="phone_mob" id="phone_mob" type="hidden" />
+                        <input name="region_id" id="region_id" type="hidden" />
+                        <input name="region_name" id="region_name" type="hidden" />
+                        <input name="address" id="address" type="hidden" />
+                        <input name="zipcode" id="zipcode" type="hidden" />
+                        <input name="save_address" id="save_address" value="0" type="hidden" />
+                </div>
+            </li>
+        </ul>
+    </section>
+    <div class="orderScore_cls">
+      <span class="getScore" id="scoreTotal">
+
+      </span>
+    </div>
+</form>
+    <div class="b7">
+        <div class="b71">
+        <span>
+          订单总金额:
+        </span>
+            <strong>
+                ￥{$goods_info.amount}元
+            </strong>
+        </div>
+        <div class="b72">
+            <!--vue-if-->
+            <a href="javascript:void($('#order_form').submit());" class="ui-button">
+          <span>
+            提交订单
+          </span>
+            </a>
+            <!--vue-if-->
+        </div>
+    </div>
+    <div class="clear space10">
+    </div>
+<script src="{res file=js/ui-choose.js}"></script>
+<script>
+    $('.ui-choose').ui_choose();
+    var uc_03 = $('#uc_03').data('ui-choose');
+//    uc_03.click = function(index, item) {
+//        console.log('click', index);
+//    };
+//    uc_03.change = function(index, item) {
+//        console.log('change', index);
+//    };
+    function choose_mount(id){
+        if($("#policy").val() == undefined){
+            var htm = "<input type='hidden' value="+id+" name='policy' id='policy' />";
+            $("#policy_list").append(htm);
+        }else{
+            $("#policy").remove();
+        }
+
+    }
+
+    $(function(){
+        $('.chosen2').bind('click', function() {
+            $(this).find('input').attr('checked', true);
+        } );
+        $(".chosen2:first input").attr('checked', true);
+        $("#need_choose").click();
+        var my_address = "{foreach from=$my_address item=address}'{$address.phone_tel}'{/foreach}";
+        var length = my_address.length;
+        if(length == 0){
+            alert("请填写收货地址！");
+            document.getElementById('address_log').style.display='block';
+            document.getElementById('fade').style.display='block';
+            document.getElementById('address_log2').style.display='block';
+            document.getElementById('fade').style.display='block';
+            document.getElementsByTagName('body')[0].scrollTop=1000;
+        }else{
+            alert("请确认收货地址！");
+        }
+    });
+</script>
+</body>
+
+</html>

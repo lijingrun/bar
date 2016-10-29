@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript" src="{lib file=jquery.js}" charset="utf-8"></script>
+</head>
+<body>
+    <script>
+        function change_ke_code(id){
+            if(confirm("是否确定修改内容并重新推？")){
+                var k3_code = $("#k3_code"+id).val();
+                var user_name = $("#user_name"+id).val().trim();
+                $.ajax({
+                    type : 'post',
+                    url : 'index.php?app=store&act=change_k3_code',
+                    data : {'k3_code' : k3_code, 'id' : id, 'user_name' : user_name},
+                    success : function(data){
+                        if(data == 111){
+                            alert("修改成功！");
+                            location.reload();
+                        }else{
+//                            alert("恭喜你，获得再试一次的机会");
+                            alert(data);
+                        }
+                    }
+                });
+            }
+        }
+        function find(){
+            var order_no = $("#order_no").val();
+            location.href='index.php?app=store&act=k3_orders&order_no='+order_no;
+        }
+        function cancel_order(id){
+            if(confirm('是否确定取消？')){
+                $.ajax({
+                    type : 'post',
+                    url : 'index.php?app=store&act=cancel_k3_order',
+                    data : {'id' : id},
+                    success : function(data){
+                        if(data == 111){
+                            alert("取消成功！");
+                            location.reload();
+                        }else{
+                            alert("服务器繁忙，请稍后重试！");
+                        }
+                    }
+                });
+            }
+        }
+        function add() {
+            if (confirm("客户线上支付的订单才能这样操作！")) {
+                var order_no = $("#order_no").val();
+                if (order_no != '') {
+                    $.ajax({
+                        type: 'post',
+                        url: 'index.php?app=store&act=add_k3_data',
+                        data: {'order_no': order_no},
+                        success: function (data) {
+                            if (data == 111) {
+                                alert("操作成功！");
+                                location.reload();
+                            } else {
+                                alert(data);
+                            }
+                        }
+                    });
+                }
+            }
+        }
+    </script>
+    卡单列表：
+    <div>
+        订单号：<input type="text" id="order_no" /> <input type="button" onclick="find();" value="查找"  />
+        <input type="button" value="生成" onclick="add();"/>
+        <table>
+            <tr>
+                <th style="width: 150px;">订单号</th>
+                <th style="width: 150px;">客户名称</th>
+                <th style="width: 150px;">K3编码</th>
+                <th style="width: 150px;">操作</th>
+            </tr>
+            <!-- {foreach from=$orders item=order} -->
+            <tr>
+                <td colspan="4" style="height: 10px;"></td>
+            </tr>
+            <tr>
+                <th>{$order.fFBillNO}</th>
+                <th>
+                    <input type="text" value="{$order.fFCustName}" id="user_name{$order.fFrowid}" />
+                </th>
+                <th><input type="text" value="{$order.fFCustnumber}" id="k3_code{$order.fFrowid}" /></th>
+                <th>
+                    <input type="button" value="修改&重推" onclick="change_ke_code({$order.fFrowid});" />
+                    <input type="button" value="取消" onclick="cancel_order({$order.fFrowid});" />
+                </th>
+            </tr>
+            <!-- {/foreach} -->
+        </table>
+    </div>
+</body>
+</html>

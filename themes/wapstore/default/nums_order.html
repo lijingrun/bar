@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <base href="{$site_url}/" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <link href="{res file=css/common.css}" rel="stylesheet" type="text/css" />
+        <link href="{res file=css/flexslider.css}" rel="stylesheet" type="text/css" />
+        <link href="{res file=css/main.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/rmc-common.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/bootstrap.min.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/font-awesome.css}" type="text/css" rel="stylesheet" />
+        <script type="text/javascript" src="{res file=js/jquery-1.8.0.min.js}"></script>
+        <script type="text/javascript" src="{res file=js/jquery.flexslider.js}"></script>
+        <script type="text/javascript" src="{res file=js/sub_menu.js}"></script>
+        <script type="text/javascript" src="{lib file=ecmall.js}" charset="utf-8"></script>
+        <!-- 下面是活动倒计时的样式+js -->
+        <script type="text/javascript" src="{res file=js/jquery.countdown.js}"></script>
+        <!--<script type="text/javascript" src="{res file=js/script.js}"></script>-->
+        <link type="text/css" rel="stylesheet" href="{res file=css/jquery.countdown.css}" />
+        <script>
+            function addone() {
+                var nums = $("#nums").val();
+                nums++;
+                $("#nums").val(nums);
+            }
+
+            function subone() {
+                var nums = $("#nums").val();
+                if (nums <= 1) {
+                    $("#nums").val(1);
+                } else {
+                    nums--;
+                    $("#nums").val(nums);
+                }
+            }
+            //下单
+            function check_data() {
+                var nums = $("#nums").val();
+                var region = $("#region").val();
+                var address = $.trim($("#address").val());
+                var name = $.trim($("#name").val());
+                var phone = $.trim($("#phone").val());
+                var group_id = $("#group_id").val();
+                if (region == 0 || address == '' || name == '' || phone == '') {
+                    alert("请填写收货相关资料");
+                } else {
+                    $.ajax({
+                        type: 'post',
+                        url: 'index.php?app=store&act=order_nums',
+                        data: {'nums': nums, 'region': region, 'address': address, 'name': name, 'phone': phone, 'group_id': group_id},
+                        success: function (data) {
+                            if (data == 111) {
+                                alert("操作成功！");
+                                window.location.reload();
+                            } else if (data == 222) {
+                                alert("输入内容有误！");
+                            } else if (data == 333) {
+                                alert("请先登录！");
+                                window.localtion.href = "index.php?app=login";
+                            } else if (data == 444) {
+                                alert("你没有权限！");
+                            } else if (data == 555) {
+                                alert("活动已经结束！");
+                            } else if (data == 666) {
+                                alert("对不起，活动还没开始");
+                            }
+                        }
+                    });
+                }
+            }
+
+            //修改
+            function check_data2() {
+                var nums = $("#nums").val();
+                var group_id = $("#group_id").val();
+                $.ajax({
+                    type: 'post',
+                    url: 'index.php?app=store&act=edit_groupbuy',
+                    data: {'nums': nums, 'group_id': group_id},
+                    success: function (data) {
+                        if (data == 111) {
+                            alert("操作成功！");
+                            window.location.reload();
+                        } else {
+                            alert("活动已经结束，不能再修改");
+                        }
+                    }
+                });
+            }
+
+            $(function () {
+
+                var note = $('#note'),
+                        ts = new Date(2012, 0, 1),
+                        newYear = true;
+
+                if ((new Date()) > ts) {
+                    // The new year is here! Count towards something else.
+                    // Notice the *1000 at the end - time must be in milliseconds
+                    var counttime = $("#counttime").val();
+                    ts = (new Date()).getTime() + counttime * 1000;
+                    newYear = false;
+                }
+
+                $('#countdown').countdown({
+                    timestamp: ts,
+                    callback: function (days, hours, minutes, seconds) {
+
+                        var message = "";
+
+                        message += days + " day" + (days == 1 ? '' : 's') + ", ";
+                        message += hours + " hour" + (hours == 1 ? '' : 's') + ", ";
+                        message += minutes + " minute" + (minutes == 1 ? '' : 's') + " and ";
+                        message += seconds + " second" + (seconds == 1 ? '' : 's') + " <br />";
+
+                        if (newYear) {
+                            message += "left until the new year!";
+                        }
+                        else {
+                            message += "left to 10 days from now!";
+                        }
+
+                        note.html(message);
+                    }
+                });
+
+            });
+            
+            function reload_window(){
+                location.reload();
+            }
+            
+        </script>
+        <style>
+            p{
+                padding-top:5px;
+            }
+
+            .div-1{
+                height:80px;
+                width:48%;
+                margin:1%;
+                float:left;
+                background-color: #00A1E9;
+                color:white;
+                padding:5px;
+            }
+
+            .div-3{
+                font-size:17px; 
+                color : #1c2089;
+                margin: 8px;
+                border:2px dashed #00A1E9; 
+                background-color: white;
+                margin-top: 20px;
+            }
+
+            .img-1{
+                height:25px;
+            }
+            
+            .div-4{
+                float:left;
+                background-color: #00A1E9;
+                color:white;
+                width:98%;
+                margin:1%;
+                font-size: 15px;
+            }
+            
+            .div-2{
+                padding:5px;
+                margin:1%;
+                height:80px;
+                width:48%;
+                float:left;
+                background-color: #F08300;
+                color:white;
+            }
+        </style>
+    </head>
+    <body>
+        <header class="region container-fluid bg_blue fixed"> 
+                <div class="content row header_search" align="center">
+                    <a href="javascript:history.back()">
+                        <div class="banner_left col-xs-2 font_white">
+                            <span class="fa fa-angle-left"></span>
+                        </div>
+                    </a>
+                    <div class="banner_middle col-xs-8 font_white font_xl" style="margin-top:10px">
+                        团购详细
+                    </div>
+                </div> 
+            </header>
+        <div class="fixed_header_search" style="padding-left:10px;padding-right: 10px;">
+            <div align="center" style='padding:10px;'>
+                <a href="index.php?app=goods&id={$goods.goods_id}">
+                <img src="{$goods.default_image}" style="width:60%" alt=''/>
+                </a>
+            </div>
+            <div align="center">
+                ({$goods.goods_name})
+            </div>
+            <div class="div-3" align="center">
+                <!-- {if $timeout} -->
+                <div  style='color:red;'>
+                    活动已结束!
+                </div>
+                <!-- {else} -->
+                <div style="padding-bottom:15px;">
+                    <img src='{res file=images/time2}' class='img-1' alt='' />
+                    距离活动结束还有
+                </div>
+                <div id="countdown"></div>
+                <!-- {/if} -->
+            </div>
+            <div class="div-3" style="height:150px;">
+                <div style="width:100%;">
+                    <div class="div-1" align="center">
+                        <h5>原价</h5>
+                        <h3 style="padding-top: 5px;">{$nums.price|price}/{$nums.spec_unit}</h3>
+                    </div>
+                    <div class='div-2' align="center">
+                        <h5>当前价格</h5>
+                        <h3 style="padding-top: 5px;">{$now_price.unit_price|price}/{$nums.spec_unit}</h3>
+                    </div>
+                </div>
+                <!-- {if $next_price} -->
+                <div align='center' class="div-4" style="height:55px;">
+                    还差&nbsp<span style='color:red;font-size: 22px;'>{$next_nums}</span>&nbsp箱即可以按优惠价：{$next_price.unit_price|price}/{$nums.spec_unit}来购买！
+                </div>
+                <!-- {else} -->
+                <h4 align="center" style="padding-top: 10px;">
+                    当前已经是这次活动最大优惠
+                </h4>
+                <!-- {/if} -->
+            </div>
+            
+            
+            
+            <div class='div-3' style="color:#00A1E9;font-size:15px;padding:1%;background-color: #FFFDDB">
+                <p align="center">
+                    ----------团购规则----------
+                </p>
+                <!-- {foreach from=$price_rule item=val} -->
+                <p style="padding-left: 3%;">
+                    团购总量：{$val.min_num}-{$val.max_num}箱：
+                </p>
+                <p style="padding-left: 10%">
+                    --- {$val.unit_price|price}/{$nums.spec_unit}[{$val.total_price|price}({$nums.spec_name})]
+                </p>
+                <!-- {/foreach} -->
+            </div>
+            <input type="hidden" value="{$nums.id}" id="group_id" />
+            <div style="width:100%;">
+                <div class='div-1'>
+                    <div style="font-size: 13px;border-bottom:1px solid #FFFFFF;padding:8px;">已团购总数量:{$nums.total_nums}箱</div>
+                    <div style="padding-top:10px;font-size: 12px;" align="center">已有<span style="color:red">{$buyer_nums}</span>人参加本次活动</div>
+                </div>
+                <div class='div-1' align="center">
+                    <h5>您团购的数量</h5>
+                    <h4>{$has_buy.nums}箱</h4> 
+                    <button type="button" style="width:100%;background-color: #F08300;" onclick="reload_window();">点击刷新本页</button>
+                </div>
+            </div>
+            <input type="hidden" id="counttime" value="{$countdown}" />
+
+            <!-- {if $nums.status == 3} -->
+            <a href="index.php?app=buyer_order">
+                <p style='color:red;font-size: 18px;'>订单已经生成，请到我的订单界面或者点击这里进行查看和付款</p>
+            </a>
+            <!-- {elseif $nums.status == 4} -->
+            <p style='color:red'>由于购买数量不足，卖家已经取消了活动，请期待下一次</p>
+            <!-- {/if} -->
+            <!-- {if $nums.status == 1} -->
+            <div style="padding-top: 20px;">
+                <!-- {if !$has_buy.nums} -->
+                参团数量：
+                <div style="padding:10px;font-size: 17px;"  >
+                    <input type="button" value="-" style="width:20%;" onclick="subone();"/>
+                    <input type="text" value="1" id="nums" style="width:35px;" />{$nums.spec_name}
+                    <input type="button" value="+" style="width:20%;" onclick="addone();"  />
+                </div>
+                收货地址：
+                <div style="padding: 10px;font-size:17px;">
+                    <p>
+                        <select id="region">
+                            <option value="0">请选择省份</option>
+                            <!-- {foreach from=$regions item=region} -->
+                            <option value="{$region.region_id}" >{$region.region_name}</option>
+                            <!-- {/foreach} -->
+                        </select>
+                    </p>
+                    <p>
+                        <input type="text" id="address" placeholder="收货地址"/>
+                    </p>
+                    <p>
+                        <input type="text" id="name" placeholder="联系人"/>
+                    </p>
+                    <p>
+                        <input type="text" id="phone" placeholder="联系人电话"/>
+                    </p>
+                </div>
+                <div align="center" style='font-size:17px;'>
+                    <input type="button" value="确定参团" style="padding:5px;font-size:17px;width:80%;background-color: #1c2089;color:white" onclick="check_data();"/>
+                </div>
+                <!-- {else} -->
+
+                <div style="padding:10px;font-size: 17px;margin-top:80px;"  >
+                    <!-- {if $e_price} -->
+                    <div>
+                        预计货款：{$e_price|price}
+                    </div>
+                    <!-- {/if} -->
+                    修改数量：
+                    <br />
+                    <input type="button" value="-" style="width:20%;" onclick="subone();"/>
+                    <input type="text" value="{$has_buy.nums}" id="nums" style="width:35px;" />({$nums.spec_name})
+                    <input type="button" value="+" style="width:20%;" onclick="addone();"  />
+                </div>
+                <div align="center">
+                    <input type="button" value="确定修改" style="padding:5px;font-size:17px;width:80%;background-color: #1c2089;color:white" onclick="check_data2();"/>
+                </div>
+                <!-- {/if} -->
+            </div>
+            <!-- {/if} -->
+        </div>
+        <div style="height:60px"></div>
+        {include file=footer_nav.html}
+    </body>
+</html>

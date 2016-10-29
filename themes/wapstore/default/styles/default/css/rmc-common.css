@@ -1,0 +1,97 @@
+body {
+	background-color: #f7f7f7!important;
+}
+
+.font_white {
+	color: #FFFFFF;
+}
+
+.font_grey_light {
+	color: #8C8C8C;
+}
+
+.font_grey_dark {
+	color: #1E1E1E;
+}
+
+.font_pink {
+	color: #F9065E;
+}
+
+.font_blue {
+	color: #0050CD;
+}
+
+
+
+
+.font_2xs {
+	font-size: 8px;
+}
+
+.font_xs {
+	font-size: 10px;
+}
+
+.font_s {
+	font-size: 12px;
+}
+
+.font_m {
+	font-size: 14px;
+}
+
+.font_l {
+	font-size: 18px;
+}
+
+.font_xl {
+	font-size: 20px;
+}
+
+.font_2xl {
+	font-size: 22px;
+}
+
+
+
+.bg_blue {
+	background-color: #0050CD;
+}
+
+.bg_white {
+	background-color: #FFFFFF;
+}
+
+.bg_grey {
+	background-color: #1E1E1E;
+}
+
+.bg_grey_light {
+	background-color: #E0E0E0;
+}
+
+
+.border_grey{
+	border:1px solid #E0E0E0;
+}
+
+
+
+.arrow_left {
+	border-left: 2px solid #0050CD;
+	background:url(../images/border_arrow_left.png) 0px 50% no-repeat;
+	background-size: 4px;
+}
+
+.arrow_right {
+	border-right: 2px solid #0050CD;
+	background:url(../images/border_arrow_right.png) 100% 50% no-repeat;
+	background-size: 5px;
+}
+
+.arrow_bottom {
+	border-bottom: 3px solid #0050CD;
+	background:url(../images/border_arrow_bottom.png) 50% 100% no-repeat;
+	background-size: 10px;
+}

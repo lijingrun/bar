@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>积分商城</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        {include file=member.header.html}
+        <div class="content">
+            <div class="totline"></div>
+            <div class="botline"></div>
+            {include file=member.menu.html}
+            <div id="right">
+                {include file=member.curlocal.html}
+                {include file=member.submenu.html}
+                <div class="wrap">
+                    <div class="public_select table">
+                        <div>
+                            <table border="1">
+                                <tr>
+                                    <th>订单id</th>
+                                    <th>购买产品</th>
+                                    <th>产品单价</th>
+                                    <th>购买数量</th>
+                                    <th>花费积分</th>
+                                    <th>订单状态</th>
+                                </tr>
+                                <!-- {foreach from=$orders item=order} -->
+                                <tr>
+                                    <th>
+                                        <a href="index.php?app=redeem&act=order_detail&order_id={$order.order_id}">
+                                        {$order.order_id}
+                                        </a>
+                                    </th>
+                                    <th>
+                                        <a href="index.php?app=redeem&act=detail&goods_id={$order.goods_id}">
+                                        {$order.goods_name}
+                                        </a>
+                                    </th>
+                                    <th>{$order.one_price}</th>
+                                    <th>{$order.buy_num}</th>
+                                    <th>{$order.total_price}</th>
+                                    <th>{$order.status|modifier:order_status}</th>
+                                   
+                                </tr>
+                                <!-- {/foreach} -->
+                            </table>
+                        </div>
+
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+
+        {include file=footer.html}
+    </body>
+</html>

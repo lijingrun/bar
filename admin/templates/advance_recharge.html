@@ -1,0 +1,74 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>充值记录</title>
+</head>
+<body>
+    <script>
+        function get_advance(order_sn){
+            if(confirm("是否已经确认收到款项？")){
+                location.href="index.php?app=advance_payment&act=get_advance&order_id="+order_sn;
+            }
+        }
+        function find_by_no(){
+            var order_no = document.getElementById('order_no').value;
+            location.href="index.php?app=advance_payment&act=recharge&order_no="+order_no;
+        }
+    </script>
+    <div>
+        <table border="1" style="font-size:15px;">
+            <tr>
+                <th style="width:150px;">订单号</th>
+                <th style="width:150px;">充值账号</th>
+                <th style="width:200px;">充值金额</th>
+                <th style="width:250px;">充值时间</th>
+                <th style="width:150px;">操作</th>
+            </tr>
+            <!-- {foreach from=$orders item=order} -->
+            <tr>
+                <th>{$order.order_sn}</th>
+                <th>
+                    <a href="index.php?app=advance_payment&act=rechange_log&user_id={$order.buyer_id}" >
+                    {$order.buyer_name}
+                    </a>
+                </th>
+                <th>{$order.order_amount|price}</th>
+                <th>{$order.add_time|date:complete}</th>
+                <th>
+                        <input type="button" value="收到款项" onclick="get_advance('{$order.order_sn}');" />
+                </th>
+            </tr>
+            <!-- {/foreach} -->
+        </table>
+        <div style="paddint-top:50px;">
+        客户充值记录(前20条)
+            <div style="padding:20px;">
+                订单号：<input type="text" id="order_no" > <input type="button" value="查找" onclick="find_by_no();" />
+            </div>
+        <table>
+            <tr>
+                <th style="width:150px;">订单号</th>
+                <th style="width:150px;">充值账号</th>
+                <th style="width:200px;">充值金额</th>
+                <th style="width:250px;">充值时间</th>
+            </tr>
+            <!-- {foreach from=$h_orders item=h_order} -->
+            <tr>
+                <th>{$h_order.order_sn}</th>
+                <th>{$h_order.buyer_name}</th>
+                <th>{$h_order.order_amount|price}</th>
+                <th>{$h_order.add_time|date:complete}</th>
+            </tr>
+            <!-- {/foreach} -->
+            <tr>
+                <td onclose="4">
+                    <a href="index.php?app=advance_payment&act=recharge&page={$pev_page}">上一页</a>
+                    <span>当前第{$page}页</span>
+                    <a href="index.php?app=advance_payment&act=recharge&page={$next_page}">下一页</a>
+                </td>
+            </tr>
+        </table>
+        </div>
+    </div>
+</body>
+</html>

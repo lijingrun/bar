@@ -1,0 +1,27 @@
+{include file='header_search.html'}
+
+<div class="radius arrow_left border_grey" style="padding-left:20px">
+    <h3><a href='?app=store&id=13' class="font_blue">墙纸</a></h3>
+    <!--{foreach from=$scategory.children item=child}-->
+    <a href='{url app=search&act=store&cate_id=$child.id}' style="display: inline-table;width: 30%;padding: 10px 0;text-align: center;color: #546280;font-size:12px;">{$child.value|escape}</a> 
+    <!--{/foreach}-->
+</div>
+<div class="radius arrow_left border_grey" style="padding-left:20px">
+    <h3><a href='/?app=store&id=7' class="font_blue">墙纸辅料</a></h3>
+    <!--{foreach from=$scategory.children item=child}-->
+    <a href='{url app=search&act=store&cate_id=$child.id}' style="display: inline-table;width: 30%;padding: 10px 0;text-align: center;color: #546280;font-size:12px;">{$child.value|escape}</a> 
+    <!--{/foreach}-->
+
+</div>
+<div class="radius arrow_left border_grey" style="padding-left:20px">
+    <h3><a href='?app=search&cate_id=463' class="font_blue">墙纸粘帖</a></h3>
+    <!--{foreach from=$scategory.children item=child}-->
+    <a href='{url app=search&act=store&cate_id=$child.id}' style="display: inline-table;width: 30%;padding: 10px 0;text-align: center;color: #546280;font-size:12px;">{$child.value|escape}</a> 
+    <!--{/foreach}-->
+
+</div>
+</div>
+<div style="height:60px"></div>
+{include file='footer_nav.html'}
+</body>
+</html>

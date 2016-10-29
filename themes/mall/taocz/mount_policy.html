@@ -1,0 +1,27 @@
+{include file=member.header.html}
+
+<div class="content">
+    <div class="totline"></div>
+    <div class="botline"></div>
+    {include file=member.menu.html}
+    <div id="right">
+        {include file=member.curlocal.html}
+        {include file=member.submenu.html}
+
+        <div>
+            <div>
+                <a href="index.php?app=mount_policy&act=add">
+                    <button>增加优惠</button>
+                </a>
+            </div>
+            <!-- {if $store_policy} -->
+            <!-- {foreach from=$store_policy item=val } -->
+                <div style="padding:10px;margin:10px;background-color: #7d7d7d;color:white;">
+                    <p>对应会员等级：{$val.grade.grade_name}</p>
+                    <p>对应每月优惠：单笔满{$val.policy.coe}送{$val.policy.give}</p>
+                </div>
+            <!-- {/foreach} -->
+            <!-- {/if} -->
+        </div>
+    </div>
+</div>

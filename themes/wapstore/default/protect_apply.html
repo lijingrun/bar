@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <base href="{$site_url}/" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <link href="{res file=css/common.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/index.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/main.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/rmc-common.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/bootstrap.min.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/font-awesome.css}" type="text/css" rel="stylesheet" />
+        <script type="text/javascript" src="index.php?act=jslang"></script>
+        <script type="text/javascript" src="{lib file=jquery.js}" charset="utf-8"></script>
+        <script type="text/javascript" src="{lib file=ecmall.js}" charset="utf-8"></script>
+        <style>
+            img{width:100%;}
+        </style>
+    </head>
+    <body id="log-reg">
+        <script>
+            function find_city(){
+                var province_id = $("#province").val();
+                if(province_id != 0){
+                    $.ajax({
+                        type : 'post',
+                        url : 'index.php?app=goods&act=find_city',
+                        data : {'province_id' : province_id},
+                        success : function(data){
+                            $("#city").remove();
+                            $("#city_div").append("<select name='city' id='city'><option value='0' id='city_begin'>请选择店铺所在城市</option></select>");
+                            $("#city_begin").after(data);
+                        }
+                    });
+                }
+            }
+        </script>
+        <header class="region container-fluid bg_blue fixed"> 
+            <div class="content row header_search" align="center">
+                <a href="javascript:history.back()">
+                    <div class="banner_left col-xs-2 font_white">
+                        <span class="fa fa-angle-left"></span>
+                    </div>
+                </a>
+            </div> 
+        </header>
+        <div class="container-fluid fixed_header_search">
+            品牌：
+            <div align="center" style="padding-top:20px;">
+                <img src="{$brand.brand_logo}" style="width:150px;height:50px;" />
+                <p>{$brand.brand_name}</p>
+            </div>
+            包含产品：
+            <div align="center">
+                <!-- {foreach from=$brand_goods item=goods} -->
+                <div align="center" style="padding:20px;">
+                    <a href="index.php?app=goods&id={$goods.goods_id}">
+                        <img src="{$goods.default_image}" style="width:100px;" />
+                    </a>
+                    <p>{$goods.goods_name}</p>
+                </div>
+                <!-- {/foreach} -->
+            </div>
+            品牌保护协议：
+            <div>
+                品牌保护是厂家针对经销商的一个保护政策，由每个厂家根据实际情况对全国各地经销商进行区域划分，同一区域内
+                经销商会受到品牌保护政策的保护，即同区域的经销商尽量避免售卖同一品牌的产品，同一区域的经销商不能通过平
+                台购买其他经销商已经在售品牌的所属产品，为了厂家能更好地对每个经销商进行区域划分，申请时请准确填写以下
+                资料：
+            </div>
+            <div align="center">
+                <form method="post">
+                    <div style="padding:15px" id="province_div">
+                        <select id="province" name="province" onchange="find_city();">
+                            <option value="0">请选择店铺所在省份</option>
+                            <!-- {foreach from=$provinces item=val} -->
+                            <option value="{$val.id}">{$val.name}</option>
+                            <!-- {/foreach} -->
+                        </select>
+                    </div>
+                    <div style="padding-bottom:15px" id="city_div">
+                        <select name="city" id="city">
+                            <option value="0" id="city_begin">请选择店铺所在城市</option>
+                        </select>
+                    </div>
+                    <input type="text" name="address" placeholder="请输入店铺详细信息"/>
+                    <input type="hidden" value="{$brand.brand_id}" name="brand_id"/>
+                    <input type="hidden" value="{$brand.brand_name}" name="brand_name"/>
+                    <input type="hidden" value="{$brand.store_id}" name="store_id" />
+                    <p style="padding:15px;">
+                        <input type="submit" value="提交申请" />
+                    </p>
+                </form>
+            </div>
+        </div>
+        <div style="height:100px;">
+        </div>
+        {include file='footer_nav.html'}
+    </body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="{res file=js/jquery-1.8.0.min.js}" type="text/javascript"></script>
+        <script src="{res file=js/pingpp.js}" type="text/javascript"></script>
+        <script>
+            pingpp.createPayment({$ch}, function (result, error) {
+                if (result == "success") {
+                    // 只有微信公众账号 wx_pub 支付成功的结果会在这里返回，其他的 wap 支付结果都是在 extra 中对应的 URL 跳转。
+                } else if (result == "fail") {
+                    // charge 不正确或者微信公众账号支付失败时会在此处返回
+                } else if (result == "cancel") {
+                    // 微信公众账号支付取消支付
+                }
+            });
+        </script>
+    </head>
+    <body>
+        <div>
+        </div>
+    </body>
+</html>

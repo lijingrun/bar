@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <base href="{$site_url}/" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        {$page_seo}
+        <link href="{res file=css/common.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/index.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/main.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/rmc-common.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/bootstrap.min.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/font-awesome.css}" type="text/css" rel="stylesheet" />
+        <script type="text/javascript" src="index.php?act=jslang"></script>
+        <script type="text/javascript" src="{lib file=jquery.js}" charset="utf-8"></script>
+        <script type="text/javascript" src="{lib file=ecmall.js}" charset="utf-8"></script>
+
+        {$_head_tags}
+    </head>
+    <body id="log-reg">
+        <header class="region container-fluid bg_blue fixed"> 
+            <div class="content row header_search" align="center">
+                <a href="javascript:history.back()">
+                    <div class="banner_left col-xs-2 font_white">
+                        <span class="fa fa-angle-left"></span>
+                    </div>
+                </a>
+                <div class="banner_middle col-xs-8 font_white font_xl" style="margin-top:10px">
+                    我的优惠券
+                </div>
+            </div> 
+        </header>
+        <div class="container-fluid fixed_header_search">
+            <!-- {foreach from=$coupons item=coupon} -->
+            <div style="margin:15px;padding:10px;">
+                <!--                <p>优惠券号：{$coupon.coupon_sn}</p>
+                                <p>优惠金额：{$coupon.coupon_value|price}</p>
+                                <p>使用期限：{$coupon.start_time|date}-{$coupon.end_time|date}</p>
+                                <p>一次性购买{$coupon.min_amount}可使用</p>
+                                <p>发放店铺：{$coupon.store_name}</p>-->
+                <div align="center">
+                    <a href="index.php?app=my_coupon&act=coupon_detail&coupon_id={$coupon.coupon_id}">
+                    <img src="{$coupon.img}" style="width:80%;" />
+                    </a>
+                </div>
+                <p>优惠券号：{$coupon.coupon_sn}</p>
+                <p>优惠金额：{$coupon.coupon_value|price}</p>
+                <p>使用期限：{$coupon.start_time|date}-{$coupon.end_time|date}</p>
+                <p>一次性购买{$coupon.min_amount}可使用</p>
+                <p>发放店铺：{$coupon.store_name}</p>
+                <p>优惠券状态：<!-- {if $coupon.valid} -->可用<!-- {else} -->不可用<!-- {/if} --></p>
+                <p>可用次数：{$coupon.remain_times}次</p>
+                <div align="center">
+                    <input type="button" value="删除" style="width:50%;padding:5px;margin: 5px;background-color: #7B68EE" onclick="del();"  />
+                    <input type="hidden" value="{$coupon.coupon_sn}" id="coupon_sn" />
+                </div>
+                <script>
+                    function del(id) {
+                        if (confirm("一经删除不能恢复，是否确认删除操作？")) {
+                            var id = $("#coupon_sn").val();
+                            window.location.href = "index.php?app=my_coupon&act=drop&id=" + id;
+                        }
+                    }
+                </script>
+            </div>
+            <!-- {/foreach} -->
+        </div>
+        <div style="padding-bottom: 70px;">
+
+        </div>
+        {include file='footer_nav.html'}
+    </body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>积分商城</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        {include file=member.header.html}
+        <div class="content">
+            <div class="totline"></div>
+            <div class="botline"></div>
+            {include file=member.menu.html}
+            <div id="right">
+                {include file=member.curlocal.html}
+                {include file=member.submenu.html}
+                <div class="wrap">
+                    <div class="public_select table">
+                        <div>
+                            <form action="index.php?app=redeem&act=buy_now" method="post">
+                            购买产品：{$good.goods_name}({$good.price})<br />
+                            <input type="hidden" value="{$good.goods_id}" name="goods_id" />
+                            购买数量：{$nums}<br />
+                            <input type="hidden" value="{$nums}" name="nums" />
+                            所需积分：{$total_price}<br />
+                            
+                            请选择地址：
+                            <!-- {foreach from=$address item=val} -->
+                            <div>
+                            <input type="radio" name="address_id" value="{$val.addr_id}" checked="checked"/>
+                            {$val.region_name}{$val.address}({$val.consignee}:{$val.phone_tel})
+                            </div>
+                            <!-- {/foreach} -->
+                            <input type="submit" value="确认订单" />
+                            </form>
+                        </div>
+
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+
+        {include file=footer.html}
+    </body>
+</html>

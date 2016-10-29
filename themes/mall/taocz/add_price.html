@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>品牌保护</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <script>
+            function findcity() {
+                var province_id = $("#province").val();
+                if (province_id !== 0) {
+                    $("#city").remove();
+                    $("#province").after("<select id='city'><option value='0' id='city_begin'>请选择城市</option></select>");
+                    $.ajax({
+                        type: 'post',
+                        url: 'index.php?app=my_protect&act=get_city',
+                        data: {'province_id': province_id},
+                        success: function (data) {
+                            $("#city_begin").after(data);
+                        }
+                    });
+                }
+            }
+            function findcity2(){
+                var province_id = $("#province2").val();
+                if (province_id !== 0) {
+                    $("#city2").remove();
+                    $("#province2").after("<select id='city2'><option value='0' id='city_begin2'>请选择城市</option></select>");
+                    $.ajax({
+                        type: 'post',
+                        url: 'index.php?app=my_protect&act=get_city',
+                        data: {'province_id': province_id},
+                        success: function (data) {
+                            $("#city_begin2").after(data);
+                        }
+                    });
+                }
+            }
+            function add_price() {
+                var province_id = $("#province").val();
+                var city_id = $("#city").val();
+                var price_name = $("#price_name").val().trim();
+                if (province_id == 0) {
+                    alert("请选择省份");
+                    return;
+                }
+                if (city_id == 0) {
+                    alert("请选择城市");
+                    return;
+                }
+                if (price_name == '') {
+                    alert("请填写区域名称");
+                    return;
+                }
+                $.ajax({
+                    type: 'post',
+                    url: 'index.php?app=my_protect&act=add_price_ajax',
+                    data: {'province_id': province_id, 'city_id': city_id, 'price_name': price_name},
+                    success: function (data) {
+                        if (data == 111) {
+                            alert('操作成功！');
+//                            location.reload();
+                        } else if (data == 555) {
+                            alert('该卖场已经存在！');
+                        } else {
+                            alert('系统错误，请重试！');
+                        }
+                    }
+                });
+            }
+            function find_price(){
+                var province_id = $("#province2").val();
+                var city_id = $("#city2").val();
+                var price_name = $("#price_name2").val();
+                window.location.href="index.php?app=my_protect&act=add_price&province_id="+province_id+"&city_id="+city_id+"&price_name="+price_name;
+            }
+        </script>
+        {include file=member.header.html}
+        <div class="content">
+            <div class="totline"></div>
+            <div class="botline"></div>
+            {include file=member.menu.html}
+            <div id="right">
+                {include file=member.curlocal.html}
+                {include file=member.submenu.html}
+                <div class="wrap">
+                    <div style="padding-bottom: 50px;">
+                        <select id="province" Onchange="findcity();">
+                            <option value="0">请选择省份</option>
+                            <!-- {foreach from=$provinces item=province} -->
+                            <option value="{$province.id}">{$province.name}</option>
+                            <!-- {/foreach} -->
+                        </select>
+                        <select id="city">
+                            <option value="0" id="city_begin">请选择城市</option>
+                        </select>
+                        <input type="text" id="price_name" placeholder="请填写区域（卖场）名称" />
+                        <input type="button" value="添加" Onclick="add_price();" />
+                    </div>
+                    <div class="public_select table">
+                        <table>
+                            <tr class="operations">
+                                <th colspan="12">
+                            <p class="position1 clearfix">
+                                <!--<input type="checkbox" id="all" class="checkall"/>-->
+                                <!--                                <label for="all">{$lang.checkall}</label>
+                                                                <a href="javascript:void(0);" class="edit" ectype="batchbutton" uri="index.php?app=my_goods&act=batch_edit" name="id">{$lang.edit}</a>
+                                                                <a href="javascript:void(0);" class="delete" ectype="batchbutton" uri="index.php?app=my_goods&act=drop" name="id" presubmit="confirm('{$lang.drop_confirm}')">{$lang.drop}</a>-->
+                            </p>
+                            <p class="position2 clearfix">
+                                {include file=member.page.bottom.html}
+                            </p>
+                            </th>
+                            </tr>
+                            <tr>
+                                <td colspan="5" class="align2">
+                                    按条件搜索：
+                                    <select id="province2" Onchange="findcity2();">
+                                        <option value="0">请选择省份</option>
+                                        <!-- {foreach from=$provinces item=province} -->
+                                        <option value="{$province.id}">{$province.name}</option>
+                                        <!-- {/foreach} -->
+                                    </select>
+                                    <select id="city2">
+                                        <option value="0" id="city_begin2">请选择城市</option>
+                                    </select>
+                                    <input type="text" id="price_name2" />
+                                    <input type="button" value="搜索" Onclick="find_price();" />
+                                </td> 
+                            </tr>
+                            <tr class="gray"  ectype="table_header">
+                                <th>所属省份</th>
+                                <th>所属城市</th>
+                                <th>区域(卖场)名称</th>
+                                <th>添加时间</th>
+                                <th>操作</th>
+                            </tr>
+
+                            <!-- {foreach from=$protect_prices item=price} -->
+                            <tr class="sep-row"><td colspan="5"></td></tr>
+                            <tr class="line-hd">
+                                <th colspan="5">
+                                </th>
+                            </tr>
+                            <tr>
+                                <td class="align2">
+                                    {$price.province_name}
+                                </td>
+                                <td class="align2">
+                                    {$price.city_name}
+                                </td>
+                                <td class="align2">
+                                    {$price.price_name}
+                                </td>
+                                <td class="align2"> 
+                                    {$price.add_time|date}
+                                </td>
+                                <td class="align2">
+                                    <a href="index.php?app=my_protect&act=user_price&id={$price.price_id}">包含客户</a>
+                                    <a href="javascript:drop_confirm('{$lang.drop_confirm}', 'index.php?app=my_protect&amp;act=drop&id={$price.price_id}');" class="delete">{$lang.drop}</a>
+                                </td>
+                            </tr>
+                            <!-- {/foreach} -->
+                            <tr class="operations">
+                                <th colspan="12">
+                            <p class="position1 clearfix">                            </p>
+                            <p class="position2 clearfix">
+                                {include file=member.page.bottom.html}
+                            </p>
+                            </th>
+                            </tr>
+                        </table>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+
+        {include file=footer.html}
+    </body>
+</html>

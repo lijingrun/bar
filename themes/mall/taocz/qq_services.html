@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>积分商城</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        {include file=member.header.html}
+        <div class="content">
+            <div class="totline"></div>
+            <div class="botline"></div>
+            {include file=member.menu.html}
+            <div id="right">
+                {include file=member.curlocal.html}
+                {include file=member.submenu.html}
+                <div class="wrap">
+                    <div class="public_select table">
+                        <div>
+                            <form method="post">
+                                <span style="color:red;">
+                                    请在每个省份后面填写对应的客服id号码
+                                </span>
+                                <table style="width:400px;">
+                                    <tr>
+                                        <th>省份</th>
+                                        <th>客服id</th>
+                                        <th>联系电话</th>
+                                    </tr>
+                                    <!-- {if $qqs} -->
+                                        <!-- {foreach from=$qqs item=qq} -->
+                                        <tr>
+                                            <td>
+                                                <input type="hidden" value="{$qq.region_id}" name="region_id[]"/>
+                                                <input type="text" value="{$qq.region}" name="region_name[]" readonly="readonly"/>
+                                            </td>
+                                            <td>
+                                                <input type="text" name="qq[]" value="{$qq.qq}" />
+                                            </td>
+                                            <td>
+                                                <input type="text" name="phone[]" value="{$qq.telephone}" />
+                                            </td>
+                                        </tr>
+                                        <!-- {/foreach} -->
+                                    <!--  -->
+                                    <!-- {else} -->
+                                        <!-- {foreach from=$regions item=region} -->
+                                        <tr>
+                                            <td>
+                                                <input type="hidden" value="{$region.region_id}" name="region_id[]"/>
+                                                <input type="text" value="{$region.region_name}" name="region_name[]" readonly="readonly"/>
+                                            </td>
+                                            <td>
+                                                <input type="text" name="qq[]" />
+                                            </td>
+                                            <td>
+                                                <input type="text" name="phone[]"; />
+                                            </td>
+                                        </tr>
+                                        <!-- {/foreach} -->
+                                    <!-- {/if} -->
+                                    <tr>
+                                        <td colspan="2">
+                                            <input type="submit" value="保存" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </form>
+                        </div>
+
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+ 
+        {include file=footer.html}
+    </body>
+</html>

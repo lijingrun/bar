@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <base href="{$site_url}/" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        {$page_seo}
+        <link href="{res file=css/common.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/index.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/main.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/rmc-common.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/bootstrap.min.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/font-awesome.css}" type="text/css" rel="stylesheet" />
+        <script type="text/javascript" src="index.php?act=jslang"></script>
+        <script type="text/javascript" src="{lib file=jquery.js}" charset="utf-8"></script>
+        <script type="text/javascript" src="{lib file=ecmall.js}" charset="utf-8"></script>
+
+        {$_head_tags}
+        <script type="text/javascript">
+            function cancle_order(id) {
+                if (confirm('是否确定取消该订单？')) {
+                    window.location.href = "index.php?app=redeem&act=cancle_order&order_id=" + id;
+                }
+            }
+            function checked_order(id) {
+                if (confirm('请确认收到货物！')) {
+
+                }
+            }
+        </script>
+    </head>
+
+
+    <body id="log-reg">
+
+        <header class="region container-fluid bg_blue fixed"> 
+            <div class="content row header_search" align="center">
+                <a href="javascript:history.back()">
+                    <div class="banner_left col-xs-2 font_white">
+                        <span class="fa fa-angle-left"></span>
+                    </div>
+                </a>
+                <div class="banner_middle col-xs-8">
+                    订单详情
+                </div>
+            </div> 
+        </header>
+        <div class="container-fluid fixed_header_search" >
+            <br/>
+            <h5>产品详细</h5>
+            <div style="border:2px solid #00B2EE; border-top:none;border-bottom:none;padding:10px;" >
+                
+            <table>
+                    <tr>
+                        <td style="width:100px;">
+                            <img src="{$order.goods_img}" style="width:100px;"/>
+                        </td>
+                        <td>
+                            <div style="float:left;padding-left: 10px;">
+                                <p>{$order.goods_name}</p>
+                                <p>规格（型号）：{$order.spee_qty}</p>
+                                <p>积分：{$order.one_price}</p>
+                                <p>数量：{$order.buy_num}</p>
+                                <p>总积分：{$order.total_price}</p>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <br/>
+            <h5>订单详细</h5>
+            <div style="border:2px solid #00B2EE; border-top:none;border-bottom:none;padding:10px;" >
+                <p>订单状态：{$order.status|modifier:order_status}</p>
+                <p>订单编号：{$order.order_id}</p>
+                <p>订单时间：{$order.created|date:complete}</p>
+                <p>收货地址：{$order.region_name}{$order.address}</p>
+                <p>收货人名：{$order.get_name}</p>
+                <p>联系电话：{$order.get_phone}</p>
+            </div>
+            {if $order.status == 30 || $order.status == 40}
+            <br/>
+            <h5>物流状态</h5>
+            <div style="border:2px solid #00B2EE; border-top:none;border-bottom:none;padding:10px;" >
+                <p>发货时间：{$order.out_time}</p>
+                <p>发货人:{$order.out_man}</p>
+                <p>联系电话：{$order.out_phone}</p>
+                <p>物流公司：{$order.logistics_name}</p>
+                <p>物流电话：{$order.logistics_phone}</p>
+                <p>预计到达时间：{$order.get_time}</p>
+                <p>确认订单时间：{$order.finish_time|date:complete}</p>
+            </div>
+            {/if}
+            
+
+
+
+            {include file='footer_nav.html'}
+        </div>
+        <div style="height: 100px;">
+
+        </div>
+    </body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>申请审核</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script>
+            function add_price(){
+                var apply_id = $("#apply_id").val();
+                var price_id = $("#price_id").val();
+                if(price_id == 0){
+                    alert('请选择对应的卖场！');
+                }else{
+                    $.ajax({
+                        type : 'post',
+                        url : 'index.php?app=my_protect&act=relation_to_price',
+                        data : {'apply_id' : apply_id, 'price_id' : price_id},
+                        success : function(data){
+                            if(data == 111){
+                                alert("添加成功！");
+                                location.href="index.php?app=my_protect&act=apply_list";
+                            }
+                        }
+                    });
+                }
+            }
+        </script>
+    </head>
+    <body>
+        
+        {include file=member.header.html}
+        <div class="content">
+            <div class="totline"></div>
+            <div class="botline"></div>
+            {include file=member.menu.html}
+            <div id="right">
+                {include file=member.curlocal.html}
+                {include file=member.submenu.html}
+                <div class="wrap">
+                    <h2>关联卖场</h2>
+                    <h2>会员名称：{$apply.user_name}</h2>
+                    <h2>所在省份：{$apply.province}</h2>
+                    <h2>所在城市：{$apply.city}</h2>
+                    <h2>详细地址：{$apply.address}</h2>
+                    <input type ="hidden" id="apply_id" value="{$apply.id}" />
+                    <div style="padding-top:10px;">
+                    <!-- {if $prices} -->
+                    <select id="price_id">
+                        <option value="0">请选择对应的卖场</option>
+                        <!-- {foreach from=$prices item=price} -->
+                        <option value="{$price.price_id}">{$price.price_name}</option>
+                        <!-- {/foreach} -->
+                    </select>
+                    
+                    <p style="padding:10px;">
+                    <input type="button" value="确定" style="width:80px;height: 28px;" onclick="add_price();" />
+                    </p>
+                    <!-- {else} -->
+
+                    该地区还未设立任何卖场！
+                    <a href="index.php?app=my_protect&act=add_price">点击新建卖场</a>
+                    
+                    <!-- {/if} -->
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+
+        {include file=footer.html}
+    </body>
+</html>

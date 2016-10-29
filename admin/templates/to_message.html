@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="http://126wallpaper.com/includes/libraries/javascript/jquery.js" charset="utf-8"></script>
+</head>
+<style>
+    div{
+        padding:10px;
+    }
+</style>
+<script>
+    function choose_user(){
+        var target = $("#target").val();
+        $("#users").html('');
+        if(target == 'users'){
+            var html = "<p style='font-size: 8px;color:red;'>请输入会员名称，用‘,’隔开</p><textarea rows='10;' name='users'></textarea>";
+            $("#users").html(html);
+        }
+    }
+</script>
+<body>
+    <form method="post">
+        <div>
+        发送对象：
+        <select name="target" onchange="choose_user();" id="target" >
+            <option value="all">全部</option>
+            <option value="users">单人</option>
+        </select>
+        </div>
+        <div id="users">
+        </div>
+        <div>
+            <input type="submit" value="发送" />
+        </div>
+    </form>
+</body>
+</html>

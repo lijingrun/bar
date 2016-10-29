@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <style>
+            div{
+                padding-left: 35px;
+            }
+        </style>
+        <script>
+            function out_put(id) {
+                var logistics_num = document.getElementById('logistics_num').value;
+                var out_man_k3 = document.getElementById('out_man_k3').value;
+                var out_phone = document.getElementById('out_phone').value;
+                var out_man = document.getElementById('out_man').value;
+                var logistics_name = document.getElementById('logistics_name').value;
+                var logistics_phone = document.getElementById('logistics_phone').value;
+                var get_time = document.getElementById('get_time').value;
+                if (logistics_num == "") {
+                    alert("请输入相关信息");
+                } else {
+                    window.location.href = "index.php?app=redeem&act=out_put&order_id=" + id + "&logistics_num=" + logistics_num + "&out_man_k3=" + out_man_k3 + "&out_phone=" + out_phone + "&out_man=" + out_man + "&logistics_name=" + logistics_name + "&logistics_phone=" + logistics_phone + "&get_time=" + get_time;
+                }
+            }
+            function goreturn() {
+                window.history.back();
+            }
+        </script>
+        <div>
+            <h4>购买客户情况</h4>
+            <p>客户名称：{$member.user_name}</p>
+            <p>k3编码：{$member.k3_code}</p>
+        </div>
+        <div>
+            <h4>产品情况</h4>
+            <p>产品名称：{$order.goods_name}</p>
+            <p>购买积分：{$order.one_price}</p>
+            <p>购买数量：{$order.buy_num}</p>
+        </div>
+        <div>
+            <h4>订单情况</h4>
+            <p>订单编号：{$order.order_id}</p>
+            <p>总花费积分：{$order.total_price}</p>
+            <p>订单状态：{$order.status|modifier:order_status}</p>
+            <p>下单时间：{$order.created|date:complete}</p>
+            {if $order.status == 20}
+            <p>
+                物流单号：<input type="text" id="logistics_num" />
+            </p>
+            <p>
+                客服工号：<input type="text" id="out_man_k3" />
+            </p>
+            <p>
+                发货电话：<input type="text" id="out_phone" />
+            </p>
+            <p>
+                联系人：&nbsp;<input type="text" id="out_man" />
+            </p>
+            <p>
+                物流公司：<input type="text" id="logistics_name"/>
+            </p>
+            <p>
+                物流电话：<input type="text" id="logistics_phone"/>
+            </p>
+            <p>
+                预达时间：<input type="text" id="get_time" />
+            </p>
+            <input type="button" value="发货" onclick="out_put({$order.order_id});" />
+            {/if}
+            {if $order.status == 30}
+            <p>物流编码：{$order.logistics_num}</p>
+            <p>发货时间:{$order.out_time|date:complete}</p>
+            <p>经手人:{$order.out_man}</p>
+            <p>物流公司:{$order.logistics_name}</p>
+            <p>物流电话:{$order.logistics_phone}</p>
+            <p>预达时间:{$order.get_time}</p>
+            {/if}
+            {if $order.status == 40}
+            <p>物流编码：{$order.logistics_num}</p>
+            <p>发货时间:{$order.out_time|date:complete}</p>
+            <p>经手人:{$order.out_man}</p>
+            <p>物流公司:{$order.logistics_name}</p>
+            <p>物流电话:{$order.logistics_phone}</p>
+            <p>完成交易时间：{$order.finishtime|date:complete}</p>
+            {/if}
+            {if $order.status == 0}
+            <p>取消时间：{$order.deltime|date:complete}</p>
+            <p>取消操作人：{$order.delman}</p>
+            {/if}
+        </div>
+        <div align="center">
+            <input type="button" value="返回" onclick="goreturn();"/>
+        </div>
+    </body>
+</html>

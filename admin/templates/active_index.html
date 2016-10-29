@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>活跃显示抢</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>
+            <a href="index.php?app=active&act=add">
+                <input type="button" value="新增" />
+            </a>
+        </div>
+        <div>
+            <table border="1">
+                <tr>
+                    <th style="width:200px;">活动图片</th>
+                    <th>产品</th>
+                    <th>开始时间</th>
+                    <th>结束时间</th>
+                    <th>状态</th>
+                    <th>价格</th>
+                    <th>积分</th>
+                    <th>每人限购</th>
+                    <th>剩余数量</th>
+                    <th>操作</th>
+                </tr>
+                <!-- {foreach from=$actives item=active} -->
+                <tr>
+                    <td><img src="{$active.img}" style="width:100%;"></td>
+                    <td>{$active.goods_name}</td>
+                    <td>{$active.start_time|date:complete}</td>
+                    <td>{$active.end_time|date:complete}</td>
+                    <td>
+                        <!-- {if $active.enable == 1} -->
+                        已激活
+                        <!-- {else} -->
+                        未激活
+                        <!-- {/if} -->
+                    </td>
+                    <td>{$active.price|price}</td>
+                    <td>{$active.point_price}</td>
+                    <td>{$active.can_buy}</td>
+                    <td>{$active.nums}</td>
+                    <td>
+                        <a href="index.php?app=active&act=del&id={$active.id}">
+                            删除
+                        </a>
+                        <!-- {if $active.enable == 0} -->
+                        <a href="index.php?app=active&act=enable&id={$active.id}">
+                            发布
+                        </a>
+                        <!-- {/if} -->
+                    </td>
+                </tr>
+                <!-- {/foreach} -->
+            </table>
+        </div>
+    </body>
+</html>

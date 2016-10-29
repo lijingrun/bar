@@ -1,0 +1,24 @@
+{include file=member.header.html}
+<div class="content">
+    {include file=member.menu.html}
+    <div id="right"> {include file=member.curlocal.html}
+        <div class="wrap">
+            <div class="public table">
+                <form method="post" enctype="multipart/form-data">
+                    <input type="file" name="coupon_img" />
+                    <input type="hidden" value="{$coupon_id}" name="coupon_id"/>
+                    <input type="submit" value="确认上传" />
+                </form>
+            </div>
+            <div class="wrap_bottom"></div>
+        </div>
+        <iframe name="coupon" style="display:none;"></iframe>
+        <div class="clear"></div>
+        <div class="adorn_right1"></div>
+        <div class="adorn_right2"></div>
+        <div class="adorn_right3"></div>
+        <div class="adorn_right4"></div>
+    </div>
+    <div class="clear"></div>
+</div>
+{include file=footer.html}

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>客户充值记录</title>
+</head>
+<body>
+    <div>
+        <h3>客户：{$member.user_name}</h3>
+        <h4>账号余额：{$member.advance|price}</h4>
+    </div>
+    充值记录：
+    <div>
+        <table>
+            <tr>
+                <th style="width:250px;">充值时间</th>
+                <th style="width:100px;">充值金额</th>
+                <th style="width:150px;">充值单号</th>
+            </tr>
+            <!-- {foreach from=$logs item=log} -->
+            <tr>
+                <th>{$log.create_time|date:complete}</th>
+                <th>{$log.amount}</th>
+                <th>{$log.order_sn}</th>
+            </tr>
+            <!-- {/foreach} -->
+        </table>
+    </div>
+</body>
+</html>

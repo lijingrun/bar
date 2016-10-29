@@ -1,0 +1,29 @@
+/*reset*/
+body,ul,li,ol,img{margin: 0;padding: 0;}
+
+/*example*/
+.example2{}
+.example2 ol{position:relative;width: 80px;height: 20px;top:-30px;left:60px;}
+.example2 ol li{float:left;width: 10px;height: 10px;margin: 5px;background: #fff;}
+.example2 ol li.seleted{background: #1AA4CA;}
+
+.index_img{
+	padding-top:30px;
+	padding-bottom:30px;
+	background-image:url(../images/index.jpg) no-repeat;
+}
+
+
+
+.more{
+	float:right;
+	padding-right:50%;
+}
+
+.remcommend_div{
+	padding-left:50px;
+	font-size:25px;
+	border-bottom:3px solid red;
+	margin-bottom:25px;
+}
+

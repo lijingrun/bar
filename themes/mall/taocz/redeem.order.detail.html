@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>积分商城</title>
+        <meta charset="UTF-8">
+        <style type="text/css">
+            .p_class{
+                padding:10px;
+                font-size:20px;
+            }
+            </style>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        {include file=member.header.html}
+        <div class="content">
+            <div class="totline"></div>
+            <div class="botline"></div>
+            {include file=member.menu.html}
+            <div id="right">
+                {include file=member.curlocal.html}
+                {include file=member.submenu.html}
+                <div class="wrap">
+                    <div class="public_select table">
+                        <div style="padding-left: 30%;">
+                            <p  class="p_class">订单号：{$order.order_id}</p>
+                            <a href="index.php?app=redeem&act=detail&goods_id={$order.goods_id}">
+                            <div >
+                                <img src="{$order.goods_img}"  style="width:50%;"/>
+                                <p style="padding-left:20%;">{$order.goods_name}</p>
+                            </div>
+                            </a>
+                            <p class="p_class">购买数量：{$order.buy_num}</p>
+                            <p class="p_class">商品需要积分：{$order.one_price}</p>
+                            <p class="p_class">共花费积分:{$order.total_price}</p>
+                            <p class="p_class">物流信息： </p>
+                            <div>
+                                <p class="p_class">收货地址：{$order.region_name}{$order.address}</p>
+                                <p class="p_class">收货人:{$order.get_name}</p>
+                                <p class="p_class">收货联系电话:{$order.get_phone}</p>
+                                <p class="p_class">订单状态：{$order.status|modifier:order_status}</p>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+
+        {include file=footer.html}
+    </body>
+</html>

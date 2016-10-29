@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {include file=public_header.html}
+    <link rel="stylesheet" type="text/css" href="{res file=css/textui.css}" />
+    <script type="text/javascript" src="{res file=js/main.js}"></script>
+</head>
+<body>
+<header class="ly-header" style="height:auto">
+    <div class="ly-header-bar">
+            <div id="m_common_header_goback" class="ly-header-icon-back" onClick="javascript :history.back(-1);">
+                <span></span>
+            </div>
+        <div class="ly-header-title">个人中心</div></div>
+</header>
+<script>
+    function change_name(user_id){
+        if(confirm("是否确定修改真实名称？")){
+            var change_username = $("#signin-username").val().trim();
+            if(change_username == ''){
+                alert("请输入需要修改的名称");
+            }else{
+                $.ajax({
+                    type : 'post',
+                    url : 'index.php?app=member&act=change_real_name',
+                    data : {'user_id' : user_id, 'new_name' : change_username},
+                    success : function(data){
+                        if(data == 111){
+                            alert("修改成功！");
+                            location.href="index.php?app=member";
+                        }
+                    }
+                });
+            }
+        }
+    }
+    function change_password(user_id){
+        if(confirm("是否确定修改密码？")){
+            var old_password = $("#old_password").val().trim();
+            var new_password = $("#new_password").val().trim();
+            var new_password2 = $("#new_password2").val().trim();
+            if(new_password != new_password2){
+                alert("2次密码输入不一致，请重新输入！");
+            }else if(new_password == '' || old_password == '' || new_password2 == ''){
+                alert("请输入相关内容！");
+            }else{
+                $.ajax({
+                    type : 'post',
+                    url : 'index.php?app=member&act=change_password',
+                    data : {'user_id' : user_id, 'old_password' : old_password, 'new_password' : new_password},
+                    success : function(data){
+                        if(data == 111){
+                            alert("修改成功！");
+                            location.reload();
+                        }else if(data == 222){
+                            alert("你的原密码错误，请重新输入！");
+                        }else if(data == 333){
+                            alert("你没有权限修改！");
+                        }
+                    }
+                });
+            }
+        }
+    }
+</script>
+<div class="memberHome">
+    <div class="user_info">
+        <p class="username">
+            <span id="username">{$visitor.user_name}</span></p>
+        <nav class="main_nav">
+            <ul>
+                <li>
+                    <a class="logout" href="#0">修改姓名密码</a></ul>
+        </nav>
+        <!-- {if $user.sgrade == 2} --> <!-- 金卡 -->
+        <div id="memberRank" class="memberRank mr3"></div>
+        <!-- {elseif $user.sgrade == 3} --> <!-- 铂金 -->
+        <div id="memberRank" class="memberRank mr4"></div>
+        <!-- {elseif $user.sgrade == 4} --> <!-- 钻石 -->
+        <div id="memberRank" class="memberRank mr5"></div>
+        <!-- {elseif $user.sgrade == 5} --> <!-- VIP -->
+        <div id="memberRank" class="memberRank mr2"></div>
+        <!-- {else} -->
+        <div id="memberRank" class="memberRank mr1"></div>
+        <!-- {/if} -->
+        <a href="index.php?app=member&act=member_discount"><div class="memberRank2">会员特权</div></a>
+
+    </div>
+    <div class="cd-user-modal">
+        <div class="cd-user-modal-container">
+            <ul class="cd-switcher">
+                <li>
+                    <a href="#0">修改密码</a>
+                </li>
+                <li>
+                    <a href="#0">修改个人资料</a>
+                </li>
+            </ul>
+            <div id="cd-signup">
+                <!-- 登录表单 --> <script type="text/javascript">$(function() {
+                $(".select").each(function() {
+                    var s = $(this);
+                    var z = parseInt(s.css("z-index"));
+                    var dt = $(this).children("dt");
+                    var dd = $(this).children("dd");
+                    var _show = function() {
+                        dd.slideDown(200);
+                        dt.addClass("cur");
+                        s.css("z-index", z + 1);
+                    }; //展开效果
+                    var _hide = function() {
+                        dd.slideUp(200);
+                        dt.removeClass("cur");
+                        s.css("z-index", z);
+                    }; //关闭效果
+                    dt.click(function() {
+                        dd.is(":hidden") ? _show() : _hide();
+                    });
+                    dd.find("a").click(function() {
+                        dt.html($(this).html());
+                        _hide();
+                    });
+                    $("body").click(function(i) { ! $(i.target).parents(".select").first().is(s) ? _hide() : "";
+                    });
+                })
+            })</script>
+                <div class="cd-form" >
+                    <p class="fieldset">
+                        <input class="full-width has-padding has-border" id="signin-username" type="text" placeholder="输入真实姓名"></p>
+                    <!--<span style="color:red; height:14px; margin-bottom:0px;">注：地区只能设置一次，不能修改！</span>-->
+                    <!--<p>-->
+                    <!--<dl class="select">-->
+                        <!--<dt>请选择地区（只能修改一次）</dt>-->
+                        <!--<dd>-->
+                            <!--<ul>-->
+                                <!--<li>-->
+                                    <!--<a href="#">北京</a></li>-->
+                                <!--<li>-->
+                                    <!--<a href="#">广东</a></li>-->
+                                <!--<li>-->
+                                    <!--<a href="#">深圳</a></li>-->
+                                <!--<li>-->
+                                    <!--<a href="#">南京</a></li>-->
+                                <!--<li>-->
+                                    <!--<a href="#">下拉5</a></li>-->
+                                <!--<li>-->
+                                    <!--<a href="#">下拉6</a></li>-->
+                            <!--</ul>-->
+                        <!--</dd>-->
+                    <!--</dl>-->
+                    <!--</p>-->
+                    <!--<dl class="select">-->
+                        <!--<dt>请选择性别</dt>-->
+                        <!--<dd>-->
+                            <!--<ul>-->
+                                <!--<li>-->
+                                    <!--<a href="#">保密</a></li>-->
+                                <!--<li>-->
+                                    <!--<a href="#">男性</a></li>-->
+                                <!--<li>-->
+                                    <!--<a href="#">女性</a></li>-->
+                            <!--</ul>-->
+                        <!--</dd>-->
+                    <!--</dl>-->
+                    <!--</p>-->
+                    <p class="fieldset">
+                        <input class="full-width2" type="submit" onclick="change_name({$user.user_id});" value="确认资料修改"></p>
+                </div>
+            </div>
+            <div id="cd-login">
+                <!-- 注册表单 -->
+                <div class="cd-form">
+                    <p class="fieldset">
+                        <input class="full-width has-padding has-border" id="old_password" type="text" placeholder="输入旧密码"></p>
+                    <p class="fieldset">
+                        <input class="full-width has-padding has-border" id="new_password" type="text" placeholder="输入新密码"></p>
+                    <p class="fieldset">
+                        <input class="full-width has-padding has-border" id="new_password2" type="text" placeholder="确认新密码"></p>
+                    <p class="fieldset">
+                        <input class="full-width2" type="submit" onclick="change_password({$user.user_id});" value="确认密码修改"></p>
+                </div>
+            </div>
+            <a href="#0" class="cd-close-form">关闭</a></div>
+    </div>
+    <div class="memberTab">
+        <a href="#" class="tab">账号余额：
+            <span id="cartCount" class="cl_red">{$user_advance|price}</span></a>
+        <a href="#" class="tab">金币剩余：
+            <span id="cartCount" class="cl_red">{$user.coin}</span></a>
+    </div>
+    <div class="myOrder">
+        <a class="allOrder" href="index.php?app=buyer_order">全部订单
+            <i class="iright"></i></a>
+        <ul class="orderItem">
+            <li>
+                <a href="index.php?app=buyer_order&act=index&type=pending">
+                    <i class="orderIcon ipay"></i>
+                    <p class="orderTxt">待付款</p>
+                    <b class="countNum" id="noPayOrderCount" style="display: inline;">{$buyer_stat.pending}</b></a>
+            </li>
+            <li>
+                <a href="index.php?app=buyer_order&act=index&type=accepted">
+                    <i class="orderIcon icomment"></i>
+                    <p class="orderTxt">待发货</p>
+                    <b class="countNum" id="noReviewOrderCounts" style="display: inline;">{$t_count}</b>
+                </a>
+            </li>
+            <li>
+                <a href="index.php?app=buyer_order&act=index&type=shipped">
+                    <i class="orderIcon irecieve"></i>
+                    <p class="orderTxt">待收货</p>
+                    <b class="countNum" id="havaSendOrderCount" style="display: inline;">{$buyer_stat.shipped}</b>
+                </a>
+            </li>
+            <li>
+                <a href="index.php?app=buyer_order&act=index&type=evaluation">
+                    <i class="orderIcon value"></i>
+                    <p class="orderTxt">待评价</p>
+                    <b class="countNum" id="havaSendOrderCount" style="display: inline;">{$e_count}</b>
+                </a>
+            </li>
+
+        </ul>
+    </div>
+    <div class="myManage">
+        <a class="myManage13" href="index.php?app=member&act=member_discount">会员特权
+            <i>点击查看</i>
+        </a>
+    </div>
+    <div class="myManage">
+        <a class="myManage1" href="index.php?app=my_address">地址管理
+            <i>{$address_count}</i>
+        </a>
+        <a class="myManage2" href="index.php?app=my_advance">账户余额
+            <i>{$user_advance|price}</i>
+        </a>
+        <!--<a class="myManage3" href="#">我的积分-->
+            <!--<i>{$user_point}</i>-->
+            <!--</span>-->
+        <!--</a>-->
+        <a class="myManage12" href="index.php?app=buyer_coin">我的金币
+            <i>{$user.coin}</i>
+            </span>
+        </a>
+        <a class="myManage11" href="index.php?app=search&cate_id=742">金币商城
+        </a>
+        <a class="myManage4" href="index.php?app=buyer_groupbuy">团购订单
+            <i></i>
+        </a>
+        <a class="myManage5" href="index.php?app=fw_game&act=find_game">签到抽奖
+            <i></i>
+        </a>
+    </div>
+    <div class="myManage">
+        <a class="myManage6" href="index.php?app=my_coupon">我的优惠券
+            <i>{$coupon_count}</i>
+        </a>
+        <a class="myManage7" href="index.php?app=my_favorite">收藏的商品
+            <i>{$goods_count}</i>
+        </a>
+        <a class="myManage8" href="index.php?app=my_favorite&type=store">收藏的店铺
+            <i>{$store_count}</i>
+        </a>
+    </div>
+    <div class="myManage">
+        <a class="myManage14" href="index.php?app=default&act=app_download">下载APP
+            <!--<i>首单减免</i>-->
+        </a>
+        <!--<a class="myManage9" href="#">联系客服-->
+            <!--<i>400-830-7028</i>-->
+        <!--</a>-->
+        <a class="myManage10" href="index.php?app=article&cate_id=4">升级公告
+            <i></i>
+        </a>
+        <!-- {if $is_weixin == false} -->
+        <!--<a class="myManage10" href="http://livechat.128wallpaper.com:3000/?from=101&to=105">平台客服-->
+            <!--<i></i>-->
+        <!--</a>-->
+        <!-- {/if} -->
+    </div>
+</div>
+<!--<div class="gray-text">-->
+      <!--<span class="gray-layout">-->
+        <!--<span class="gray-text-img"></span>精品推荐</span>-->
+<!--</div>-->
+<!--<div class="mui-chaoshi-item-columns">-->
+    <!--<div class="mui-chaoshi-item-column">-->
+        <!--<a class="mui-chaoshi-item-column-inner" href="#">-->
+            <!--<div class="img-wrapper">-->
+                <!--<img class="item-img img-ks-lazyload" src="http://www.126wallpaper.com/data/files/store_7/goods_42/small_201505041657224081.jpg"></div>-->
+            <!--<div class="item-main">-->
+                <!--<div class="item-info">-->
+                    <!--<div class="item-title">金山卫士中性免胶胶粉200g</div>-->
+                    <!--<div class="item-desc">-->
+                <!--<span class="plain-text">-->
+                  <!--<p>-->
+                      <!--<label>型号规格：</label>-->
+                      <!--<label class="hui">1*18/箱</label></p>-->
+                <!--</span>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="item-imp">-->
+                    <!--<div class="price-box">-->
+                        <!--<div class="promotion-price no-referPrice">-->
+                  <!--<span class="price">-->
+                    <!--<span class="rmb">¥</span>0.01</span></div>-->
+                    <!--</div>-->
+                    <!--<button class="j_AddCart">加入购物车</button></div>-->
+            <!--</div>-->
+        <!--</a>-->
+    <!--</div>-->
+    <!--<div class="mui-chaoshi-item-column">-->
+        <!--<a class="mui-chaoshi-item-column-inner" href="#">-->
+            <!--<div class="img-wrapper">-->
+                <!--<img class="item-img img-ks-lazyload" src="http://www.126wallpaper.com/data/files/store_7/goods_42/small_201505041657224081.jpg"></div>-->
+            <!--<div class="item-main">-->
+                <!--<div class="item-info">-->
+                    <!--<div class="item-title">金山卫士中性免胶胶粉200g</div>-->
+                    <!--<div class="item-desc">-->
+                <!--<span class="plain-text">-->
+                  <!--<p>-->
+                      <!--<label>型号规格：</label>-->
+                      <!--<label class="hui">1*18/箱</label></p>-->
+                <!--</span>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="item-imp">-->
+                    <!--<div class="price-box">-->
+                        <!--<div class="promotion-price no-referPrice">-->
+                  <!--<span class="price">-->
+                    <!--<span class="rmb">¥</span>0.01</span></div>-->
+                    <!--</div>-->
+                    <!--<button class="j_AddCart">加入购物车</button></div>-->
+            <!--</div>-->
+        <!--</a>-->
+    <!--</div>-->
+    <!--<div class="mui-chaoshi-item-column">-->
+        <!--<a class="mui-chaoshi-item-column-inner" href="#">-->
+            <!--<div class="img-wrapper">-->
+                <!--<img class="item-img img-ks-lazyload" src="http://www.126wallpaper.com/data/files/store_7/goods_42/small_201505041657224081.jpg"></div>-->
+            <!--<div class="item-main">-->
+                <!--<div class="item-info">-->
+                    <!--<div class="item-title">金山卫士中性免胶胶粉200g</div>-->
+                    <!--<div class="item-desc">-->
+                <!--<span class="plain-text">-->
+                  <!--<p>-->
+                      <!--<label>型号规格：</label>-->
+                      <!--<label class="hui">1*18/箱</label></p>-->
+                <!--</span>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="item-imp">-->
+                    <!--<div class="price-box">-->
+                        <!--<div class="promotion-price no-referPrice">-->
+                  <!--<span class="price">-->
+                    <!--<span class="rmb">¥</span>0.01</span></div>-->
+                    <!--</div>-->
+                    <!--<button class="j_AddCart">加入购物车</button></div>-->
+            <!--</div>-->
+        <!--</a>-->
+    <!--</div>-->
+    <!--<div class="mui-chaoshi-item-column">-->
+        <!--<a class="mui-chaoshi-item-column-inner" href="#">-->
+            <!--<div class="img-wrapper">-->
+                <!--<img class="item-img img-ks-lazyload" src="http://www.126wallpaper.com/data/files/store_7/goods_42/small_201505041657224081.jpg"></div>-->
+            <!--<div class="item-main">-->
+                <!--<div class="item-info">-->
+                    <!--<div class="item-title">金山卫士中性免胶胶粉200g</div>-->
+                    <!--<div class="item-desc">-->
+                <!--<span class="plain-text">-->
+                  <!--<p>-->
+                      <!--<label>型号规格：</label>-->
+                      <!--<label class="hui">1*18/箱</label></p>-->
+                <!--</span>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="item-imp">-->
+                    <!--<div class="price-box">-->
+                        <!--<div class="promotion-price no-referPrice">-->
+                  <!--<span class="price">-->
+                    <!--<span class="rmb">¥</span>0.01</span></div>-->
+                    <!--</div>-->
+                    <!--<button class="j_AddCart">加入购物车</button></div>-->
+            <!--</div>-->
+        <!--</a>-->
+    <!--</div>-->
+<!--</div>-->
+<p class="btn-wrap">
+    <a href="index.php?app=member&act=logout" onclick="return confirm('你确定要退出吗？')" class="mms-btn">退出</a></p>
+<div class="clear space10"></div>
+<div id="topcontrol" style="width:3.333rem; height:3.333rem; border:0; bottom:4.333rem;right: 0.7407rem;position: fixed;display: block; opacity: 0; cursor: pointer;border-radius:50px;">
+    <img totop="" src="images/topback.png" style="width:3.333rem; height:3.333rem; border-radius:50px; border:0;" title="返回顶部" /></div>
+{include file="footer_nav.html"}
+</body>
+</html>

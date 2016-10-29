@@ -1,0 +1,126 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <base href="{$site_url}/" />
+        {$page_seo}
+        <link href="{res file=css/common.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/address.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/main.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/rmc-common.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/bootstrap.min.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/font-awesome.css}" type="text/css" rel="stylesheet" />
+        <script type="text/javascript" src="index.php?act=jslang"></script>
+        <script type="text/javascript" src="{lib file=jquery.js}" charset="utf-8"></script>
+        <script type="text/javascript" src="{lib file=ecmall.js}" charset="utf-8"></script>
+        <script type="text/javascript" src="{lib file=member.js}" charset="utf-8"></script>
+        
+
+
+        <script type="text/javascript">
+            //<!CDATA[
+            var SITE_URL = "{$site_url}";
+            var REAL_SITE_URL = "{$real_site_url}";
+            var PRICE_FORMAT = '{$price_format}';
+            //]]>
+        </script>
+        {$_head_tags}
+    </head>
+    <body>
+        <header class="region container-fluid bg_blue fixed" align="center"> 
+            <div class="content row header_search" align="center">
+                <a href="javascript:history.back()">
+                    <div class="banner_left col-xs-2 font_white">
+                        <span class="fa fa-angle-left"></span>
+                    </div>
+                </a>
+                <div class="banner_middle col-xs-8 font_white font_xl" style="margin-top:10px">
+                    收货地址
+                </div>
+                <a ectype="dialog" dialog_title="{$lang.add_address}" dialog_id="my_address_add" uri="index.php?app=my_address&act=add">
+                    <div class="banner_right col-xs-2 font_white">
+                        <img src="{res file=images/plus.png}" style="height:20px;width:20px;margin-top:5px;">
+                    </div>
+                </a>
+            </div> 
+        </header>
+        <div class="container-fluid fixed_header_search">
+            <div class="add_box" style="display:none">
+                <form method="post" action="index.php?app=my_address&act={$act}&addr_id={$address.addr_id}" >
+                    <p><input  name="consignee" value="{$address.consignee|escape}"  type="text" placeholder="请填写你的真实姓名"/></p>
+                    <p><input type="text" placeholder="请填写你的手机号码" /></p>
+                    <p>
+                        <select>
+                            <option>请选择</option>
+                        </select>
+                    </p>
+                    <p>
+                        <select>
+                            <option>请选择</option>
+                        </select>
+                    </p>
+                    <p>
+                        <select>
+                            <option>请选择</option>
+                        </select>
+                    </p>
+                    <p>
+                        <input type="text" placeholder="不必重复填写地区" name="address" value="{$address.address|escape}" />
+                    </p>
+                    <p><input type="text" placeholder="邮政编码"/></p>
+                    <p><input type="checkbox"  class="mr"/>设为默认地址</p>
+                    <p><input type="submit"  class="white_btn add_submit" value="<!--{if $address.addr_id}-->{$lang.edit_address}<!--{else}-->{$lang.add_address}<!--{/if}-->"></p>
+                </form>
+            </div>
+            <!--编辑收货地址-->
+            <div class="edit_box" style="display:none">
+                <p><input type="text" placeholder="请填写你的真实姓名" value="秋刀鱼"/></p>
+                <p><input type="text" placeholder="请填写你的手机号码" name="phone_mob" value="{$address.phone_tel}" /></p>
+                <p>
+                    <select>
+                        <option>福建省</option>
+                    </select>
+                </p>
+                <p>
+                    <select>
+                        <option>厦门市</option>
+                    </select>
+                </p>
+                <p>
+                    <select>
+                        <option>思明区</option>
+                    </select>
+                </p>
+                <p>
+                    <input type="text" placeholder="不必重复填写地区" value="莲前西林西二里路金沙花园31号702" />
+                </p>
+                <p><input type="text" placeholder="邮政编码" value="361000"/></p>
+                <p><input type="checkbox"  class="mr"/>设为默认地址</p>
+                <p><a href="#" class="white_btn add_submit">确定</a></p>
+            </div>
+            <!--收货地址-->
+            <div class="address_con">
+                <!--{foreach from=$addresses item=address name=v}-->
+                <div class="address_box" >
+                    <div class="address_info">
+                        <p>{$address.consignee|escape}（<!-- {if $address.phone_tel }-->{$address.phone_tel} <!--{else}--> {$address.phone_mob}<!--{/if}--> ）</p>
+                        <p>{$address.region_name|escape}</p>
+                        <p>{$address.address|escape}</p>
+                    </div>
+                    <p class="oprate">
+                        <a href="javascript:void(0);" ectype="dialog" dialog_id="my_address_edit" dialog_title="{$lang.edit_address}" dialog_width="100%" uri="index.php?app=my_address&act=edit&addr_id={$address.addr_id}" class="edit_address bg_blue font_white" style="padding:10px;"><span class="fa fa-pencil-square-o"> 编 辑</span></a>
+                        <a href="javascript:drop_confirm('{$lang.drop_confirm}', 'index.php?app=my_address&amp;act=drop&addr_id={$address.addr_id}');" class="del_address font_blue" style="padding:10px;"><span class="fa fa-trash-o"> 删 除</span></a>
+                    </p>
+                </div>
+                <!--{foreachelse}-->
+                <!--{/foreach}--> 
+            </div>
+                <iframe id='iframe_post' name="iframe_post" frameborder="0" width="0" height="0"/>
+                <!--底部-->
+        </div>
+        <div style="height:60px"></div>
+        {include file="footer_nav.html"}

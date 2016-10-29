@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>
+            <h4 style='color:red'>请严格按照下面的excel表单的表头以及格式来上传,红色为必填项</h4>
+            <table border='1'>
+                <tr>
+                    <th>A</th>
+                    <th>B</th>
+                    <th>C</th>
+                    <th>D</th>
+                    <th>E</th>
+                    <th>F</th>
+                    <th>G</th>
+                    <th>H</th>
+                    <th>I</th>
+                    <th>J</th>
+                    <th>K</th>
+                    <th>L</th>
+                    <th>M</th>
+                </tr>
+                <tr>
+                    <th>审核标志</th>
+                    <th>关闭标志</th>
+                    <th>日期</th>
+                    <th>购货单位</th>
+                    <th style='color:red'>订单编号</th>
+                    <th style='color:red'>物流单号</th>
+                    <th>客服工号</th>
+                    <th style='color:red'>发货电话</th>
+                    <th style='color:red'>联系人</th>
+                    <th style='color:red'>物流公司</th>
+                    <th style='color:red'>物流电话</th>
+                    <th>状态</th>
+                    <th>预达时间</th>
+                </tr>
+            </table>
+        </div>
+        <br/>
+        <div>
+            <form method="post" enctype="multipart/form-data">
+                <input type="file" name="excel_file" />
+                <input type="submit" value="导入" />
+            </form>
+        </div>
+    </body>
+</html>

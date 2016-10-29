@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {include file='public_header.html'}
+</head>
+
+<body>
+<script>
+    function submit_form(){
+        var keyword = $("#layout_newkeyword").val();
+        if(keyword == ''){
+            alert("请输入想要搜索的产品名称");
+        }else{
+            $("#form").submit();
+        }
+    }
+</script>
+<header class="ly-header2 topFix">
+    <div class="ly-header-bar">
+        <div id="m_common_header_goback" class="ly-header-icon-back">
+            <a href="javascript:;" onclick="javascript:history.back(-1);">
+                <span></span>
+            </a>
+        </div>
+        <form id="form" action="{url app=search}" class="ly-header-search-form" name="form_search">
+            <div class="ly-header-search-box">
+                <div class="ly-header-search-input">
+                    <input id="layout_newkeyword" maxlength="20" name="keyword" type="text" cleardefault="no" autocomplete="off" value="" placeholder="搜索你想要的产品" class="hilight1">
+                    <input type="hidden" name="app" value="search" />
+                    <input type="hidden" name="act" value="index" />
+                </div>
+            </div>
+        </form>
+        <div class="ly-header-icon-shortcut J_ping" onclick="submit_form();">
+            <span></span>
+        </div>
+    </div>
+</header>
+<p style="margin-top:44px;"></p>
+
+
+<div id="content_ca">
+    <div class="ca_menu">
+        <ul>
+            <!--{foreach from=$gcategorys item=gcategory}-->
+            <!-- {if $gcategory.id != 742} -->
+            <li>
+                <a class="active" <!-- {if $gcategory.children } --> href="#" <!-- {else} --> href="{url app=search&cate_id=$gcategory.id}" <!-- {/if} -->>
+                {$gcategory.value|escape}
+                </a>
+                <ul style="display:block;">
+                <!--{foreach from=$gcategory.children item=child}-->
+                <li>
+                    <a <!-- {if $gcategory.children } --> href="#" <!-- {else} --> href="{url app=search&cate_id=$child.id}" <!-- {/if} -->>
+                    {$child.value|escape}
+                    </a>
+                    <ul>
+                    <!-- {foreach from=$child.children item=val} -->
+                    <li>
+                        <a <!-- {if $val.children } --> href="#" <!-- {else} -->href="{url app=search&cate_id=$val.id}" <!-- {/if} -->>
+                            {$val.value}
+                        </a>
+                        <ul>
+                            <!-- {foreach from=$val.children item=v} -->
+                            <li>
+                                <a href="{url app=search&cate_id=$v.id}">
+                                    {$v.value}
+                                </a>
+                            </li>
+                            <!-- {/foreach} -->
+                        </ul>
+                    </li>
+                    <!-- {/foreach} -->
+                    </ul>
+                </li>
+                <!-- {/foreach} -->
+                </ul>
+            </li>
+            <!-- {/if} -->
+            <!-- {/foreach} -->
+        </ul>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="{res file=js/ca_menu_min.js}"></script>
+<script type="text/javascript">
+    $(document).ready(function (){
+
+        $(".ca_menu ul li").ca_menu();
+
+    });
+</script>
+<div id="topcontrol" style="width:3.333rem; height:3.333rem; border:0; bottom:4.333rem;right: 0.7407rem;position: fixed;display: block; opacity: 0; cursor: pointer;border-radius:50px;">
+    <img totop="" src="images/topback.png" style="width:3.333rem; height:3.333rem; border-radius:50px; border:0;" title="返回顶部" /></div>
+{include file='footer_nav.html'}
+</body>
+
+</html>

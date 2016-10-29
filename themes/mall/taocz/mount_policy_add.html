@@ -1,0 +1,40 @@
+{include file=member.header.html}
+
+
+<style>
+    p{
+        padding:10px;
+    }
+</style>
+<div class="content">
+    <div class="totline"></div>
+    <div class="botline"></div>
+    {include file=member.menu.html}
+    <div id="right">
+        {include file=member.curlocal.html}
+        {include file=member.submenu.html}
+        <form method="post">
+        <div>
+            <p>
+                客户等级：
+                <select name="grade_id">
+                    <!-- {foreach from=$grades item=grade} -->
+                    <option value="{$grade.grade_id}">{$grade.grade_name}</option>
+                    <!-- {/foreach} -->
+                </select>
+            </p>
+            <p>
+                对应优惠：
+                <select name="policy_id">
+                    <!-- {foreach from=$policy_types item=policy} -->
+                    <option value="{$policy.id}">满{$policy.coe}送{$policy.give}</option>
+                    <!-- {/foreach} -->
+                </select>
+            </p>
+            <p>
+                <input type="submit" value="确定" />
+            </p>
+        </div>
+        </form>
+    </div>
+</div>

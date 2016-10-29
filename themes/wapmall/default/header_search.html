@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <base href="{$site_url}/" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        {$page_seo}
+        <link href="{res file=css/common.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/index.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/main.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/rmc-common.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/bootstrap.min.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/font-awesome.css}" type="text/css" rel="stylesheet" />
+        <script type="text/javascript" src="index.php?act=jslang"></script>
+        <script type="text/javascript" src="{lib file=jquery.js}" charset="utf-8"></script>
+        <script type="text/javascript" src="{lib file=ecmall.js}" charset="utf-8"></script>
+        {$_head_tags}
+        <script type="text/javascript">
+            //<!CDATA[
+            var SITE_URL = "{$site_url}";
+            var REAL_SITE_URL = "{$real_site_url}";
+            var PRICE_FORMAT = '{$price_format}';
+            //]]>
+        </script>
+    </head>
+    <body id="log-reg">
+        <header class="region container-fluid bg_blue fixed"> 
+            <div class="content row header_search" align="center">
+                <a href="javascript:history.back()">
+                    <div class="banner_left col-xs-2 font_white">
+                        <span class="fa fa-angle-left"></span>
+                    </div>
+                </a>
+                <div class="banner_middle col-xs-8">
+                    <form method="GET" action="{url app=search}">
+                        <input placeholder="搜索" name="keyword" class="search_top"/>
+                        <input type="hidden" name="app" value="search" />
+                        <input type="hidden" name="act" value="index" />
+                </div>
+                <div class="banner_right col-xs-2">  
+                        <button type="submit" style="background-color: transparent;border: 0;color: #FFFFFF;font-size: 25px;margin-top: 2px;">
+                            <span class="fa fa-search"></span>
+                        </button>
+                    </form>
+                </div>
+                <!--
+                <div class="top"> <h1> <a href="{url app=default}"><img alt="{$site_title}" src="{$site_logo}" width="144px"/></a></h1> </div>
+                <div id="fake-search"> 
+                    <form method="GET" action="{url app=search}">
+                        <div class="fakeInput">
+                            <input class="text" name="keyword" style="color:silver"/>
+                            <input type="submit" value="" class="search-button" />
+                            <input type="hidden" name="app" value="search" />
+                            <input type="hidden" name="act" value="index" />
+                        </div> 
+                    </form>
+                </div> 
+                -->
+            </div> 
+        </header>
+        <div class="container-fluid fixed_header_search">
+            
+            

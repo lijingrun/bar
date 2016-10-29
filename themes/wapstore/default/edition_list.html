@@ -1,0 +1,133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <base href="{$site_url}/" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <link href="{res file=css/common.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/index.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/main.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/rmc-common.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/bootstrap.min.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/font-awesome.css}" type="text/css" rel="stylesheet" />
+        <script type="text/javascript" src="index.php?act=jslang"></script>
+        <script type="text/javascript" src="{lib file=jquery.js}" charset="utf-8"></script>
+        <script type="text/javascript" src="{lib file=ecmall.js}" charset="utf-8"></script>
+        <script>
+            function  find_bykeyword(){
+                var keyword = $("#keyword").val();
+                var store_id = $("#store_id").val();
+                window.location.href = "index.php?app=mobile_edition&store_id="+store_id+"&keyword="+keyword;
+            }
+        </script>
+    </head>
+    <body id="log-reg">
+        <header class="region container-fluid bg_blue fixed"> 
+            <div class="content row header_search" align="center">
+                <a href="javascript:history.back()">
+                    <div class="banner_left col-xs-2 font_white">
+                        <span class="fa fa-angle-left"></span>
+                    </div>
+                </a>
+            </div> 
+        </header>
+        <div class="container-fluid fixed_header_search">
+            <div style="padding-top:10px;" align="center">
+                <input type="text" id="keyword" value="{$keyword}"/> <input type="button" value="搜索" onclick="find_bykeyword();">
+                    <input type="hidden" value="{$store_id}" id="store_id" />
+            </div>
+            <table>
+
+                <!-- {foreach from=$editions item=edition} -->
+                <tr  style="border:2px;"><td>
+                        <a href="index.php?app=mobile_edition&act=details&id={$edition.edition_id}">
+                            <div style="padding:10px;" align="center">
+                                <img src="{$edition.img}" style="width:100px;height:100px;">
+                                    <br/>
+                                    {$edition.edition_name}
+                            </div>
+                    </td>
+                    <td>
+                        <table >
+                            <tr>
+                                <td style="white-space:nowrap;overflow:hidden;word-break:keep-all;" valign="top">
+                                    品牌： 
+                                </td>
+                                <td>
+                                    {$edition.brand}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="white-space:nowrap;overflow:hidden;word-break:keep-all;" valign="top">
+                                    材质：
+                                </td>
+                                <td>
+                                    {$edition.material}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="white-space:nowrap;overflow:hidden;word-break:keep-all;" valign="top">
+                                    工艺：
+                                </td>
+                                <td>
+                                    {$edition.technology}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="white-space:nowrap;overflow:hidden;word-break:keep-all;" valign="top">
+                                    规格：
+                                </td>
+                                <td style="word-break:break-all;">
+                                    {$edition.specifications}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="white-space:nowrap;overflow:hidden;word-break:keep-all;" valign="top">
+                                    克重：
+                                </td>
+                                <td>
+                                    {$edition.weight}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="white-space:nowrap;overflow:hidden;word-break:keep-all;" valign="top">
+                                    风格：
+                                </td>
+                                <td>
+                                    {$edition.style}
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    </a>
+                </tr>
+                <tr>
+                    <td colspan="2" style="width:20px;">
+                        <div style="border-style:solid; border-width:1px; border-bottom-color:#000">
+
+                        </div>
+                    </td>
+                </tr>
+                <!-- {/foreach} -->
+
+            </table>
+            <br />
+            <div align="center" style="padding-bottom: 100px;">
+                <a href="index.php?app=mobile_edition&store_id={$store_id}&page={$page_info.prev_page}&keyword={$keyword}">
+                    <input type="button" value="上一页" style="width:80px;"/>
+                </a>
+                &nbsp;第{$page_info.page}页&nbsp;
+                <a href="index.php?app=mobile_edition&store_id={$store_id}&page={$page_info.next_page}&keyword={$keyword}">
+                    <input type="button" value="下一页" style="width:80px;"/>
+                </a>
+            </div>
+
+
+        </div>
+        
+
+        {include file='footer_nav.html'}
+    </body>
+</html>

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {include file=public_header.html}
+    <script type="text/javascript" src="{lib file=cart.js}" charset="utf-8"></script>
+    <script>
+        function add(spec_id) {
+            add_to_cart(spec_id, 1);
+        }
+
+        /* add cart */
+        function add_to_cart(spec_id, quantity) {
+            var url = "index.php?app=cart&act=add";
+            $.getJSON(url, {'spec_id': spec_id, 'quantity': quantity}, function (data) {
+                if (data.done) {
+                    location.reload();
+                }
+                else {
+                    alert(data.msg);
+                }
+            });
+        }
+
+        //获取qq
+        function find_qq(store_id, qq) {
+            $.ajax({
+                'type': 'post',
+                'url': 'index.php?app=goods&act=find_qq',
+                'data': {'store_id': store_id},
+                success: function (data) {
+                    if (data == 222 || data == 111) {
+                        window.open("http://wpa.qq.com/msgrd?v=3&uin=" + qq + "&site=qq&menu=yes");
+                    } else {
+                        window.open("http://wpa.qq.com/msgrd?v=3&uin=" + data + "&site=qq&menu=yes");
+                    }
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+<header class="ly-header">
+    <div class="ly-header-bar">
+        <a href="javascript:;" onclick="javascript:history.back(-1);">
+        <div id="m_common_header_goback" class="ly-header-icon-back">
+            <span></span>
+        </div>
+        </a>
+        <div class="ly-header-title">购物车</div>
+    </div>
+</header>
+
+
+<div class="iwrap">
+    <!--{foreach from=$carts item=cart key=store_id}-->
+    <section class="goods_list">
+        <div class="crumbs">
+            <a class="fl" href="index.php?app=store&id={$store_id}">
+                {$lang.store}:{$cart.store_name}
+            </a>
+            <div class="clear">
+            </div>
+        </div>
+        <ul class="order">
+            <!--{foreach from=$cart.goods item=goods}-->
+            <li id="cart_item_{$goods.rec_id}">
+            <span class="pic-s">
+              <a href="index.php?app=goods&id={$goods.goods_id}">
+                  <img src="{$goods.goods_image}"
+                       style="display: block;">
+              </a>
+            </span>
+            <span class="txt">
+              <p>
+                  <a class="fs14" href="#">
+                      {$goods.goods_name|escape}
+                  </a>
+              </p>
+              <p style="">
+                  <label class="hui">
+                  </label>
+                  {$goods.specification|escape}
+              </p>
+              <p>
+                  <label class="hui">
+                      价格：
+                  </label>
+                  <label class="money">
+                      <!-- {if $goods.point_price != 0} -->
+                      {$goods.point_price}金币
+                      <!-- {else} -->
+                      {$goods.price|price}
+                      <!-- {/if} -->
+                  </label>
+                  <label style="color:red;">
+                  </label>
+                <span class="d" para="del" onclick="drop_cart_item({$store_id}, {$goods.rec_id});">
+                </span>
+              </p>
+              <p class="bcount" style="margin: 4px 0;">
+                <span class="fl hui">
+                  数量：
+                </span>
+                <span class="c" onclick="decrease_quantity({$goods.rec_id});">
+                  -
+                </span>
+                <span class="fl">
+                  <!--<input type="text" value="1" class="sinput">-->
+                    <input type="text" id="input_item_{$goods.rec_id}"  value="{$goods.quantity}" orig="{$goods.quantity}"  class="sinput"  id="input_item"  onkeyup="change_quantity({$store_id}, {$goods.rec_id}, {$goods.spec_id}, this);"  changed="{$goods.quantity}"/>
+                </span>
+                <span class="c" onclick="add_quantity({$goods.rec_id});">
+                  +
+                </span>
+
+                  <!--</p>-->
+                  <!--<p style="display:none;">-->
+                  <!--<label class="wtip">-->
+                  <!--该商品目前只剩余8盒-->
+                  <!--</label>-->
+                  <!--</p>-->
+                  <!--<p style="display:none;">-->
+                  <!--<label class="wtip">-->
+                  <!--商品缺货或已下架-->
+                  <!--</label>-->
+                  <!--</p>-->
+            </span>
+                <div class="clear">
+                </div>
+                <!-- {foreach from=$goods.rules item=rules} -->
+                <p style="color:red">{$rules.display}</p>
+                <!-- {/foreach} -->
+            </li>
+            <!-- {/foreach} -->
+        </ul>
+    </section>
+    <!-- {if $cart.mount_policy} -->
+        <div class="goods-part bdr-tb">
+            <div class="prod-promotion bdr-b borb arrow-fold">
+                <div class="prod-promotion-container promotion-up J_ping">
+                    <span class="part-note-msg"></span>
+                    <div class="promotion-content arrow-fold">
+                        <div class="promotion-item promotion-info">
+                            <span>您在本店这个月还可享有以下优惠：</span>
+                            <p style='color:red;'>*以下优惠独立享受，不与其他任何优惠叠加*</p>
+                        </div>
+                        <!-- {foreach from=$cart.mount_policy item=policy} -->
+                        <div class="promotion-item item-import">
+                            <i class="label-icon-div"> <span class="label-text">满就送</span> </i>
+                            <a href="#" ronclick="#"> <span class="promotion-item-text"><p>{$policy.content}</p></span> </a>
+                        </div>
+                        <!-- {/foreach} -->
+                    </div>
+                    <span class="promotion-left"> </span>
+                </div>
+            </div>
+        </div>
+    <!-- {/if} -->
+    <div class="fixOrder">
+        <p style="margin-right:10px;">
+            总额：
+            <label class="money fs18">
+                <span id='cart{$store_id}_amount'>{$cart.amount|price}</span>
+            </label>
+        </p>
+        <p>
+            <a id="buyBtn" class="btn_orange fr" style="margin-right:10px;" href="index.php?app=order&goods=cart&store_id={$store_id}">
+                去结算
+                <!--<label style="cursor:pointer;">-->
+                    <!--（2）-->
+                <!--</label>-->
+            </a>
+            <a class="btn_white fl" style=" margin-left:20px;" href="index.php?app=store&id={$store_id}">
+                继续购物
+            </a>
+        </p>
+    </div>
+    <!-- {/foreach} -->
+    <div class="pages_nextprev" style="display:none;">
+    </div>
+</div>
+<!-- {if $interest} -->
+<div class="gray-text">
+    <span class="gray-layout"><span class="gray-text-img"></span>下面这些商品您可能感兴趣</span>
+</div>
+<!-- {/if} -->
+
+<div class="mui-chaoshi-item-columns">
+    <!--{foreach from=$interest item=goods}-->
+    <div class="mui-chaoshi-item-column">
+        <div class="mui-chaoshi-item-column-inner" href="#">
+            <a href="index.php?app=goods&id={$goods.goods_id}">
+                <div class="img-wrapper">
+                    <img class="item-img img-ks-lazyload"
+                         src="{$goods.default_image}">
+                </div>
+            </a>
+            <div class="item-main">
+                <div class="item-info">
+                    <div class="item-title">
+                        {$goods.goods_name}
+                    </div>
+                    <div class="item-desc">
+            <span class="plain-text">
+              <p>
+                  <label>
+                      型号规格：
+                  </label>
+                  <label class="hui">
+                      {$goods.spec}
+                  </label>
+              </p>
+            </span>
+                    </div>
+                </div>
+                <div class="item-imp">
+                    <div class="price-box">
+                        <div class="promotion-price no-referPrice">
+              <span class="price">
+                <span class="rmb">
+                </span>
+                {$goods.spec_price|price}
+              </span>
+                        </div>
+                    </div>
+                    <button class="j_AddCart" onclick="add({$goods.spec_id});">
+                        加入购物车
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- {/foreach} -->
+</div>
+
+<div class="clear space10"></div>
+
+<div id="topcontrol"
+     style="width:3.333rem; height:3.333rem; border:0; bottom:4.333rem;right: 0.7407rem;position: fixed;display: block; opacity: 0; cursor: pointer;border-radius:50px;">
+    <img totop="" src="images/topback.png" style="width:3.333rem; height:3.333rem; border-radius:50px; border:0;"
+         title="返回顶部"/>
+</div>
+<div style="height:60px"></div>
+{include file='footer_nav.html'}
+</body>
+</html>

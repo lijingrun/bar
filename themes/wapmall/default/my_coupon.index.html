@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>328商城</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="keywords" content="328商城" />
+    <meta http-equiv="description" content="328商城" />
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="shortcut icon" href="{res file=images/favicon.ico}" />
+    <title>328商城</title>
+    <link rel="stylesheet" type="text/css" href="{res file=css/style.css}" />
+    <link rel="stylesheet" type="text/css" href="{res file=css/index.css}" />
+    <link rel="stylesheet" type="text/css" href="{res file=css/textui.css}" />
+    <script type="text/javascript" src="{res file=js/jquery-1.8.3.min.js}"></script>
+    <script type="text/javascript" src="{res file=js/jquery.SuperSlide.js}"></script>
+    <script type="text/javascript" src="{res file=js/scrolltopcontrol.js}"></script>
+    <script type="text/javascript" src="{res file=js/main.js}"></script>
+</head>
+
+<body>
+<header class="ly-header" style="height:auto">
+    <div class="ly-header-bar">
+        <div id="m_common_header_goback" class="ly-header-icon-back">
+            <a href="javascript:;" onclick="javascript:history.back(-1);">
+                <span></span>
+            </a>
+        </div>
+        <div class="ly-header-title">我的优惠券</div></div>
+</header>
+<!-- {foreach from=$coupons item=coupon} -->
+<div class="pepper-w">
+    <div class="pepper pepper-blue">
+        <div class="pepper-l">
+            <p class="pepper-l-num">
+                <i>¥</i>
+                <span>{$coupon.coupon_value}</span>（一次性购买{$coupon.min_amount}可使用）</p>
+            <p class="pepper-l-con">{$coupon.store_name}专用，可用次数：{$coupon.remain_times}次；</p></div>
+        <div class="pepper-r">
+            <span>使用期限</span>
+            <div>{$coupon.start_time|date}
+                <p class="pepper-line">~</p>{$coupon.end_time|date}</div></div>
+    </div>
+    <div class="pepper-b pepper-blue">
+        <div class="pb-con">优惠卷号：{$coupon.coupon_sn}
+            <span>优惠券状态：<!-- {if $coupon.valid} -->可用<!-- {else} -->不可用<!-- {/if} --></span></div>
+        <div class="pb-border"></div>
+    </div>
+    <div class="p-address"></div>
+</div>
+<!-- {/foreach} -->
+
+</body>
+
+</html>

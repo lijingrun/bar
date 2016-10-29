@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+
+    <body>
+        <script>
+            function find_order() {
+                var name = document.getElementById('name').value;
+                var status = document.getElementById('status').value;
+                var orderid = document.getElementById('orderid').value;
+                window.location.href = "index.php?app=redeem&act=orders&name=" + name + "&status=" + status + "&orderid=" + orderid;
+            }
+            
+            function cancle_order(id){
+                if(confirm("真的确定要取消订单吗？")){
+                    window.location.href = "index.php?app=redeem&act=cancle_order&order_id="+id;
+                }
+            }
+        </script>
+        <div align="center">
+            订单号：<input type="text" name="orderid" value="{$orderid}" id="orderid"/>&nbsp;&nbsp;
+            订单状态
+            <select name='status' id="status">
+                <option value=10 {if $status == 10}selected='selected'{/if}>所有</option>
+                <option value=20 {if $status == 20}selected='selected'{/if} >待发货</option>
+                <option value=30 {if $status == 30}selected='selected'{/if} >待签收</option>
+                <option value=40 {if $status == 40}selected='selected'{/if} >已完成</option>
+                <option value=1 {if $status == 1}selected='selected'{/if} >已取消</option>
+            </select>
+            &nbsp;&nbsp;
+            客户名：<input type="text" name="name" value="{$name}" id="name"/>
+
+            <input type="button" value="搜索" onclick="find_order();"/>
+
+        </div>
+
+        <div align="center">
+            <table border='1' style="width:80%;">
+                <tr>
+                    <th>订单号</th>
+                    <th>下单时间</th>
+                    <th>买家</th>
+                    <th>购买产品</th>
+                    <th>所用积分</th>
+                    <th>订单状态</th>
+                    <th>操作</th>
+                </tr>
+                <!-- {foreach from=$orders item=order} -->
+                <tr>
+                    <td>{$order.order_id}</td>
+                    <td>{$order.created|date:complete}</td>
+                    <td>{$order.buyer_name}</td>
+                    <td>{$order.goods_name}</td>
+                    <td>{$order.total_price}</td>
+                    <td>
+                            {$order.status|modifier:order_status}
+                    </td>
+                    <td>
+                        <a href='index.php?app=redeem&act=detail&order_id={$order.order_id}' >
+                            <input type="button" value="查看详细" />
+                        </a>
+                        {if $order.status == 20}
+                        <a href='#' >
+                            <input type="button" value="取消订单" onclick="cancle_order({$order.order_id});"/>
+                        </a>
+                        {/if}
+                    </td>
+                </tr>
+                <!-- {/foreach} -->
+                <tr>
+                    <td colspan="7">
+                        <div align='right'>
+                            共{$total_pages}页{$count}条数据 &nbsp;&nbsp;
+                            <a href='index.php?app=redeem&act=orders&page={$prev_page}&name={$name}&orderid={$orderid}&status={$status}'>上一页</a>
+                            第 {$page} 页
+                            <a href='index.php?app=redeem&act=orders&page={$next_page}&name={$name}&orderid={$orderid}&status={$status}'>下一页</a>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div>
+            <a href="index.php?app=import">
+                <input type="button" value="批量发货" />
+            </a>
+        </div>
+    </body>
+</html>

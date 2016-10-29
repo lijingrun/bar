@@ -1,0 +1,67 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <base href="{$site_url}/" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        {$page_seo}
+        <link href="{res file=css/common.css}" rel="stylesheet" type="text/css" />
+        <link href="{res file=css/flexslider.css}" rel="stylesheet" type="text/css" />
+        <link href="{res file=css/main.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/rmc-common.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/bootstrap.min.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/font-awesome.css}" type="text/css" rel="stylesheet" />
+        <script type="text/javascript" src="{res file=js/jquery-1.8.0.min.js}"></script>
+        <script type="text/javascript" src="{res file=js/jquery.flexslider.js}"></script>
+        <script type="text/javascript" src="{res file=js/sub_menu.js}"></script>
+        <script type="text/javascript" src="{lib file=ecmall.js}" charset="utf-8"></script>
+    </head>
+    <body>
+
+        {include file=header_search.html}
+        <div class="sort" style="height:44px">
+            <ul>
+                <li class="bg_blue font_white" style="border-bottom:3px solid #0050cd">排序</li>
+                <a href="index.php?app=store&act=search&id={$store.store_id}&keyword={$keyword}&cate_id={$cate_id}&order=sales%20desc"><li class=" <!--{if $sort eq '4'}-->arrow_bottom<!--{/if}-->">销量</li></a>
+                <a href="index.php?app=store&act=search&id={$store.store_id}&keyword={$keyword}&cate_id={$cate_id}&order=add_time%20desc"><li class=" <!--{if $sort eq '1'}-->arrow_bottom<!--{/if}-->">新品</li></a>
+                <a href="index.php?app=store&act=search&id={$store.store_id}&keyword={$keyword}&cate_id={$cate_id}&order=price%20desc"><li class=" <!--{if $sort eq '2'}-->arrow_bottom<!--{/if}-->">价格</li></a>
+                <a href="index.php?app=store&act=search&id={$store.store_id}&keyword={$keyword}&cate_id={$cate_id}&order=views%20desc"><li class=" <!--{if $sort eq '3'}-->arrow_bottom<!--{/if}-->">人气</li></a>
+            </ul>
+        </div>
+
+        
+        <!--列表-->
+        <div class="lists lists1">
+            <ul style="margin-left:2%">
+                <!--{if $searched_goods}-->
+                <!--{foreach from=$searched_goods item=sgoods}-->
+                <a href="{url app=goods&id=$sgoods.goods_id}">
+                    <li>
+                        <div style="padding:10px;">
+                            <img src="{$sgoods.default_image}" />
+                        </div>
+                        <div class="font_s">
+                            <p>{$sgoods.goods_name|escape}</p>
+                            <span>{$sgoods.price|price}</span>
+                        </div>
+                    </li>
+                </a>
+                <!--{/foreach}-->
+                <!--{else}-->
+                <div style="padding:50px 60px; text-align:center;background:#fff;margin:5px 5px 0;">{$lang.no_records}</div>
+                <!--{/if}-->
+            </ul>
+        </div>
+
+
+        <!--------翻页-------------->
+        <div class="page">
+            {include file=page.bottom.html}
+        </div>
+        <div style="height:60px"></div>
+        {include file=footer_nav.html}
+    </body>
+</html>

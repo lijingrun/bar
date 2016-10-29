@@ -1,0 +1,31 @@
+<head>
+    {include file=public_header.html}
+</head>
+<body>
+<script>
+    function sure(){
+        if(confirm("一旦确认后您积分将会清零，是否确定？")){
+            var point = {$point};
+            $.ajax({
+                type : 'post',
+                url : 'index.php?app=buyer_coin&act=sure_to_convert',
+                data : {'point' : point},
+                success : function(data){
+                    alert(data);
+                }
+            });
+        }
+    }
+</script>
+<div style="padding:10px;font-size: 20px;">
+    <p>尊敬的客户：您好！</p>
+    <p>我们查询到您在商城的剩余积分是{$point}分</p>
+    <p style="background-color: #aa7700;padding:5px;color:white;">1积分=80金币</p>
+    <p align="center">我们将会将您的积分转换成为{$coin}金币币返还到您的账号上面</p>
+    <p style="color: red;">注意：一旦您确认，您的积分将会清零，改过程不可逆，如有问题，请先联系客服人员确认</p>
+    <div style="padding:10px;">
+        <input type="button" value="确定转换" style="font-size: 20px;padding: 5px;" onclick="sure();" />
+    </div>
+</div>
+{include file="footer_nav.html"}
+</body>

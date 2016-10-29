@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {include file=public_header.html}
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <link rel="stylesheet" type="text/css" href="{res file=css/viplevel.css}"/>
+    <link rel="stylesheet" type="text/css" href="{res file=css/bt.css}"/>
+    <script type="text/javascript" src="{res file=js/mui.js}"></script>
+    <script>
+    //        $(function () {
+    //            //创建slider组件
+    //            Zepto('#sliderPro').slider({loop: true});
+    //            var tab_a = $('.titleBox h3');
+    //            tab_a.click(function () {
+    //                Zepto(this).addClass('curTitle').siblings().removeClass();
+    //                var index = tab_a.index(this);
+    //                Zepto('.tabCon').eq(index).show().siblings('.tabCon').hide();
+    //            })
+    //            $(window).scroll(function () {
+    //                $(".topAlert").hide();
+    //            });
+    //            window.onscroll = function () {
+    //                if (document.documentElement.scrollTop + document.body.scrollTop > 100) {
+    //                    document.getElementById("fPurchase").style.display = "block";
+    //                    document.getElementById("fTopBox").style.display = "block";
+    //                    document.getElementById("headBox").style.position = "fixed";
+    //                }
+    //                else {
+    //                    document.getElementById("fPurchase").style.display = "none";
+    //                    document.getElementById("fTopBox").style.display = "none";
+    //                    document.getElementById("headBox").style.position = "relative";
+    //                }
+    //            }
+    //        })
+
+        // set for android device.
+        setAndroidDeviceId = function (device_type, serial_id, device_model) {
+            $.ajax({
+                type: 'POST',
+                data: {
+                    device_type: device_type,
+                    serial_id: serial_id,
+                    device_model: device_model,
+                },
+                url: '?app=mqtt&act=device_login',
+                dataType: 'text',
+                success: function (data) {
+                    console.log(data);
+                },
+            });
+        };
+        // set for iOS device.
+        setIOSDeviceId = function (serial_id, device_model) {
+            setAndroidDeviceId('apns', serial_id, device_model);
+        };
+
+        function find_goods() {
+            var goods_name = $("#searchkey").val().trim();
+            location.href = "index.php?keyword=" + goods_name + "&app=search&act=index";
+        }
+    </script>
+</head>
+<body>
+<div style="background:#ffffff;">
+    <div class="logo">
+        <a href="#"><img src="{res file=images/logo_p.png}" alt="126墙纸商城"/></a>
+    </div>
+    <div class="zhuti">
+        <form id="searchdata" action="#" method="get">
+            <ol class="search clearfix">
+                <li class="searchtype s_list"><span>产品</span>
+                    <dl>
+                        <div>
+                            选择搜索栏目
+                        </div>
+                        <dt data-url="#">
+                            产品
+                        </dt>
+                        <!--<dt data-url="#"  style="border-bottom:none">-->
+                        <!--厂家-->
+                        <!--</dt>-->
+                    </dl>
+                </li>
+                <li class="searchkey"><input type="text" id="searchkey" name="wd" autocomplete="off" value=""
+                                             placeholder="搜索产品"/></li>
+                <li class="searchbt">
+                    <button type="button" onclick="find_goods();"></button>
+                </li>
+            </ol>
+        </form>
+    </div>
+    <div class="hot-words-lst">
+        <ul class="hot-words-lst">
+            <li><a href="index.php?keyword=脱水&app=search&act=index">脱水湿胶</a></li>
+            <li><a href="index.php?keyword=无缝墙布&app=search&act=index">无缝墙布胶</a></li>
+            <li><a href="index.php?app=store&id=24307">维涅斯墙纸</a></li>
+            <li><a href="index.php?app=store&act=search&id=7&keyword=金山卫士">金山卫士</a></li>
+            <!--<li><a href="#">蓝羽墙纸</a></li>-->
+        </ul>
+    </div>
+    <!--效果html开始-->
+    <div class="mui-slider" style="padding-bottom:31%;">
+        <div class="mui-slider-group mui-slider-loop">
+            <!--支持循环，需要重复图片节点-->
+            <div class="mui-slider-item mui-slider-item-duplicate">
+                <a href="" id="link_url"><img id="img_url" src=""/></a>
+            </div>
+            <a href="" id="link_url"> </a>
+            <!-- {foreach from=$images item=image} -->
+            <div class="mui-slider-item">
+                <a href="{$image.url}"><img src="{$image.image}"/></a>
+            </div>
+            <!-- {/foreach} -->
+            <!--<div class="mui-slider-item">-->
+            <!--<a href="#"><img src="images/banner.jpg" /></a>-->
+            <!--</div>-->
+            <!--<div class="mui-slider-item">-->
+            <!--<a href="#"><img src="images/banner.jpg" /></a>-->
+            <!--</div>-->
+            <!--<div class="mui-slider-item">-->
+            <!--<a href="#"><img src="images/banner.jpg" /></a>-->
+            <!--</div>-->
+            <script>
+                var link_url = "#";
+                var img_url = "images/banner.jpg"
+                $('#img_url').attr('src', img_url);
+                $('#link_url').attr('href', link_url);
+            </script>
+            <div class="mui-slider-item mui-slider-item-duplicate">
+                <!-- {foreach from=$images item=image} -->
+                <a href="#"><img "images="" anner.jpg"="" /></a>
+                <!-- {/foreach} -->
+            </div>
+            <!--支持循环，需要重复图片节点-->
+        </div>
+        <div class="mui-slider-indicator">
+            <!--<div class="mui-indicator mui-active"></div>-->
+            <!-- {foreach from=$images item=image} -->
+            <div class="mui-indicator"></div>
+            <!-- {/foreach} -->
+        </div>
+        <!--轮播上面的搜索框-->
+    </div>
+    <script>
+        //获得slider插件对象
+        var gallery = mui('.mui-slider');
+        gallery.slider({
+            interval: 5000//自动轮播周期，若为0则不自动播放，默认为0；
+        });
+    </script>
+    <script language="javascript">
+        jQuery(".slideBox").slide({mainCell: ".bd ul", effect: "fold", autoPlay: true, trigger: "click"});
+    </script>
+    <!--效果html结束-->
+    <div class="entrance">
+        <div class="entrance-item">
+            <a class="btn btn-m btn-warn" href="index.php?app=category"><i class="icon icon-list"></i>产品分类</a>
+        </div>
+        <div class="entrance-item">
+            <a class="btn btn-m btn-info" href="index.php?app=member"><i class="icon icon-briefcase"></i>个人中心</a>
+        </div>
+    </div>
+</div>
+<div class="clear space10 bg001"></div>
+<div class="mb10">
+    <ul class="img_view">
+        <li class="cborder"><a href="#"><img src="{res file=images/lanyu.jpg}" alt="著名厂家" width="100%"/>
+            <div class="ptext">
+                <h3>著名厂家</h3>
+                <p></p>
+            </div>
+        </a><span></span></li>
+        <li class="cborder"><a href="#"><img src="{res file=images/weinisi.jpg}" alt="墙纸分类" width="100%"/>
+            <div class="ptext">
+                <h3>墙纸分类 </h3>
+                <p></p>
+            </div>
+        </a><span></span></li>
+        <li class="cborder"><a href="#"><img src="{res file=images/fuliao.jpg}" alt="辅料分类" width="100%"/>
+            <div class="ptext">
+                <h3>墙纸辅料分类</h3>
+                <p></p>
+            </div>
+        </a><span></span></li>
+    </ul>
+    <ul class="text_list">
+        <li>
+            <a href="index.php?app=store&id=7"><h3>蓝羽辅料</h3></a>
+            <a href="index.php?app=store&id=24307"><h3>维涅斯墙纸</h3></a>
+            <a href="index.php?app=store&id=24480"><h3>中博装饰</h3></a>
+        </li>
+        <li>
+            <a href="index.php?app=store&id=24307"><h3>热卖墙纸</h3></a>
+            <a href="index.php?app=store&act=search&id=24307&order=views%20desc"><h3>精品墙纸</h3></a>
+            <a href="index.php?app=search&cate_id=464"><h3>更多...</h3></a>
+        </li>
+        <li><a href="index.php?app=search&cate_id=474"><h3>墙纸湿胶</h3></a>
+            <a href="index.php?keyword=基膜&app=search&act=index"><h3>墙纸基膜</h3></a>
+            <a href="index.php?app=search&cate_id=465"><h3>更多...</h3></a>
+        </li>
+    </ul>
+</div>
+<!-- {if $c_goods} -->
+<div class="clear space10 bg001"></div>
+<div class="pro-list">
+    <div class="daily-deals">
+        <div class="pro-tit">
+            促销热卖
+            <!--<a href="#" class="see-all">全部<span></span></a>-->
+        </div>
+        <div class="pro-box">
+            <ul>
+                <!-- {foreach from=$c_goods item=c_good} -->
+                <li class="swiper-slide">
+                    <a href="index.php?app=goods&id={$c_good.goods_id}">
+                        <div class="pro-img">
+                            <!-- {if $c_good.stock == 0} -->
+                            <img src="{$site_url}/sold_out.jpg"/>
+                            <!-- {else} -->
+                            <span class="off-ico2" style="background-color: red;">促销</span>
+                            <image src="{$c_good.default_image}"/>
+                            <!-- {/if} -->
+                        </div>
+                        <div class="pro-text">
+                            <p class="pro-piece">{$c_good.goods_name}</p>
+                            <p class="pro-piece2">
+                                <!-- {if $is_jingxiaoshang} -->
+                                {$c_good.price_distributor|price}
+                                <!-- {else} -->
+                                {$c_good.price|price}
+                                <!-- {/if} -->
+                            </p>
+                        </div>
+                    </a>
+                </li>
+                <!-- {/foreach} -->
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- {/if} -->
+<div class="clear space10 bg001"></div>
+<div class="pro-list">
+    <div class="daily-deals">
+        <div class="pro-tit">
+            店长推荐
+            <!--<span style="color:#0066CC">买一送一</span>-->
+            <!--<a href="#" class="see-all">全部<span></span></a>-->
+        </div>
+        <div class="pro-box">
+            <ul>
+                <!-- {foreach from=$r_goods item=r_good} -->
+                <li class="swiper-slide">
+                    <a href="index.php?app=goods&id={$r_good.goods_id}">
+                        <div class="pro-img">
+                            <!--<span class="off-ico2">买一送一</span>-->
+                            <img src="{$r_good.default_image}"/>
+                        </div>
+                        <div class="pro-text">
+                            <p class="pro-piece">{$r_good.goods_name}</p>
+                            <p class="pro-piece2">
+                                <!-- {if $is_jingxiaoshang} -->
+                                {$r_good.price_distributor|price}
+                                <!-- {else} -->
+                                {$r_good.price|price}
+                                <!-- {/if} -->
+                            </p>
+                        </div>
+                    </a>
+                </li>
+                <!-- {/foreach} -->
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="clear space10 bg001"></div>
+<div class="pro-list">
+    <div class="daily-deals">
+        <div class="pro-tit">
+            最新上市
+            <!--<a href="#" class="see-all">全部<span></span></a>-->
+        </div>
+        <div class="pro-box">
+            <ul>
+                <!-- {foreach from=$new_goods item=new_good} -->
+                <li class="swiper-slide">
+                    <a href="index.php?app=goods&id={$new_good.goods_id}">
+                        <div class="pro-img">
+                            <span class="off-ico2">New</span>
+                            <img src="{$new_good.default_image}"/>
+                        </div>
+                        <div class="pro-text">
+                            <p class="pro-piece">{$new_good.goods_name}</p>
+                            <p class="pro-piece2">
+                                <!-- {if $is_jingxiaoshang} -->
+                                {$new_good.price_distributor|price}
+                                <!-- {else} -->
+                                {$new_good.price|price}
+                                <!-- {/if} -->
+                            </p>
+                        </div>
+                    </a>
+                </li>
+                <!-- {/foreach} -->
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="clear space10 bg001"></div>
+
+<!--<a href="index.php?app=store&act=search&id=7&recommended=1&order=recommended%20desc" onclick="javascript:window.location.href='#?url='+window.location.href;sendUserlogsElement('#');" class="fPurchase" id="fPurchase" style="display: block;">促销</a>-->
+<div id="topcontrol"
+     style="width:3.333rem; height:3.333rem; border:0; bottom:4.333rem;right: 0.7407rem;position: fixed;display: block; opacity: 0; cursor: pointer;border-radius:50px;">
+    <img totop="" src="topback.png" style="width:3.333rem; height:3.333rem; border-radius:50px; border:0;"
+         title="返回顶部"/>
+</div>
+
+
+{include file=footer_nav.html}
+<script type="text/javascript">
+    function CloseDiv(show_div) {
+        document.getElementById(show_div).style.display = 'none';
+        document.getElementById(bg_div).style.display = 'none';
+    }
+    ;
+</script>
+
+<!-- 专场活动div -->
+<!-- {if $special} -->
+<div id="show_div">
+    <div class="modal ui-modal-advertise-bottom cart-cmp-common  cart-cmp-animate">
+        <div class="modal-body">
+            <div class="modal-message">
+                <a onclick="CloseDiv('show_div','fade')" class="close-btn"
+                   mars_sead="ads_close-2_btn"><span>×</span></a>
+                <div>
+                    <a href="index.php?app=special_buyer&special_id={$special.special_id}" mars_sead="ads_page-3_btn" rel="nofollow">
+                        <img src="{$special.image}.png">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- {/if} -->
+
+
+
+
+<!-- {if $grade_remind} -->
+
+<div id="goodcover"></div>
+<div id="code">
+    <div class="close1"><a href="javascript:void(0)" id="closebt"><img src="{res file=images/vip_close.png}"></a></div>
+    <div class="goodtxt">
+        <p></p>
+        <p>恭喜您已经升级为</p>
+        <p style="font-size:3.5rem">{$grade_name}</p>
+    </div>
+    <div class="code-img"><a href="index.php?app=member&act=member_discount">
+        <img src="{res file=images/levle_bt.png}"></a></div>
+</div>
+
+<script>
+    $(function() {
+        //alert($(window).height());
+        $(function() {
+            $('#code').center();
+            $('#goodcover').show();
+            $('#code').fadeIn();
+        });
+        $('#closebt').click(function() {
+            $('#code').hide();
+            $('#goodcover').hide();
+        });
+        $('#goodcover').click(function() {
+            $('#code').hide();
+            $('#goodcover').hide();
+        });
+        /*var val=$(window).height();
+         var codeheight=$("#code").height();
+         var topheight=(val-codeheight)/2;
+         $('#code').css('top',topheight);*/
+        jQuery.fn.center = function(loaded) {
+            var obj = this;
+            body_width = parseInt($(window).width());
+            body_height = parseInt($(window).height());
+            block_width = parseInt(obj.width());
+            block_height = parseInt(obj.height());
+
+            left_position = parseInt((body_width / 2) - (block_width / 2) + $(window).scrollLeft());
+            if (body_width < block_width) {
+                left_position = 0 + $(window).scrollLeft();
+            };
+
+            top_position = parseInt((body_height / 2) - (block_height / 2) + $(window).scrollTop());
+            if (body_height < block_height) {
+                top_position = 0 + $(window).scrollTop();
+            };
+
+            if (!loaded) {
+
+                obj.css({
+                    'position': 'absolute'
+                });
+                obj.css({
+                    'top': ($(window).height() - $('#code').height()) * 0.5,
+                    'left': left_position
+                });
+                $(window).bind('resize', function() {
+                    obj.center(!loaded);
+                });
+                $(window).bind('scroll', function() {
+                    obj.center(!loaded);
+                });
+
+            } else {
+                obj.stop();
+                obj.css({
+                    'position': 'absolute'
+                });
+                obj.animate({
+                    'top': top_position
+                }, 200, 'linear');
+            }
+        }
+
+    })
+</script>
+<!-- {/if} -->
+</body>
+</html>

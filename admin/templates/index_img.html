@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>首页轮播图设置</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script type="text/javascript" charset="utf-8" src="{lib file=jquery-1.4.4.min.js}"></script>
+    </head>
+    <body>
+        <script>
+                    function changeurl(id){
+                    var url = $("#url" + id).val();
+                            $.ajax({
+                            type : "post",
+                                    url : "index.php?app=index_img&act=changeurl",
+                                    data : {'id':id, 'url':url},
+                                    success : function(data){
+                                    alert(data);
+                                    }
+                            });
+                    }
+            function changeorder(id){
+            var order = $("#order" + id).val();
+                    $.ajax({
+                    type : "post",
+                            url : "index.php?app=index_img&act=changeorder",
+                            data : {'id':id, 'order':order},
+                            success : function(data){
+                            alert(data);
+                            }
+                    });
+            }
+            function delimg(id){
+                if(confirm("删除数据不能恢复，是否确定删除？")){
+                    $("#"+id).hide();
+                    $.ajax({
+                       type : "post",
+                            url : "index.php?app=index_img&act=delimg",
+                            data : {'id':id},
+                            success : function(data){
+                            alert(data);
+                            } 
+                    });
+                }
+            }
+        </script>
+        <div>
+            <!-- {foreach from=$images item=image} -->
+            <div style="padding:10px;" id="{$image.id}">
+                <img src="http://120.24.156.120/{$image.image}" style="width:200px;"/> </br>
+                连接:<input type="text" value="{$image.url}" id="url{$image.id}" onblur="changeurl({$image.id});"/>
+                排序<input type="text" value="{$image.the_order}" id="order{$image.id}" onblur="changeorder({$image.id})">
+                <a href="index.php?app=index_img&act=changeimg&id={$image.id}">
+                    <input type="button" value="修改图片" />
+                </a>
+                <input type="button" value="删除图片" onclick="delimg({$image.id});"/>
+            </div>
+            <!-- {/foreach} -->
+            <br />
+            <div style="padding:30px;">
+                <span>请上传1563x699的图片</span>
+                <form method="post" enctype="multipart/form-data">
+                    <input type="file" name="index_img" />
+                    连接:<input type="text" name="the_url"/>
+                    排序：<input type="text" name="the_order">
+
+                    <p>
+                        <input type="submit" value="增加" />
+                    </p>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

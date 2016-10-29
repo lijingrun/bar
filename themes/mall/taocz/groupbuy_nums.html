@@ -1,0 +1,132 @@
+<style type="text/css">
+    .p{
+        padding-left:10px;
+        padding-top: 10px;
+    }
+</style>
+{include file=member.header.html}
+
+<script>
+    function findgoods() {
+        $("#goods_list").remove();
+        var goods_name = $.trim($("#goods_name").val());
+        if (goods_name == '') {
+            alert('请输入商品名称');
+        } else {
+            $.ajax({
+                type: 'post',
+                url: 'index.php?app=groupbuy_nums&act=find_goods',
+                data: {'goods_name': goods_name},
+                success: function (data) {
+                    $("#choose_goods").after(data);
+                }
+            });
+        }
+    }
+    
+    function add_price(){
+        var data = "<div class='p' >"+
+                    "数量区间："+
+                    "<input type='text' name='min_nums[]' placeholder='请填写件数' style='width:120px;'/>"+
+                   "--"+
+                    "<input type='text' name='max_nums[]' placeholder='请填写件数' style='width:120px;'/>"+
+                    "<br />对应价格："+
+                    "<input type='text' name='unit_price[]' placeholder='单价' style='width:120px;'/> 元"+
+                    "<input type='text' name='total_price[]' placeholder='整箱价' style='width:120px;'/>元"+
+                "</div>";
+        $("#add").before(data);
+    }
+    
+    function get_sprice(){
+        var goods_id = $("#goods").val();
+        if(goods_id == 0){
+            return;
+        }else{
+            $.ajax({
+                type : 'post',
+                url : 'index.php?app=groupbuy_nums&act=get_spec',
+                data : {'goods_id' : goods_id},
+                success : function(data){
+                    $("#type").after(data);
+                }
+            });
+        }
+    }
+</script>
+
+<div class="content">
+    <div class="totline"></div>
+    <div class="botline"></div>
+    {include file=member.menu.html}
+    <div id="right"> 
+        {include file=member.curlocal.html}
+        {include file=member.submenu.html}
+        <div class="wrap">
+            <span>以量定价基本信息</span>
+            <form method="post" id="form">
+                <p class="p">
+                    活动名称：
+                    <input type="text" name="name" id="name" />
+                </p>
+                <p class="p">
+                    搜索产品：
+                    <input type="text" id="goods_name" placeholder="请填写商品的准确名称"/>
+                    <input type="button" value="搜索" onclick="findgoods();"/>
+                </p>
+                <p class="p">
+                    <span id="choose_goods">请选择产品：</span>
+                </p>
+                <p class="p">
+                    <span id="type">活动产品型号：</span>
+                    
+                </p>
+                <p class="p">
+                    是否给对应产品积分：
+                    <select name="point">
+                        <option value="1" >给积分</option>
+                        <option value="2" >不给积分</option>
+                    </select>
+                </p>
+                <p class="p">
+                    产品原价：
+                    <input type="text" name="price"/><span style="color:red">这里是前台显示给客户看的价钱</span>
+                </p>
+                <p class="p">
+                    原价单位：
+                    <input type="text" name="spec_unit" />
+                </p>
+                <p class="p">
+                    活动开始时间：
+                    <input type="datetime-local" name="start_time"/>
+                </p>
+                <p class="p">
+                    活动结束时间：
+                    <input type="datetime-local" name="end_time"/>
+                </p>
+                设置数量与价格关系
+                <div class="p" >
+                    数量区间：
+                    <input type="text" name="min_nums[]" value="0" readonly="readonly" style="width:120px;"/>
+                    --
+                    <input type="text" name="max_nums[]" placeholder="请填写件数" style="width:120px;"/>
+                    <br />对应价格：
+                    <input type="text" name="unit_price[]" placeholder="单价" style="width:120px;"/> 元
+                    <input type="text" name="total_price[]" placeholder="整箱价" style="width:120px;"/>元
+                </div>
+                <input type="button" value="新增区间" id="add" onclick="add_price();"/>
+                <div align="center">
+                    <input type="submit" value="提交" onclick="checkdata();"/>
+                </div>
+            </form>
+        <div class="wrap_bottom"></div>
+    </div>
+
+    <div class="clear"></div>
+    <div class="adorn_right1"></div>
+    <div class="adorn_right2"></div>
+    <div class="adorn_right3"></div>
+    <div class="adorn_right4"></div>
+</div>
+<div class="clear"></div>
+</div>
+{include file=footer.html}

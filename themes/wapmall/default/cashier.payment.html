@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {include file=public_header.html}
+    <link rel="stylesheet" type="text/css" href="{res file=css/switch-buttons.css}" />
+</head>
+<body  >
+<header  class="ly-header2">    <div class="ly-header-bar">        <div id="m_common_header_goback" class="ly-header-icon-back"><a href="javascript:;" onclick="javascript:history.back(-1);" ><span> </span></a></div>        <div class="ly-header-title">支付</div>            </div>    </header>
+
+
+<h6 class="receive-tips distant " id="J_errorMsg2">请于24小时内完成付款，否则订单可能会被商城自动取消！</h6>
+<form action="index.php?app=cashier&act=goto_pay&order_id={$order.order_id}" method="POST" id="goto_pay">
+<div class="order_total order-amount-total">
+    <h2 class="total-title">应付金额<span>{$order.order_amount|price}</span></h2>
+    <p style="color:red;">
+        app会员线上支付专享优惠(您当前等级是{$type})：
+    </p>
+    <p class="fabric">
+        <span>VIP会员：<em>9.9折</em></span>
+        <span>金卡会员：<em>9.85折</em></span>
+        <span>铂金会员：<em>9.8折</em></span>
+    </p>
+    <p class="cl">
+        <span class="sp1">订单编号</span>
+        <span class="sp2">{$order.order_sn}</span>
+    </p>
+
+    <p class="cl">
+        <span class="sp1">订单总额</span>
+        <span class="sp2">{$order.order_amount|price}</span>
+    </p>
+    <p class="cl" style=" color:#ff464e">
+        <span class="sp1">您的线上支付价</span>
+        <span class="sp2">{$online_pay_discount|price}</span>
+    </p>
+    <!--<p class="cl">-->
+        <!--<span class="sp1">总运费</span>-->
+        <!--<span class="sp2">￥0.00</span>-->
+    </p>
+     <!--{if $use_coin }-->
+    <p class="cl">
+        <span class="sp1">用<span style="color:#ff464e">{$use_coin}</span>金币抵消<span style="color:#ff464e">{$to_price}元</span></span>
+                        <span class="sp2">
+                        <label class="switch-btn circle-style">
+                            <input class="checked-switch" type="checkbox" name="use_coin" value="{$to_price}" />
+                            <span class="text-switch" data-yes="使用" data-no="不用"></span>
+                            <span class="toggle-btn"></span>
+                        </label></span>
+    </p>
+    <p align="center">
+        <span style="color:red;">*线上支付，抵扣完之后再折扣*</span>
+    </p>
+    <!-- {/if} -->
+</div>
+
+
+    <div class="online">
+        <h2>选择支付方式</h2>
+        <ul id="pay_ctr" class="choosePay">
+            <!--{if $payments.online}-->
+            <!--{foreach from=$payments.online key=key item=payment}-->
+            <li id="pay_li_{$key}1">
+                <a  onclick="selectPayType('{$key}1')" href="javascript:;" id="choose_payment">
+                    <input type="hidden" value="{$payment.payment_id}" id="payment{$key}1" />
+                    <img src="{$site_url}/includes/payments/{$payment.payment_code}/mobile_logo.png" />
+                    <span>{$payment.payment_name}(线上支付)</span>
+                    <i class="icon"></i>
+                </a>
+            </li>
+            <!-- {/foreach} -->
+            <!-- {/if} -->
+
+            <!--{if $payments.offline}-->
+
+            <!--{foreach from=$payments.offline item=payment}-->
+            <li id="pay_li_{$key}2">
+                <a  onclick="selectPayType('{$key}2')" href="javascript:;" id="choose_payment">
+                    <img src="{$site_url}/includes/payments/{$payment.payment_code}/mobile_logo.png" />
+                    <input type="hidden" value="{$payment.payment_id}" id="payment{$key}2" />
+                    <span>{$payment.payment_name}(线下支付)</span>
+                    <i class="icon"></i>
+                </a>
+            </li>
+            <!-- {/foreach} -->
+            <!-- {/if} -->
+        </ul>
+
+    </div>
+            <input type="hidden" value="0" name="payment_id" id="input_payment_id" />
+    <a class="payBtn" href="javascript:$('#goto_pay').submit();">立即支付</a>
+
+</form>
+<div style="height: 30px;">
+
+</div>
+<script>
+    $(function(){
+        $("#choose_payment").click();
+    });
+    function selectPayType(pay_icon_id){
+        var payment_id = $("#payment"+pay_icon_id).val();
+        $("#input_payment_id").val(payment_id);
+        $("#payType").val(pay_icon_id);
+        $(".c_pay").removeClass("c_pay");
+        $('#pay_li_'+pay_icon_id + " a").addClass("c_pay");
+    }
+</script>
+
+
+{include file="footer_nav.html"}
+</body>
+</html>

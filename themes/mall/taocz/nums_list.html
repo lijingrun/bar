@@ -1,0 +1,97 @@
+{include file=member.header.html}
+<script>
+    function release(id){
+        $.ajax({
+            type : 'post',
+            url : 'index.php?app=groupbuy_nums&act=release',
+            data : {'id' : id},
+            success : function(data){
+                alert(data);
+                window.location.reload();
+            }
+        });
+    }
+</script>
+<div class="content">
+    <div class="totline"></div>
+    <div class="botline"></div>
+    {include file=member.menu.html}
+    <div id="right"> 
+        {include file=member.curlocal.html}
+        {include file=member.submenu.html}
+        <div class="wrap">
+            <a href="index.php?app=groupbuy_nums&act=add"><input type="button" value="新增以量定价团购" /></a>
+            <table>
+                <tr>
+                    <th style="width:100px;">活动名称</th>
+                    <th style="width:150px;">活动商品</th>
+                    <th style="width:150px">开始时间</th>
+                    <th style="width:150px;">结束时间</th>
+                    <th style="width:50px">已订数量</th>
+                    <th style="width:75px;">状态</th>
+                    <th>操作</th>
+                    
+                </tr>
+                <!-- {foreach from=$nums item=num} -->
+                <tr>
+                    <td>
+                        <a href="index.php?app=groupbuy_nums&act=price&id={$num.id}">
+                        {$num.name}
+                        </a>
+                    </td>
+                    <td>
+                        <a href="index.php?app=goods&id={$num.goods_id}">
+                        {$num.goods.goods_name}
+                        </a>
+                    </td>
+                    <td>{$num.start_time|date:complete}</td>
+                    <td>{$num.end_time|date:complete}</td>
+                    <td>
+                        <a href="index.php?app=groupbuy_nums&act=buys&id={$num.id}">
+                            {$num.total_nums}
+                        </a>
+                    </td>
+                    <td>
+                        <!-- {if $num.status == 1} -->
+                        已发布
+                        <!-- {elseif $num.status == 2} -->
+                        未发布
+                        <!-- {elseif $num.status == 3} -->
+                        已完成
+                        <!-- {elseif $num.status == 4} -->
+                        已取消
+                        <!-- {/if} -->
+                    </td>
+                    <td>
+                        <!-- {if $num.status == 1} -->
+                        
+                        <!-- {elseif $num.status == 2} -->
+                        <input type="button" value="发布" onclick="release({$num.id});"/>
+<!--                        <a href="index.php?app=groupbuy_nums&act=add&group_id={$num.id}">
+                            <input type="button" value="修改" />
+                        </a>-->
+                        <!-- {/if} -->
+                        <!-- {if $num.end && $num.status != 3 && $num.status != 4} -->
+                        <a href="index.php?app=groupbuy_nums&act=order_born&group_id={$num.id}">
+                            <input type="button" value="生成订单" />
+                        </a>
+                        <a href='index.php?app=groupbuy_nums&act=cencle&group_id={$num.id}'> 
+                            <input type='button' value='活动不成立' />
+                        </a>
+                        <!-- {/if} -->
+                    </td>
+                </tr>
+                <!-- {/foreach} -->
+            </table>
+            <div class="wrap_bottom"></div>
+        </div>
+
+        <div class="clear"></div>
+        <div class="adorn_right1"></div>
+        <div class="adorn_right2"></div>
+        <div class="adorn_right3"></div>
+        <div class="adorn_right4"></div>
+    </div>
+    <div class="clear"></div>
+</div>
+{include file=footer.html}

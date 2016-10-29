@@ -1,0 +1,111 @@
+{include file=member.header.html}
+<div class="content">
+    <div class="totline"></div>
+    <div class="botline"></div>
+    {include file=member.menu.html}
+    <div id="right"> 
+        {include file=member.curlocal.html}
+		{include file=member.submenu.html}
+
+		<script>
+		$(function() {
+			// default time value
+//			$('input[type="date"]').each( function() {
+//				if($(this).val() == '')
+//				$(this)[0].valueAsDate = new Date(); } );
+//
+//
+//			$('input[name="available"]').change( function() {
+//				if( $('input[name="enabled"]').attr("checked") ) $(this).val(1);
+//				else $(this).val(0);
+//			});
+//			$('input[name="available"]').change();
+
+		});
+		</script>
+
+		<style type="text/css">
+			.p{
+				padding-left:10px;
+				padding-top: 10px;
+			}
+			#args_list p {
+				padding-bottom: 5px;
+			}
+			.args_input, .p input {
+				border: 1px solid silver;
+				border-width: 0 0 1px 0;
+			}
+
+			.rule_table td {
+				font-size: 12px;
+				padding: .5em 1em;
+			}
+
+			input { padding: 0 .5em; }
+			input[type='text'] { width: 180px; font-size: 12px!important; }
+		</style>
+
+        <div class="wrap">
+			 <form method="post" id="form">
+				<h2>大转盘信息</h2>
+				<div style="width: 100%; border-bottom: 1px solid silver; padding: 0 0 10px 0; margin-bottom: 10px;"></div>
+
+				<table class="rule_table">
+					<tr>
+						<td>名称：</td>
+						<td>
+							<input type="text" name="name" id="name" value="{$fw.name}" />
+							<input type="hidden" name="fw_id" name="fw_id" value="{$fw.id}" />
+						</td>
+					</tr>
+					<tr>
+						<td>活动开始时间：</td>
+						<td>
+							<input type="date" name="activity_start_time" value="{$activity_start_time}"/>凌晨
+						</td>
+					</tr>
+					<tr>
+						<td>活动结束时间：</td>
+						<td>
+							<input type="date" name="activity_end_time" value="{$activity_end_time}" />凌晨
+						</td>
+					</tr>
+					<tr>
+						<td>抽奖开始时间：</td>
+						<td>
+							<input type="date" name="start_time" value="{$s_time}" />凌晨
+						</td>
+					</tr>
+					<tr>
+						<td>抽奖结束时间：</td>
+						<td>
+							<input type="date" name="end_time"  value="{$end_time}" />凌晨
+							<span style="color:red;">*结束时间必须是开奖时间之后，不能同一天，计算的是当天的0点*</span>
+						</td>
+					</tr>
+					<tr>
+						<td>启用：</td>
+						<td>
+							<input type="checkbox" name="available" <!-- {if $fw.available} -->checked="checked" <!-- {/if} --> />
+						</td>
+					</tr>
+					<tr>
+						<td valign="top">信息：</td>
+						<td>
+							<textarea name="info" id="info" rows="5" cols="80" style="resize: both;">{$fw.info}</textarea>
+						</td>
+					</tr>	
+				</table>
+
+				<div align="center">
+					<input type="submit" value="提交" /> 
+				</div>
+            </form>
+
+		</div>
+
+	</div>
+	<div class="clear"></div>
+</div>
+{include file=footer.html}

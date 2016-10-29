@@ -1,0 +1,262 @@
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  background-color: #f5f5f5;
+}
+a,a:hover {
+  text-decoration: none;
+}
+
+/* Custom page CSS
+-------------------------------------------------- */
+/* Not required for template or sticky footer method. */
+
+body > .main {
+  padding: 50px 0 50px;
+}
+
+.footer > .container {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+code {
+  font-size: 80%;
+}
+
+
+.menu, .setting, .home, .search, .message, .me, .lnews, .lorder, .porder{
+  background:url('../images/icons.png') no-repeat;
+  background-size:250px 250px;
+} 
+.navbar-header {
+  background: #ff6600;
+}
+.navbar-brand {
+  position:relative;
+  width:137px;
+  margin:0 auto;
+}
+.navbar-brand a {
+  display:block;
+  font-size:20px;
+  color:#fff;
+  text-align: center;
+}
+@media (min-width:768px) {
+  .navbar-brand {
+  position:relative!important;
+  width:137px!important;
+  margin:0 auto!important;
+}
+.navbar-brand a {
+  display:block;
+  font-size:20px;
+  color:#fff;
+  text-align: center;
+}
+}
+.navbar-header i {
+  display:block;
+  width:33px;
+  height:33px;
+  position:absolute;
+}
+.navbar-header .menu {
+  background-position:-2px 0;
+  top:15px;
+  left:20px;
+}
+.navbar-header .setting {
+  background-position:0 -31px;
+  top:13px;
+  right:5px;
+}
+
+.navbar-fixed-bottom {
+  background: #ff6600;
+}
+.navbar-fixed-bottom .new-tbl-cell {
+  display: block;
+  width:25%;
+  float:left;
+  text-align: center;
+  color:#fff;
+  padding-top:8px;
+}
+.navbar-fixed-bottom .new-tbl-cell span {
+  position: relative;
+  font-size: 20px;
+  padding-bottom:3px;
+}
+.navbar-fixed-bottom .new-tbl-cell span em {
+  position: absolute;
+  top:-5px;
+  right:-8px;
+  display: block;
+  width:15px;
+  height:15px;
+  background: #f00;
+  border-radius: 50%;
+  font-style: normal;
+  font-size:10px;
+  font-weight: bold;
+}
+.navbar-fixed-bottom .new-tbl-cell p {
+  font-size: 12px;
+  margin-bottom:5px;
+}
+
+.main .carousel-indicators {
+  bottom:3px;
+}
+.main .carousel-indicators li {
+  width: 8px;
+  height: 8px;
+  background-color: #c1c1c1;
+  border: 0;
+}
+.main .carousel-indicators .active {
+  width: 10px;
+  height: 10px;
+  margin: 0;
+  background-color: #fff;
+}
+.index_news {
+  background: #fff8e8;
+  padding:10px 15px;
+  margin:8px 12px 0 12px;
+}
+.index_news ul {
+  list-style: none;
+  padding-left:10px;
+  margin:0;
+}
+.index_news ul li {
+    padding-bottom:8px;
+}
+.index_news ul li a {
+  color:#666;
+
+}
+.news_content {
+  border-left: 1px solid #bdbaab;
+  padding-left: 10px;
+  margin-left:5px;
+}
+.news_content img {
+  width:60px;
+  margin-right: 25px;
+  border-radius: 6px;
+  box-shadow: 0 2px 1px #333;
+}
+.news_content span {
+  margin-left: 25px;
+}
+.news_line {
+  display: block;
+  border-bottom: 1px dashed #bdbaab;
+  margin-top: 15px;
+}
+.time {
+  margin-bottom:5px;
+}
+.time span {
+  margin-right:5px;
+}
+.index_menu ul {
+  list-style: none;
+  overflow: hidden;
+}
+.index_menu ul li {
+  float: left;
+  width: 50%;
+  padding: 10px;
+  font-size: 10px;
+  line-height: 1.4;
+  text-align: center;
+  background-color: #f9f9f9;
+  border: 3px solid #fff;
+}
+.index_menu ul li a {
+  color:#fff;
+}
+.index_menu ul li.larea {
+  height: 180px;
+  background-color:#f7680c;
+}
+.index_menu ul li.larea .glyphicon-class {
+  display: block;
+  text-align: center;
+  word-wrap: break-word;
+}
+.index_menu ul li.sarea {
+  height: 90px;
+}
+ .menuarea {
+  display: block;
+    background-color: #ff6600;
+    width:47%;
+    float:left;
+    margin:3px;
+}
+.menuarea span{
+    color:#fff;
+    font-size:18px;
+}
+.larea {
+  padding:45px 0;
+  text-align:center;
+}
+.lnews {
+  display: block;
+  margin:0 auto;
+  width:62px;
+  height:54px;
+  background-position:-40px 0;
+}
+.lorder {
+  float: left;
+  width:38px;
+  height:42px;
+  background-position:-100px 0;
+  margin-left:40px;
+}
+
+.lorder span {
+  float:left;
+}
+.porder {
+  float: left;
+  width:38px;
+  height:42px;
+  background-position:-100px 0;
+  margin-left:40px;
+}
+.sarea {
+  padding:20px 0;
+  background: #00ccff;
+}
+.sarea span {
+  line-height: 2;
+}
+.pmarea {
+  background: #6665ff;
+}
+.main_menu {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding-left: 10px;
+}

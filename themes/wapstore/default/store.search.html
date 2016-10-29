@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>126墙纸商城</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="shortcut icon" href="{res file=images/favicon.ico}" />
+    <link rel="stylesheet" type="text/css" href="{res file=css/style.css}" />
+    <link rel="stylesheet" type="text/css" href="{res file=css/index.css}" />
+    <script type="text/javascript" src="{res file=js/jquery-1.8.3.min.js}"></script>
+    <script type="text/javascript" src="{res file=js/jquery.SuperSlide.js}"></script>
+    <script type="text/javascript" src="{res file=js/scrolltopcontrol.js}"></script>
+    <script type="text/javascript" src="{res file=js/mui.js}"></script>
+    <script type="text/javascript" src="{res file=js/sub_menu_2016.js}"></script>
+
+
+    <script type="text/javascript">
+        function CloseDiv(show_div)
+        {
+            document.getElementById(show_div).style.display='none';
+            document.getElementById(bg_div).style.display='none';
+        };
+        function searchShop(){
+            var keyword = $("#c_keyword").val();
+            location.href='index.php?app=store&act=search&id={$store.store_id}&keyword='+keyword;
+        }
+    </script>
+
+</head>
+<body>
+
+<header class="seaTop2">
+    <article class="topBox">
+        <a href="javascript:;" onClick="javascript:history.back(-1);" class="backrow"></a>
+        <div class="seaBox">
+            <input id="c_keyword" type="text" value="{$keyword}" placeholder="请输入关键词进行店内搜索">
+            <em onclick="searchShop();"></em>
+        </div>
+        <a class="topMore" href="javascript:;"><br>
+            <span>本店分类</span> </a>
+
+
+
+        <div class="sub_menu" style="height: 7010px;">
+            <div class="font_white font_l" style="padding: 15px 0px 10px 28px; height:25px; border-bottom:1px solid #cccccc;">本店商品分类</div>
+            <ul class="font_m" style="padding:10px;">
+                <!--{foreach from=$store.store_gcates item=gcategory}-->
+                <li>
+                    <!--{if $gcategory.children}-->
+                    <h2>{$gcategory.value|escape}</h2>
+                    <ol class="sub_menu_list">
+                        <!--{foreach from=$gcategory.children item=child_gcategory}-->
+                        <a href="index.php?app=store&id={$store.store_id}&act=search&cate_id={$child_gcategory.id}">
+                            <li>{$child_gcategory.value|escape}</li>
+                        </a>
+                        <!-- {/foreach} -->
+                    </ol>
+                    <!-- {/if} -->
+                </li>
+                <!-- {/foreach} -->
+
+
+            </ul>
+
+        </div>
+        <script>
+            $(function () {
+                publicmain();
+            });
+
+            $(window).resize(function () {
+                publicmain();
+            });
+
+            function publicmain() {
+                var h = document.documentElement.clientHeight - 45;
+                $('.sub_menu').css({'height': h});
+            }
+        </script>
+
+
+
+
+    </article>
+</header>
+
+<!--
+<div id="J_page_title" class="page-header-title">
+       <span id="J_pre_step" class="page-pre-step u-iconfont"><</span>
+       <span class="page-title-top" id="J_title_top">蓝羽</span>
+   </div> -->
+
+
+<div class="index-header pdt44 J_hide_logo">
+    <div class="archives-link" id="J_archives">
+        <img class="storepic" src="{$store.store_banner}">
+        <!-- <span class="g-collect"><i class="u-iconfont i-love"></i><em class="J_favor"></em></span> -->
+        <div class="lucency"></div>
+        <div class="click-pic" id="J_click_pic"></div>
+        <a class="store-message" href="index.php?app=store&act=store_detail&id={$store.store_id}">
+            <img class="ih-logo" src="{$store.store_logo}" alt="江门蓝羽墙纸公司">
+            <p class="ih-tt"><span class="store-name">{$store.store_name}</span>
+
+                <!-- <img src="" alt=""/> -->
+            </p>
+            <p class="sh-addr"><span>公司详情>></span></p>
+        </a>
+            <!--<span class="store-act J_actionFavor J_isInApp_hide gz-love J_addFavor" >-->
+                <!--<em class="cellove-num  J_favor321739">收藏本店</em>-->
+                <!--<span class="st-icon" id="J_share"></span>-->
+            <!--</span>-->
+        <!-- <span class="store-act J_actionFavor J_isInApp_hide aboutus J_addFavor" >
+             <em class="cellove-num  J_favor321739">关于我们</em>
+             <span class="st-icon" id="J_share"></span>
+         </span> -->
+    </div>
+
+
+</div>
+
+<section data-query="subnav1" class="titBox">
+
+    <dl data-query="subShopnav1" style="top: 0px; left: 0px; z-index: 5555; width: 100%; position: static;">
+        <dd>
+            <span><a href="index.php?app=store&id={$store.store_id}">店铺首页</a></span>
+        </dd>
+        <dd {if $c_type=='all'}class="Current"{/if} >
+            <span><a href="index.php?app=store&act=search&id={$store.store_id}&type=all">全部产品</a></span>
+        </dd>
+        <dd  {if $c_type=='new'}class="Current"{/if} >
+            <span><a href="index.php?app=store&act=search&id={$store.store_id}&order=add_time%20desc&type=new">新品上市</a></span>
+            <em>new</em>
+        </dd>
+        <dd {if $c_type=='recommended'}class="Current"{/if}>
+            <span><a href="index.php?app=store&act=search&id={$store.store_id}&recommended=1&order=recommended%20desc&type=recommended">促销商品</a></span>
+            <em>sale</em>
+        </dd>
+
+    </dl>
+
+    <article data-query="subnav2" class="seaTitle">
+        <ul class="proTop">
+            <li id="compre" class="curCon"><a href="#">综合</a></li>
+            <li id="price" class="sortDown">
+                <!-- {if $c_type=='all'} -->
+                <a  href="index.php?app=store&act=search&id={$store_id}&keyword={$keyword}&cate_id={$cate_id}&order=price%20desc&brand={$brand}&type=all">价格</a>
+                <!-- {elseif $c_type=='new'} -->
+                <a  href="index.php?app=store&act=search&id={$store_id}&keyword={$keyword}&cate_id={$cate_id}&order=price%20desc&brand={$brand}&type=all">价格</a>
+                <!-- {elseif $c_type=='recommended'} -->
+                <a  href="index.php?app=store&act=search&id={$store_id}&keyword={$keyword}&recommended=1&cate_id={$cate_id}&order=price%20desc&brand={$brand}&type=recommended">价格</a>
+                <!-- {else} -->
+                <a  href="index.php?app=store&act=search&id={$store_id}&keyword={$keyword}&cate_id={$cate_id}&order=price%20desc&brand={$brand}">价格</a>
+                <!-- {/if} -->
+            </li>
+        </ul>
+    </article>
+
+
+
+    <article class="jpBox">
+        <!--{if $searched_goods}-->
+        <ul class="proList" id="goods_list">
+            <!-- {foreach from=$searched_goods item=goods} -->
+            <li>
+                <div class="jpImgBox">
+                    <a href="index.php?app=goods&id={$goods.goods_id}">
+                        <img src="{$goods.default_image}">
+                    </a>
+                </div>
+                <p class="jpName"><a href="index.php?app=goods&id={$goods.goods_id}">{$goods.goods_name}</a></p>
+                <p class="jpPrice">
+                    <!-- {if $is_jingxiaoshang} -->
+                    {$goods.price_distributor|price}
+                    <!-- {else} -->
+                    {$goods.price|price}
+                    <!-- {/if} -->
+                    <!-- {if $goods['recommended'] == 1} -->
+                    <span style="color:red;">[促销]</span>
+                    <!-- {/if} -->
+                </p>
+            </li>
+            <!-- {/foreach} -->
+        </ul>
+        <!-- {else} -->
+        <div>
+            <h3 style="color:red;">该系列暂时未有产品</h3>
+        </div>
+        <!-- {/if} -->
+    </article>
+
+    <script>
+        function addmore(store_id){
+            var page = parseInt($("#addmore").attr("page"));
+            var order = $("#addmore").attr("order");
+            var cate_id = $("#cate_id").val();
+            var keyword = $("#keyword").val();
+            var sub_rule_id = $("#sub_rule_id").val();
+                $.ajax({
+                type : "get",
+                url : "index.php?app=store&act=addmoreajax",
+                data : {'store_id':store_id,'page':page ,'order':order, 'cate_id':cate_id, 'keyword':keyword,'sub_rule_id' : sub_rule_id},
+                success : function(data){
+                    if(data == 000){
+                        $("#addmore").val('亲，没有了！');
+                    }else{
+                        var nextpage = page + 1;
+                        $("#addmore").attr('page',nextpage);
+                        $("#goods_list").append(data);
+                    }
+                }
+            });
+        }
+    </script>
+
+
+    <section>
+        <input type="button" value="加载更多" onclick="addmore({$store_id});" id="addmore" page="2" order="{$order}" class="more_good">
+        <input type="hidden" value="{$cate_id}" id="cate_id">
+        <input type="hidden" value="{$keyword}" id="keyword">
+        <input type="hidden" value="{$sub_rule_id}" id="sub_rule_id">
+    </section>
+
+
+    <div class="clear space10"></div>
+
+    <!--<div class="foot_text">-->
+        <!--Copyright@2016 蓝羽 维涅斯126墙纸商城版权所有-->
+    <!--</div>-->
+
+
+    <a href="http://wpa.qq.com/msgrd?v=3&amp;uin={$store.im_qq}&amp;site=qq&amp;menu=yes"  onclick="sendUserlogsElement('UserBehavior_m_detail_qq_tell?detailuserid=49879524')" class="fPurchase" id="fPurchase" style="display: block;">QQ</a>
+
+    <div id="topcontrol" style="width:3.333rem; height:3.333rem; border:0; bottom:4.333rem;right: 0.7407rem;position: fixed;display: block; opacity: 0; cursor: pointer;border-radius:50px;">
+        <img totop="" src="{res file=images/topback.png}" style="width:3.333rem; height:3.333rem; border-radius:50px; border:0;" title="返回顶部" />
+    </div>
+
+    <article class="jpBox">
+        <div class="jpTitle">
+            <!--<h3>热门搜索</h3>-->
+        </div>
+        <div class="ListBotCon">
+            <!--<a href="#" title="脱水湿胶">脱水湿胶</a>-->
+            <!--<a href="#" title="脱水湿胶">脱水湿胶</a>-->
+            <!--<a href="#" title="脱水湿胶">脱水湿胶</a>-->
+            <!--<a href="#" title="脱水湿胶">脱水湿胶</a>-->
+            <!--<a href="#" title="脱水湿胶">脱水湿胶</a>-->
+            <!--<a href="#" title="脱水湿胶">脱水湿胶</a>-->
+            <!--<a href="#" title="脱水湿胶">脱水湿胶</a>-->
+            <!--<a href="#" title="脱水湿胶">脱水湿胶</a>-->
+        </div>
+    </article>
+    {include file=footer_nav.html}
+
+
+
+
+</body>
+</html>

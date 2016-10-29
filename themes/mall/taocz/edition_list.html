@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>版本展示详细页面</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            a:link { text-decoration: none; }
+            td{border:solid #add9c0; border:1px;}
+            table{border:solid #add9c0; border:1px;}
+        </style>
+        {include file=member.header.html}
+    <div class="content">
+        <div class="totline"></div>
+        <div class="botline"></div>
+        {include file=member.menu.html}
+        <div id="right">
+            {include file=member.curlocal.html}
+            <div class="wrap">
+                <div class="public_select table">
+                    <div style="padding-bottom: 20px;">
+                        <a href="index.php?app=edition">
+                            <input type="button" value="增加新版本展示" />
+                        </a>
+                        <br />
+                    </div>
+                    <table border="1" style="border:solid #add9c0;">
+                        <tr>
+                            <th style="width:100px;">产品</th>
+                            <th style="width:100px;">品牌</th>
+                            <th style="width:100px;">材质</th>
+                            <th style="width:100px;">工艺</th>
+                            <th style="width:100px;">规格</th>
+                            <th style="width:100px;">克重</th>
+                            <th style="width:100px;">风格</th>
+                            <th style="width:150px;">操作</th>
+                        </tr>
+                        <!-- {foreach from=$editions item=edition} -->
+                        <tr style="border:solid #add9c0;">
+                            <td style="width:100px;border:solid #add9c0;" >
+                                <img src="{$edition.img}" style="width:100%" /><br />
+                                {$edition.edition_name}
+                            </td>
+                            <td style="width:100px;border:solid #add9c0;" >
+                                {$edition.brand}
+                            </td>
+                            <td style="width:100px;border:solid #add9c0;" >
+                                {$edition.material}
+                            </td>
+                            <td style="width:100px;border:solid #add9c0;" >
+                                {$edition.technology}
+                            </td>
+                            <td style="width:100px;border:solid #add9c0;" >
+                                {$edition.specifications}
+                            </td>
+                            <td style="width:100px;border:solid #add9c0;" >
+                                {$edition.weight}
+                            </td>
+                            <td style="width:100px;border:solid #add9c0;" >
+                                {$edition.style}
+                            </td>
+                            <td align="center">
+                                <a href="index.php?app=edition&act=edit&id={$edition.edition_id}">
+                                    <input type="button" value="修改"/>
+                                </a>
+                                <a href="index.php?app=edition&act=addimages&id={$edition.edition_id}">
+                                    <input type="button" value="增加图片"/>
+                                </a>
+                            </td>
+                        </tr>
+                        <!-- {/foreach} -->
+                        <tr>
+                            <td colspan="8" align="right">
+                                共{$page_info.totalpage}页{$page_info.totalcount}条记录
+                                <a href="index.php?app=edition&act=edition_list&page={$page_info.prev_page}">
+                                    上一页
+                                </a>
+                                第{$page_info.page}页
+                                <a href="index.php?app=edition&act=edition_list&page={$page_info.next_page}">
+                                    下一页
+                                </a>
+                            </td> 
+                        </tr>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    
+    
+        <iframe name="iframe_post" id="iframe_post" width="0" height="0"></iframe>
+        {include file=footer.html}
+

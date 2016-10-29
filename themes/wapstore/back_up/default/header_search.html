@@ -1,0 +1,72 @@
+<header class="region container-fluid bg_blue fixed" align="center"> 
+    <div class="content row header_search" align="center">
+        <a href="javascript:history.back()">
+            <div class="banner_left col-xs-2 font_white">
+                <span class="fa fa-angle-left"></span>
+            </div>
+        </a>
+        <div class="banner_middle col-xs-6 font_white font_xl" style="margin-top:10px">
+        </div>
+        <a class="menu" href="javascript:;">
+            <div class="banner_right col-xs-2 font_white">
+                <span class="fa fa-list"></span>
+            </div>
+        </a>
+        <a href="{url app=store&id=$store.store_id}">
+            <div class="banner_right col-xs-2 font_white">
+                <span class="fa fa-home"></span>
+            </div>
+        </a>
+    </div> 
+</header>
+<div class="searchBar fixed_header_search">
+    <form id="" name="" method="get" action="index.php">
+        <input type="hidden" name="app" value="store" />
+        <input type="hidden" name="act" value="search" />
+        <input type="hidden" name="id" value="{$store.store_id}" />
+        <input name="keyword"  type="text" placeholder="搜搜看吧" class="search_text" /><input type="submit" value="搜索" class="search_btn" />
+    </form>
+</div>
+<div class="sub_menu">
+            <div class="font_blue bg_white font_l" style="padding:10px 20px; height:45px;">本店商品分类</div>
+            <ul class="font_m" style="padding:10px">
+                <!--{foreach from=$store.store_gcates item=gcategory}-->
+                <li>
+                    <!--{if $gcategory.children}-->
+                    <h2>{$gcategory.value|escape}</h2>
+                    <ol  class="sub_menu_list">
+                        <!--{foreach from=$gcategory.children item=child_gcategory}-->
+                        <a href="{url app=store&id=$store.store_id&act=search&cate_id=$child_gcategory.id}"><li>{$child_gcategory.value|escape}</li></a>
+                        <!--{/foreach}-->
+                    </ol>
+                    <!--{else}-->
+                    <a href="{url app=store&id=$store.store_id&act=search&cate_id=$gcategory.id}"><h2>{$gcategory.value|escape}</h2></a>
+                    <!--{/if}-->
+                </li>
+                <!--{/foreach}-->
+
+            </ul>
+            <div class="fun">
+                <a href="javascript:collect_store({$store.store_id});" class="fav"><img src="{res file=images/favorite.png}"/>收藏本店</a>
+            </div>
+        </div>
+        <script>
+
+			//<!CDATA[
+			var SITE_URL = "{$site_url}";
+			var REAL_SITE_URL = "{$real_site_url}";
+			var PRICE_FORMAT = '{$price_format}';
+
+            $(function() {
+                publicmain();
+            });
+
+            $(window).resize(function() {
+                publicmain();
+            });
+
+            function publicmain() {
+                var h = document.documentElement.clientHeight - 45;
+                $('.sub_menu').css({'height': h});
+            }
+        </script> 

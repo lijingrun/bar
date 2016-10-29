@@ -1,0 +1,177 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        {$page_seo}
+        <link href="{res file=css/common.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/user.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/address.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/main.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/rmc-common.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/bootstrap.min.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/font-awesome.css}" type="text/css" rel="stylesheet" />
+        <script type="text/javascript" src="{res file=js/jquery-1.8.0.min.js}"></script>
+
+        <script type="text/javascript" src="index.php?act=jslang"></script>
+        <script type="text/javascript" src="{lib file=jquery.js}" charset="utf-8"></script>
+        <script type="text/javascript" src="{lib file=ecmall.js}" charset="utf-8"></script>
+        <script type="text/javascript" src="{lib file=member.js}" charset="utf-8"></script>
+
+        <script type="text/javascript">
+            //<!CDATA[
+            var SITE_URL = "{$site_url}";
+            var REAL_SITE_URL = "{$real_site_url}";
+            var PRICE_FORMAT = '{$price_format}';
+            //]]>
+			function js_success(dialog_id)
+			{
+				var url = window.location.href;
+				url =  url.indexOf('#') > 0 ? url.replace(/#/g, '') : url;
+				window.location.replace(url);
+			}
+
+			// set for android device.
+			setAndroidDeviceId = function(device_type, serial_id, device_model) {
+				$.ajax( { 
+					type: 'POST',
+					data: {
+						device_type: device_type,
+						serial_id: serial_id,
+						device_model: device_model,
+					},
+					url: '?app=mqtt&act=device_login', 
+					dataType: 'text',
+					success: 
+						function(data) { 
+							console.log(data); 
+						}, 
+				} );
+			};
+			// set for iOS device.
+			setIOSDeviceId = function(serial_id, device_model) {
+				setAndroidDeviceId('apns', serial_id, device_model);
+			};
+        </script>
+		<script charset="utf-8" type="text/javascript" src="/includes/libraries/javascript/dialog/dialog.js" id="dialog_js"></script>
+		<link href="/includes/libraries/javascript/dialog/dialog.css" rel="stylesheet" type="text/css">
+		<script charset="utf-8" type="text/javascript" src="/includes/libraries/javascript/jquery.ui/jquery.ui.js"></script>
+		<script charset="utf-8" type="text/javascript" src="/includes/libraries/javascript/jquery.plugins/jquery.validate.js"></script>
+		<script charset="utf-8" type="text/javascript" src="/includes/libraries/javascript/mlselection.js"></script>
+		<link rel="stylesheet" type="text/css" href="/includes/libraries/javascript/jquery.ui/themes/ui-lightness/jquery.ui.css">
+    </head>
+    <body>
+
+        <header class="region container-fluid login_top">
+            <div class="content row header_search user_header" align="center">
+                <div class="banner_left col-xs-2 font_white">
+                </div>
+                <div  style="color:white;position:absolute;right:20px;top:30px;">
+                    <div style="border-bottom:1px solid #bfd5f8;font-size:40px;letter-spacing:2px;line-height:1.1em">
+                        {$user_point|escape}
+                    </div>
+                    <div style="font-size:15px;text-align:right;margin-top:5px;color:#bfd5f8">
+                        积 分
+                    </div>
+                </div>
+                <div class="user_photo">
+                    <a href="{url app=member}"><img src="{res file=images/user.jpg}" /></a>
+                </div>
+                <span class="user_center" style="text-align:left">
+                    <h2 style="margin-bottom:10px">会员中心</h2>
+					<div class="font_blue" style="line-height: 1.6em;">您好,欢迎 {$visitor.user_name|escape}<br/>
+						<a href="javascript:void(0);" ectype="dialog" dialog_id="my_profile" dialog_title="{$lang.my_profile}" dialog_width="100%" uri="index.php?app=member&act=profile&mobile=1" ><span class="fa fa-pencil-square-o">编辑个人信息</span></a>
+						<a href="index.php?app=member&act=logout" onclick="return confirm('你确定要退出吗？')" style="color:#999;margin-left:5px;">退出</a></div>
+                </span>
+            </div> 
+        </header>
+        <div class="container-fluid" style="min-height:350px">
+            <!--
+            <span class="user_name">
+                您好,欢迎{$visitor.user_name|escape}。<a href="index.php?app=member&act=logout" style="color:#999;margin-left:5px;">退出</a>
+            </span>
+            -->
+            <style>
+                .wapmember{margin:1%;padding: 10px;overflow: hidden;background: #fff;border-radius: 5px;box-shadow: rgba(0,0,0,0.3) 0 0 3px;margin-bottom: 10px;position: relative;}
+                .wapmember a{padding: 5px 2%;margin: 10px 2% 0 0;width:96%;text-align: center;display: inline-block;cursor: pointer;}
+            </style>
+            <div class="row" style="margin-top:60px" align="center">
+                <div class="col-xs-12 uc_item" align="left" style="text-align:center;padding:5px;background-color:#EAEAE8;color:#676d76">
+                    我的级别：{if $sgrade.grade_name}{$sgrade.grade_name}{else}普通会员{/if}</div>
+            </div>
+
+            <div class="row" style="margin-top:20px" align="center">
+                <a href="{url app=my_favorite}"><div class="col-xs-4 uc_item" align="right"><img src="{res file=images/my_favorite.png}" /></div></a>
+                <a href="{url app=my_address}"><div class="col-xs-4 uc_item2"><img src="{res file=images/my_address.jpg}" /></div></a>
+                <a href="{url app=buyer_order}"><div class="col-xs-4 uc_item" align="left"><img src="{res file=images/buyer_order.png}" /></div></a>
+
+            </div>
+            <div class="row" style="margin-top:20px" align="center">
+                <a href="{url app=buyer_groupbuy}"><div class="col-xs-4 uc_item" align="left"><img src="{res file=images/buyer_groupbuy.png}" /></div></a>
+                {if $sgrade.grade_id == 0}
+                <a href="index.php?app=apply&step=2&id=5"><div class="col-xs-4 uc_item" align="left"><img src="{res file=images/upgrade.png}" /></div></a>
+                <!--
+                        <a href="tel:0750-3333333"><div class="col-xs-4 uc_item" align="left"><img src="{res file=images/tel.png}" /></div></a>-->
+                {/if}
+                {if $sgrade.grade_id == 3 || $sgrade.grade_id == 2 || $sgrade.grade_id == 4 || $sgrade.grade_id == 5}
+                <a href="{url app=search&cate_id=742}">
+                    <div class="col-xs-4 uc_item" align="left">
+                        <img src="{res file=images/redeem.png}" />
+                    </div>
+                </a> 
+                <a href="{url app=my_coupon}">
+                    <div class="col-xs-4 uc_item" align="left">
+                        <img src="{res file=images/coupon.gif}" />
+                    </div>
+                </a> 
+                {/if}
+
+            </div>
+            <div class="row" style="margin-top:20px" align="center">
+                <a href="{url app=article&cate_id=4}">
+                    <div class="col-xs-4 uc_item" align="left" >
+                        <img src="{res file=images/update.png}" />
+                    </div>
+                </a>
+                <a href="{url app=my_advance}">
+                    <div class="col-xs-4 uc_item" align="left" >
+                        <img src="{res file=images/advance.png}" />
+                    </div>
+                </a>
+                <a href="index.php?app=fw_game&act=find_game">
+                    <div class="col-xs-4 uc_item" align="left" >
+                        <img src="{res file=images/fw.png}" />
+                    </div>
+                </a>
+            </div>
+            <!--
+            <div class="wapmember" style="margin-top:50px;">
+                <h2>买家中心</h2>
+                <a class="white_btn" href="{url app=my_favorite}">我的收藏</a>
+                <a class="white_btn" href="{url app=my_address}">收货地址</a>
+                <a class="white_btn" href="{url app=buyer_order}">我的订单</a>
+            </div>-->
+
+            <!--{if $store}
+            <div class="wapmember">
+                <h2>卖家中心</h2>
+                <a class="white_btn" href="{url app=my_goods}">商品管理</a>
+                <a class="white_btn" href="{url app=seller_order}">订单管理</a>
+                <a class="white_btn" href="{url app=my_payment}">支付方式管理</a>
+                <a class="white_btn" href="{url app=my_shipping}">配送方式管理</a>
+            </div>
+            {else}
+            <div class="wapmember">
+                <a class="white_btn" href="{url app=apply}">申请开店</a>
+            </div>
+            {/if}-->
+        </div>
+        
+		<div style="height:60px;"></div>
+        <div class="height:100px">&nbsp;</div>
+        {include file="footer_nav.html"}
+        <iframe id='iframe_post' name="iframe_post" frameborder="0" width="0" height="0"/>   
+    </body>
+</html>

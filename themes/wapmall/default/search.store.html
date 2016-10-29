@@ -1,0 +1,40 @@
+{include file='header_search.html'}
+
+</div>
+{include file=curlocal.html}
+
+<div class="container-fluid">
+
+<div class="radius" style="padding:0;background-color:transparent!important">
+    <ul>
+        <!--{foreach from=$stores item=store}-->
+        <li style="padding: 0px;overflow: hidden;line-height: 1.6em;margin-bottom:10px">
+            <a href="{url app=store&id=$store.store_id}" style="display: block;overflow: hidden;lear: both;padding: .22em 0;border:1px solid #CECECE;border-left:2px solid #066FED;border-right:2px solid #066FED;" class="font_grey_dark bg_white">
+                
+                <div class="mu-tmb" style="float:left;margin-right:15px;">
+                    <img src="{$store.store_logo}" alt="{$store.store_name|escape}" width="100" height="100" style="padding:10px;border-radius:50%; overflow:hidden;"/>
+                </div>
+                
+                <div style="padding:10px 0 ">
+                    <div>店名：{$store.store_name|escape}</div>
+                    <div class="red" style="display: block;">负责人：{$store.user_name|escape}</div>
+                    <div>{$store.region_name|escape}<img src="{$store.credit_image}"/></div>
+                </div>
+            </a>
+        </li>
+        <!--{foreachelse}-->
+        暂无此类商品
+        <!--{/foreach}-->
+    </ul>
+</div>
+
+{include file='page.bottom.html'}
+
+
+
+
+</div>
+<div style="height:60px"></div>
+{include file='footer_nav.html'}
+</body>
+</html>

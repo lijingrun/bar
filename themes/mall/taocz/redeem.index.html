@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>积分商城</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        {include file=member.header.html}
+        <div class="content">
+            <div class="totline"></div>
+            <div class="botline"></div>
+            {include file=member.menu.html}
+            <div id="right">
+                {include file=member.curlocal.html}
+                {include file=member.submenu.html}
+                <div style="padding-bottom: 10px;">
+                    <span style="font-size:20px;color:#7D26CD">我的积分：{$my_point}</span>
+                    <span style="padding-left: 20px">
+                        <a href="index.php?app=redeem&act=order">
+                            我的积分订单
+                        </a>
+                    </span>
+                </div>
+                <div class="wrap">
+                    <div class="public_select table">
+                        <div style="padding-left:100px;">
+                            <div style="padding-bottom: 600px;">
+                                <ul style="list-style:none;">
+                                    <!--{foreach from=$goods item=good}-->
+                                    <li style="float: left;">
+                                        <div style="padding:5px;border: 2px solid #FFEFD5;">
+                                            <a href="index.php?app=redeem&act=detail&goods_id={$good.goods_id}">
+                                                <div align="center" style="padding:10px;width:180px;">
+                                                    <image src="{$good.img}" style="width:90%;" />
+                                                </div>
+                                                <p style="padding-left: 20px;overflow:hidden;height:18px;width:180px;margin-bottom: 15px;font-size: 16px;">{$good.goods_name}</p>
+                                            </a>
+                                            <div style="padding-left:30px;font-size: 18px;">
+                                                <span style="color:red">{$good.price}分</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <!--{/foreach}-->
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+
+        {include file=footer.html}
+    </body>
+</html>

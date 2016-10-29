@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <base href="{$site_url}/" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <link href="{res file=css/common.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/index.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/main.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/rmc-common.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/bootstrap.min.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/font-awesome.css}" type="text/css" rel="stylesheet" />
+        <script type="text/javascript" src="index.php?act=jslang"></script>
+        <script type="text/javascript" src="{lib file=jquery.js}" charset="utf-8"></script>
+        <script type="text/javascript" src="{lib file=ecmall.js}" charset="utf-8"></script>
+
+        <style>
+            .goods_img_div{
+                background:#8F8F8F;
+                padding-top:10px;
+                padding-bottom: 10px;
+                margin-top: 80px;
+                width:100%;
+            }
+            .goods_info_div{
+                padding-left: 20px;
+                padding-top: 10px;
+                padding-bottom: 10px;
+            }
+            .price_span{
+                color:#FF6EB4;
+            }
+            .the_line{
+                background:#EBEBEB;
+                height: 8px;
+            }
+            .goods_tags_div{
+                padding-left: 20px;
+                padding-top: 30px;
+                padding-bottom: 80px;
+            }
+        </style>
+        <script>
+            function add_num() {
+                var num = $("#nums").val();
+                num++;
+                $("#nums").val(num);
+            }
+            function red_num() {
+                var num = $("#nums").val();
+                num--;
+                if (num > 0) {
+                    $("#nums").val(num);
+                } else {
+                    $("#nums").val(1);
+                }
+            }
+            function check_buy() {
+                var nums = $("#nums").val();
+                var price = $("#price").val();
+                var id = $("#goods_id").val();
+                var point = $("#point").val();
+                var reg1 = /^\d+$/;
+                if (nums.trim().match(reg1) == null) {
+                    alert('请输入正整数！');
+                } else {
+                    if (point == "") {
+                        alert("请先登录！");
+                    } else {
+                        var allprice = price * nums;
+                        if (allprice > point) {
+                            alert('您的积分不够，请确认！');
+                        } else {
+                            $("#form").submit();
+                        }
+                    }
+                }
+            }
+            function tobig(){
+                $("#simg").hide();
+                $("#bimg").show();
+            }
+            function tosmall(){
+                $("#bimg").hide();
+                $("#simg").show();
+            }
+        </script>
+    </head>
+    <body id="log-reg">
+        <header class="region container-fluid bg_blue fixed"> 
+            <div class="content row header_search" align="center">
+                <a href="javascript:history.back()">
+                    <div class="banner_left col-xs-2 font_white">
+                        <span class="fa fa-angle-left"></span>
+                    </div>
+                </a>
+            </div> 
+        </header>
+        <div>
+            <form method="post" id="form" action="index.php?app=redeem&act=buy_redeem">
+            <div align="center" class="goods_img_div" id="simg" onclick="tobig();">
+                <img src="{$good.img}" alt="" style="width:60%"/>
+            </div>
+                <div id="bimg" style="width:100%;display:none;" onclick="tosmall();">
+                    <img src="{$good.img}" alt="" style="width:100%"/>
+                </div>
+            <input type="hidden" value="{$good.goods_id}" id="goods_id" name="id" />
+            <input type="hidden" value="{$good.price}" id="price" />
+            <input type="hidden" value="{$user_point}" id="point" />
+            <div class="goods_info_div">
+                <p>
+                    {$good.goods_name}
+                </p>
+                <p>
+                    需要积分：<span class="price_span" >{$good.price}</span>
+                </p>
+            </div>
+            <div class="the_line">
+
+            </div>
+
+
+
+            <div style="padding:20px;">
+                购买数量：
+            </div>
+            <div style="padding-left: 20px;">
+                <input type="button" value="-" style="width:40px;" onclick="red_num();"/>
+                <input type="text"  value="1" id="nums" name="nums" style="width:30px;" />
+                <input type="button" value="+" style="width:40px;" onMouseDown="add_num();"/>
+            </div>
+
+            <div style="padding:20px;">
+                <input type="button" style="width:100%;font-size: 20px;" value="确定购买" onclick="check_buy();"/>
+            </div>
+            <div class="goods_tags_div">
+                <h4>商品详情</h4>
+                {$good.tags}
+            </div>
+
+            </form>
+        </div>
+        {include file='footer_nav.html'}
+    </body>
+</html>

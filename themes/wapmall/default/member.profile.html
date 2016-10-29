@@ -1,0 +1,125 @@
+
+<script type="text/javascript">
+//<!CDATA[
+$(function(){
+    regionInit("region");
+	$('#region select option').each( function(i, e) { 
+		if(i) $(this).val($(this).text()); 
+		if( $(this).val() == '{$profile.province}' ) 
+			$(this).parent().val( '{$profile.province}' );
+		if( '' != '{$profile.province}' )
+			$(this).parent().attr( 'disabled', true );			
+	} );
+    $('#member_profile').validate({
+        /*errorPlacement: function(error, element){
+            var _message_box = $(element).parent().find('.field_message');
+            _message_box.find('.field_notice').hide();
+            _message_box.append(error);
+        },*/
+        success       : function(label){
+            label.addClass('validate_right').text('OK!');
+        },
+        errorLabelContainer: $('#warning'),
+        invalidHandler: function(form, validator) {
+           var errors = validator.numberOfInvalids();
+           if(errors)
+           {
+               $('#warning').show();
+           }
+           else
+           {
+               $('#warning').hide();
+           }
+        },
+        onkeyup : false,
+        rules : {
+        },
+        messages : {
+            consignee : {
+                required : '{$lang.consignee_required}. '
+            },
+            region_id : {
+                required : '{$lang.region_required}. ',
+                min  : '{$lang.region_required}. '
+            },
+            address   : {
+                required : '{$lang.address_required}. '
+            },
+            phone_tel : {
+                required : '{$lang.phone_required}. ',
+                minlength: '{$lang.phone_tel_error}. ',
+                checkTel: '{$lang.phone_tel_error}. '
+            },
+            phone_mob : {
+                required : '{$lang.phone_required}. ',
+                minlength: '{$lang.phone_mob_error}. ',
+                digits : '{$lang.phone_mob_error}. '
+            }
+        },
+        groups:{
+            phone:'phone_tel phone_mob'
+        }
+    });
+});
+function check_phone(){
+    return ($('[name="phone_tel"]').val() == '' && $('[name="phone_mob"]').val() == '');
+}
+function hide_error(){
+	
+    $('#region').find('.error').hide();
+}
+//]]>
+</script>
+<style>
+.dialog_wrapper{width:80%;}
+.dialog_body {background: transparent;}
+.dialog_content {background: rgba(254, 254, 254, 0.8)!important;}
+#region select{margin-top:10px;}
+</style>
+ <form method="post" action="index.php?app=member&act=profile&mobile=1" id="member_profile" target="iframe_post">
+		   
+    <div class="add_box" style="margin-top:0px;">
+    	<p style="margin-bottom:0px;">
+		<b>{$lang.real_name}:</b>
+		<input name="real_name" value="{$profile.real_name|escape}" type="text" placeholder="请填写你的真实姓名"/>
+    	<label class="field_message"><span class="field_notice"></span></label>
+    	</p>
+    	<p id="region">
+		<b>所在地区<span style="color: red">(设置后不能修改)</span>:</b>
+		<input type="hidden" name="region_id" value="{$address.region_id}" id="region_id" class="mls_id" />
+		<input type="hidden" name="region_name" value="{$address.region_name|escape}" class="mls_names" />
+		<!-- {if $address.region_id} -->
+		<span>{$address.region_name|escape}</span>
+		<input type="button" value="{$lang.edit}" class="edit_region" />
+		<select style="display:none;" onchange="hide_error();">
+		  <option>{$lang.select_pls}</option>
+		  {html_options options=$regions}
+		</select>
+		<!-- {else} -->
+		<select name="province" onchange="hide_error();" style="margin-top: 0px;">
+		  <option value>--请选择地区--</option>
+		  {html_options options=$regions}
+		</select>
+		
+		<!-- {/if} -->
+		<b class="field_message" style="font-weight:normal;"><label class="field_notice"></label></b>
+                      
+        </p>
+		<p>
+		<b>{$lang.gender}:</b> 
+		 <label><input type="radio" name="gender" value="0" {if $profile.gender eq 0}checked="checked"{/if} />{$lang.unknown}  </label>
+		 <label><input type="radio" name="gender" value="1" {if $profile.gender eq 1}checked="checked"{/if} />{$lang.male}   </label>
+		 <label><input type="radio" name="gender" value="2" {if $profile.gender eq 2}checked="checked"{/if} />{$lang.female} </label>
+		</p>
+    <p style="display: none;">
+    <label class="field_message"><span class="field_notice"></span></label>
+    </p>
+        <p>
+        <input type="submit" class="blue_btn add_submit" value="提交修改" />
+        </p>
+		<p align="right">
+		<a href="?app=member&act=password">修改密码</a>
+		</p>
+    </div>
+ </form>
+

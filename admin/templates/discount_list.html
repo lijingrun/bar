@@ -1,0 +1,76 @@
+{include file="header.html"}
+<script type="text/javascript">
+    $(function(){
+        $('#start_time').datepicker({dateFormat: 'yy-mm-dd'});
+        $('#end_time').datepicker({dateFormat: 'yy-mm-dd'});
+    });
+    function find_order(){
+        var start_time = $("#start_time").val();
+        var end_time = $("#end_time").val();
+        location.href='index.php?app=advance_payment&act=discount&start_time='+start_time+"&end_time="+end_time;
+    }
+    function export_csv(){
+        var start_time = $("#start_time").val();
+        var end_time = $("#end_time").val();
+        location.href='index.php?app=advance_payment&act=export_discount_csv&start_time='+start_time+"&end_time="+end_time;
+    }
+</script>
+<div id="rightTop">
+    <ul class="subnav">
+        <li><span>{$lang.manage}</span></li>
+        <li><a class="btn1" href="index.php?app=advance_payment&act=recharge">客户充值</a></li>
+        <li>
+            <a class="btn1" href="index.php?app=advance_payment&act=consumption">扣钱确认</a>
+        </li>
+        <li>
+            <a class="btn1" href="index.php?app=advance_payment&act=discount">优惠记录</a>
+        </li>
+    </ul>
+</div>
+
+<div class="mrightTop">
+    <div class="fontl">
+            <div class="left">
+                开始时间:<input class="queryInput2" type="text" value="{$start_time}" id="start_time" name="start_time" class="pick_date" />
+                结束时间:<input class="queryInput2" type="text" value="{$end_time}" id="end_time" name="end_time" class="pick_date" />
+                <input type="button" class="formbtn" value="{$lang.query}" onclick="find_order();" />
+				<input type="button" class="formbtn" value="导出Excel" onclick="export_csv();" />
+            </div>
+    </div>
+    <div class="fontr">{include file=page.top.html}</div>
+</div>
+<div class="tdare">
+    <table width="100%" cellspacing="0" class="dataTable">
+        <tr class="tatr1">
+            <td width="20" class="firstCell"></td>
+            <td>订单号</td>
+            <td>会员名称</td>
+            <td>优惠金额</td>
+            <td>付款时间</td>
+        </tr>
+        <!--{foreach from=$orders item=order}-->
+        <tr class="tatr2">
+            <td class="firstCell"></td>
+            <td>
+                {$order.order_sn}
+            </td>
+            <td>{$order.buyer_name}</td>
+            <td>{$order.discount|price}
+            </td>
+            <td>
+                {$order.pay_time|date:complete}
+            </td>
+
+        </tr>
+        <!--{/foreach}-->
+    </table>
+
+    <div id="dataFuncs">
+
+        <div class="pageLinks">{include file=page.bottom.html}</div>
+        <div class="clear"></div>
+    </div>
+
+
+</div>
+{include file="footer.html"}

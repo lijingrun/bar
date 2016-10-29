@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <base href="{$site_url}/" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <link href="{res file=css/common.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/index.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/main.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/rmc-common.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/bootstrap.min.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/font-awesome.css}" type="text/css" rel="stylesheet" />
+        <script type="text/javascript" src="index.php?act=jslang"></script>
+        <script type="text/javascript" src="{lib file=jquery.js}" charset="utf-8"></script>
+        <script type="text/javascript" src="{lib file=ecmall.js}" charset="utf-8"></script>
+    </head>
+    <body id="log-reg">
+        <header class="region container-fluid bg_blue fixed"> 
+            <div class="content row header_search" align="center">
+                <a href="javascript:history.back()">
+                    <div class="banner_left col-xs-2 font_white">
+                        <span class="fa fa-angle-left"></span>
+                    </div>
+                </a>
+            </div> 
+        </header>
+        <div class="container-fluid fixed_header_search">
+            <!-- {foreach from=$editions item=edition} -->
+            <a href="index.php?app=edition&act=details&id={$edition.edition_id}">
+            <div style="margin:10px ;background:#D1D1D1;height:130px;">
+
+                <div style="float:left;padding-right: 30px;">
+                    <div style="padding:10px;" align="center">
+                        <img src="{$edition.img}" style="width:100px;height:100px;">
+                            <br/>
+                        {$edition.edition_name}
+                    </div>
+                </div>
+
+                <div >
+                    品牌：{$edition.brand} <br />
+                    材质：{$edition.material}  <br />
+                    工艺：{$edition.technology}<br />
+                    规格：{$edition.specifications}<br />
+                    克重：{$edition.weight}<br />
+                    风格：{$edition.style}<br />
+                </div>
+            </div>
+            </a>
+            <!-- {/foreach} -->
+        </div>
+        <div>
+            <a href="index.php?app=edition&act=edition_list&page={$perv_page}">
+                <input type="buttom" value="上一页" />
+            </a>
+            <a href="index.php?app=edition&act=edition_list&page={$next_page}">
+                <input type="buttom" value="下一页" />
+            </a>
+        </div>
+        {include file='footer_nav.html'}
+    </body>
+</html>

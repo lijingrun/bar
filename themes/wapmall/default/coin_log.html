@@ -1,0 +1,62 @@
+<head>
+    {include file=public_header.html}
+    <link rel="stylesheet" type="text/css" href="{res file=css/textui.css}" />
+    <script type="text/javascript" src="{res file=js/main.js}"></script>
+    <style>
+        .coin_div{
+            padding:10px;
+            margin:10px;
+            color:white;
+            font-size: 20px;
+        }
+        .button1{
+            font-size: 20px;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+<div style="padding:10px;font-size: 20px;color:red;" align="center">
+    账号金币余额：{$member.coin}
+</div>
+<div class="detail_group border_top">
+    <div class="h5">平台金币获取如下：</div>
+    <ul class="details_arg">
+        <li>
+            <span class="title">VIP会员：</span>
+            <span class="content">每消费1元=1金币</span>
+        </li>
+        <li>
+            <span class="title">金卡会员：</span>
+            <span class="content">每消费1元=1.1金币</span>
+        </li>
+        <li>
+            <span class="title">铂金会员：</span>
+            <span class="content">每消费1元=1.2金币</span>
+        </li>
+    </ul>
+    <p style="color:red;">注：原来在商城有积分的客户，我们会按照1积分=80金币的系数来将积分换算为相应的金币，10月7号之后的订单会按照消费1积分=相应会员等级金币数来返还到您账上（亲，金币还可以当作现金抵扣哟）</p>
+</div>
+<div>
+<!-- {foreach from=$coin_log item=log} -->
+    <!-- {if $log.order_id} -->
+    <a href="index.php?app=buyer_order&act=view&order_id={$log.order_id}">
+    <div class="coin_div" style="background-color:<!-- {if $log.lanyu_coin > 0} --> #7A7A7A <!-- {else} --> #B23AEE <!-- {/if} --> ;">
+        <p>时间：{$log.add_time|date:complete}</p>
+        <p>原因：{$log.reason}</p>
+        <p>金币：{$log.lanyu_coin}</p>
+    </div>
+    </a>
+    <!-- {else} -->
+    <div class="coin_div" style="background-color:<!-- {if $log.lanyu_coin > 0} --> #7A7A7A <!-- {else} --> #B23AEE <!-- {/if} --> ;">
+        <p>时间：{$log.add_time|date:complete}</p>
+        <p>原因：{$log.reason}</p>
+        <p>金币：{$log.lanyu_coin}</p>
+    </div>
+    <!-- {/if} -->
+<!-- {/foreach} -->
+{include file="footer_nav.html"}
+</div>
+</body>

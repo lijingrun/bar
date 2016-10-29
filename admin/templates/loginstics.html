@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>蓝羽物流管理</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <script type="text/javascript" src="{lib file=jquery-1.4.4.min.js}" charset="utf-8"></script>
+        <script >
+                    function find_orders() {
+                    var order_type = document.getElementById('order_type').value;
+                            var status = document.getElementById('status').value;
+                            var order_id = document.getElementById('order_id').value;
+                            var buyer_name = document.getElementById('buyer_name').value;
+                            window.location.href = "index.php?app=logistics&order_type=" + order_type + "&status=" + status + "&order_id=" + order_id + "&buyer_name=" + buyer_name;
+                    }
+            //发货
+            function out(id){
+            var order_id = id;
+                    var invoice_no = $.trim($("#invoice_no" + id).val()); //物流单号
+                    var invoice_origin_phone = $.trim($("#invoice_origin_phone" + id).val()); //发货电话
+                    var invoice_contact = $.trim($("#invoice_contact" + id).val()); //联系人
+                    var invoice_company = $.trim($("#invoice_company" + id).val()); //物流公司
+                    var invoice_phone = $.trim($("#invoice_phone" + id).val()); //物流电话
+                    var invoice_status = $.trim($("#invoice_status" + id).val()); //状态
+                    var invoice_change_time = $.trim($("#invoice_change_time"+id).val());//发货时间
+                    var get_phone = $.trim($("#get_phone"+id).val()); //到站点电话
+//                    var invoice_forecast_time = $.trim($("#invoice_forecast_time" + id).val()); //预达时间   已经取消
+                    var deliver_price = $.trim($("#deliver_price" + id).val()); //送货费
+                    var freight = $.trim($("#freight" + id).val()); //送货费
+                    if (invoice_no == '' || invoice_change_time== '' || invoice_origin_phone == '' || invoice_contact == '' || invoice_company == '' || invoice_phone == '' || invoice_status == '' || get_phone == ''){
+            alert('发货内容不能为空！');
+            } else{
+            $.ajax({
+            type : 'post',
+                    url : 'index.php?app=logistics&act=out',
+                    data : {
+                    'id':id,
+                            'invoice_no':invoice_no,
+                            'invoice_origin_phone':invoice_origin_phone,
+                            'invoice_contact':invoice_contact,
+                            'invoice_company':invoice_company,
+                            'invoice_phone':invoice_phone,
+                            'invoice_status':invoice_status,
+                            'invoice_change_time' : invoice_change_time,
+                            'get_phone' : get_phone,
+                            'freight' : freight,
+                            'deliver_price' : deliver_price,
+//                            'invoice_forecast_time':invoice_forecast_time,
+                    },
+                    success : function(data){
+                    if (data == 111){
+                    alert('发货成功！');
+                            window.location.reload();
+                    }else{
+                        alert('系统繁忙，请联系工程师！');
+                    }
+                    }
+            });
+            }
+            }
+            //修改发货资料
+            function edit(id){
+            if (confirm("是否确定修改已发货订单的物流信息？")){
+            var invoice_no = $.trim($("#invoice_no" + id).val()); //物流单号
+                    var invoice_origin_phone = $.trim($("#invoice_origin_phone" + id).val()); //发货电话
+                    var invoice_contact = $.trim($("#invoice_contact" + id).val()); //联系人
+                    var invoice_company = $.trim($("#invoice_company" + id).val()); //物流公司
+                    var invoice_phone = $.trim($("#invoice_phone" + id).val()); //物流电话
+                    var invoice_status = $.trim($("#invoice_status" + id).val()); //状态
+//                    var invoice_forecast_time = $.trim($("#invoice_forecast_time" + id).val()); //预达时间
+                    var invoice_change_time = $.trim($("#invoice_change_time"+id).val());//发货时间
+                    var get_phone = $.trim($("#get_phone"+id).val()); //到站点电话
+                    var deliver_price = $.trim($("#deliver_price" + id).val()); //送货费
+                    var freight = $.trim($("#freight" + id).val()); //送货费
+                    if (invoice_no == '' || invoice_change_time == '' || invoice_origin_phone == '' || invoice_contact == '' || invoice_company == '' || invoice_phone == '' || invoice_status == '' || get_phone == ''){
+            alert('发货内容不能为空！');
+            } else{
+            $.ajax({
+            type : 'post',
+                    url : 'index.php?app=logistics&act=out',
+                    data : {
+                    'id':id,
+                            'invoice_no':invoice_no,
+                            'invoice_origin_phone':invoice_origin_phone,
+                            'invoice_contact':invoice_contact,
+                            'invoice_company':invoice_company,
+                            'invoice_phone':invoice_phone,
+                            'invoice_status':invoice_status,
+                            'invoice_change_time' : invoice_change_time,
+                            'get_phone' : get_phone,
+                            'freight' : freight,
+                            'deliver_price' : deliver_price,
+//                            'invoice_forecast_time':invoice_forecast_time,
+                    },
+                    success : function(data){
+                    if (data == 111){
+                    alert('发货成功！');
+                            $('#'+id).hide();
+                    } else{
+                    alert("服务器繁忙，请稍后重试！");
+                    }
+                    }
+            });
+            }
+            }
+            }
+
+            //发积分
+            function out_redeem(id){
+            var logistics_num = $.trim($("#logistics_num" + id).val()); //物流单号
+                    var out_phone = $.trim($("#out_phone" + id).val()); //发货电话
+                    var out_man = $.trim($("#out_man" + id).val()); //发货人
+                    var logistics_name = $.trim($("#logistics_name" + id).val());
+                    var logistics_phone = $.trim($("#logistics_phone" + id).val());
+                    var invoice_change_time = $.trim($("#invoice_change_time"+id).val());
+                    var invoice_status = $.trim($("#invoice_status" + id).val());
+                    var get_time = $.trim($("#get_time" + id).val());
+                    if (logistics_num == "" | out_phone == "" | out_man == "" | logistics_name == "" | logistics_phone == "" | invoice_status == "" | get_time == ""){
+            slert("发货信息不能为空！");
+            } else{
+            $.ajax({
+            type : "post",
+                    url : "index.php?app=logistics&act=out_redeem",
+                    data : {
+                    'id' : id,
+                            'logistics_num' : logistics_num,
+                            'out_phone' : out_phone,
+                            'out_man' : out_man,
+                            'logistics_name' : logistics_name,
+                            'invoice_change_time' : invoice_change_time,
+                            'logistics_phone' : logistics_phone,
+                            'invoice_status' : invoice_status,
+                            'get_time' : get_time
+                    },
+                    success : function(data){
+                    if (data == 111){
+                    alert("操作成功！");
+                            window.location.reload();
+                    } else{
+                    alert("服务器繁忙，请稍后重试！");
+                    }
+                    }
+            });
+            }
+            }
+
+            //修改积分发货
+            function edit_redeem(id){
+            if (confirm("是否确定修改已发货订单的物流信息？")){
+            var logistics_num = $.trim($("#logistics_num" + id).val()); //物流单号
+                    var out_phone = $.trim($("#out_phone" + id).val()); //发货电话
+                    var out_man = $.trim($("#out_man" + id).val()); //发货人
+                    var logistics_name = $.trim($("#logistics_name" + id).val());
+                    var logistics_phone = $.trim($("#logistics_phone" + id).val());
+                    var invoice_status = $.trim($("#invoice_status" + id).val());
+                    var get_time = $.trim($("#get_time" + id).val());
+                    var invoice_change_time = $.trim($("#invoice_change_time"+id).val());
+                    if (logistics_num == "" | out_phone == "" | out_man == "" | logistics_name == "" | logistics_phone == "" | invoice_status == "" | get_time == ""){
+            slert("发货信息不能为空！");
+            } else{
+            $.ajax({
+            type : "post",
+                    url : "index.php?app=logistics&act=out_redeem",
+                    data : {
+                    'id' : id,
+                            'logistics_num' : logistics_num,
+                            'out_phone' : out_phone,
+                            'out_man' : out_man,
+                            'logistics_name' : logistics_name,
+                            'logistics_phone' : logistics_phone,
+                            'invoice_change_time' : invoice_change_time,
+                            'invoice_status' : invoice_status,
+                            'get_time' : get_time
+                    },
+                    success : function(data){
+                    if (data == 111){
+                    alert("操作成功！");
+                            window.location.reload();
+                    } else{
+                    alert("服务器繁忙，请稍后重试！");
+                    }
+                    }
+            });
+            }
+            }
+            }
+        </script>
+        <div style="color:#00BFFF;padding-left:35px;border-bottom:1px solid #00BFFF;border-top:1px solid #00BFFF" >
+            <h1>蓝羽物流管理系统</h1>
+        </div>
+        <div style='padding:20px;' align='center'>
+            订单类型：
+            <select id="order_type">
+                <option value="goods" {if $order_type == "goods"}selected='selected'{/if} >商品订单</option>
+                <option value="redeem" {if $order_type == "redeem"}selected='selected'{/if}>积分订单</option>
+            </select>
+            订单状态：
+            <select id="status">
+                <option value=20 {if $status == "20"}selected='selected'{/if} >待发货订单</option>
+                <option value=30 {if $status == "30"}selected='selected'{/if} >已发货订单</option>
+
+            </select>
+            订单编号：<input type="text" id="order_id" value="{$order_id}"/>
+            购货单位：<input type='text' id='buyer_name' value="{$buyer_name}"/>
+            <input type="button" value="搜索" onclick='find_orders();'/>
+            
+            <a href="index.php?app=logistics&act=underline">
+                线下物流发货
+            </a>
+        </div>
+        <div style='font-size: 10px;' align='center'>
+            <table border="1" >
+                <tr>
+                    <th style="width:100px;">订单日期</th>
+                    <th style="width:70px;">购货单位</th>
+                    <th style="width:100px;">订单编号</th>
+                    <th style="width:70px;">物流单号</th>
+                    <!--
+                    <th>客服工号<br/>（K3职员代码）</th>
+                    -->
+                    <th style="width:100px;">发货电话</th>
+                    <th style="width:50px;">联系人</th>
+                    <th style="width:50px;">物流公司</th>
+                    <th style="width:100px;">物流电话</th>
+                    <th>运费</th>
+                    <th>送货费</th>
+                    <th style="width:70px;">状态(由哪里发货)</th>
+                    <th style="width:50px;">发货时间</th>
+                    <th style="width:50px;">到站点电话</th>
+                    <th style="width:50px;">操作</th>
+                </tr>
+                <tr>
+                    <td colspan="13" align="center">
+                        <span style="color:red"> 例子（请按例子格式填写） </span>
+                    </td>
+                </tr>
+                <tr style="color:red">
+                    <th style="width:100px;"></th>
+                    <th style="width:70px;"></th>
+                    <th style="width:100px;"></th>
+                    <th style="width:70px;">200100258</th>
+                    <!--
+                    <th>客服工号<br/>（K3职员代码）</th>
+                    -->
+                    <th style="width:100px;">13425839663</th>
+                    <th style="width:50px;">陈先生</th>
+                    <th style="width:50px;">XX物流</th>
+                    <th style="width:100px;">13427387212</th>
+                    <th>100</th>
+                    <th>50</th>
+                    <th style="width:70px;">从公司总部发货</th>
+                    <th style="width:50px;">2015-05-09</th>
+                    <th style="width:50px;">13356789983</th>
+                </tr>
+                {if $order_type == 'goods'}
+                <!-- {foreach from=$goods_orders item=val} -->
+                <tr id="{$val.order_sn}">
+                    <td align='center'>
+                        {$val.add_time|date:complete}
+                    </td>
+                    <td align='center'>
+                        {$val.buyer_name}
+                    </td>
+                    <td align='center'>
+                        {$val.order_sn}
+                    </td>
+                    <td align='center'>
+                        <input type='text' id='invoice_no{$val.order_sn}' value='{$val.invoice_no}' style='width:100px;'>
+                    </td>
+                    <!--
+                    <td align='center'>
+                        <input type='text' name='remark' style='width:70px;' >
+                    </td>
+                    -->
+                    <td align='center'>
+                        <input type='text' id='invoice_origin_phone{$val.order_sn}' value='{$val.invoice_origin_phone}' style='width:100px;'>
+                    </td>
+                    <td align='center'>
+                        <input type='text' id='invoice_contact{$val.order_sn}'  value='{$val.invoice_contact}' style='width:70px;'>
+                    </td>
+                    <td align='center'>
+                        <input type='text' id='invoice_company{$val.order_sn}'   value='{$val.invoice_company}'  style='width:70px;'>
+                    </td>
+                    <td align='center'>
+                        <input type='text' id='invoice_phone{$val.order_sn}'  value='{$val.invoice_phone}' style='width:100px;'>
+                    </td>
+                    <td>
+                        <input type="text" id="freight{$val.order_sn}" value="{$val.freight}" style='width:100px;'>
+                    </td>
+                    <td>
+                        <input type="text" id="deliver_price{$val.order_sn}" value="{$val.deliver_price}" style='width:100px;'>
+                    </td>
+                    <td align='center'>
+                        <input type='text' id='invoice_status{$val.order_sn}' value='{$val.invoice_status}' style="width:80px;">
+                    </td>
+                    <td align="center">
+                        <input type="text" id="invoice_change_time{$val.order_sn}" value="{$val.invoice_change_time}" style="width:70px;">
+                    </td>
+                    <td align='center'>
+                        <input type='text' id='get_phone{$val.order_sn}' value='{$val.get_phone}' style="width:70px;">
+                    </td>
+                    <td align='center'>
+                        {if $status == 20}
+                        <input type='button' value='发货' onclick="out({$val.order_sn});"  />
+                        {else}
+                        <input type='button' value='修改'  onclick="edit({$val.order_sn});"/>
+                        {/if}
+                    </td>
+                </tr>
+                <!-- {/foreach} -->
+                {else}
+                <!-- {foreach from=$goods_orders item=val} -->
+                <tr id="{$val.order_id}">
+                    <td align='center'>
+                        {$val.created|date:complete}
+                    </td>
+                    <td align='center'>
+                        {$val.buyer_name}
+                    </td>
+                    <td align='center'>
+                        {$val.order_id}
+                    </td>
+                    <td align='center'>
+                        <input type='text' id='logistics_num{$val.order_id}'  value='{$val.logistics_num}' style='width:100px;'>
+                    </td>
+                    <!--
+                    <td align='center'>
+                        <input type='text' name='out_man_k3' value='{$val.out_man_k3}' style='width:70px;' >
+                    </td>
+                    -->
+                    <td align='center'>
+                        <input type='text' id='out_phone{$val.order_id}' value='{$val.out_phone}' style='width:100px;'>
+                    </td>
+                    <td align='center'>
+                        <input type='text' id='out_man{$val.order_id}' value='{$val.out_man}' style='width:70px;'>
+                    </td>
+                    <td align='center'>
+                        <input type='text' id='logistics_name{$val.order_id}'  value='{$val.logistics_name}' style='width:70px;'>
+                    </td>
+                    <td align='center'>
+                        <input type='text' id='logistics_phone{$val.order_id}' value='{$val.logistics_phone}' style='width:100px;'>
+                    </td>
+                    <td align='center'>
+                        <input type='text' id='invoice_status{$val.order_id}' value='{$val.invoice_status}' style='width:80px;'>
+                    </td>
+                    <td align='center'>
+                        <input type='text' id='get_time{$val.order_id}' value='{$val.get_time}' style='width:70px;'>
+                    </td>
+                    <td align='center'>
+                        {if $status == 20}
+                        <input type='button' value='发货' onclick="out_redeem({$val.order_id});"/>
+                        {else}
+                        <input type='button' value='修改' onclick="edit_redeem({$val.order_id});" />
+                        {/if}
+                    </td>
+
+                </tr>
+                <!-- {/foreach} -->
+                {/if}
+                <tr>
+                    <td colspan="13">
+                        <div style="float:right;padding:10px 20px 10px 20px;">
+                        <a href="index.php?app=logistics&order_type={$order_type}&status={$status}&order_id={$order_id}&buyer_name={$buyer_name}&page={$pev_page}&count={$count}">
+                            上一页
+                        </a>
+                        第{$page}
+                        页
+                        <a href="index.php?app=logistics&order_type={$order_type}&status={$status}&order_id={$order_id}&buyer_name={$buyer_name}&page={$next_page}&count={$count}">
+                            下一页
+                        </a>
+                        共 {$pages} 页{$count} 条记录
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            
+        </div>
+    </body>
+</html>

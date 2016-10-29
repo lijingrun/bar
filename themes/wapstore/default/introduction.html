@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>企业简介</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            .foot{
+                width:20%;
+                float:left;
+            }
+            .foot_img{
+                width:30%;
+            }
+            footer img{
+                width:100%;
+            }
+            footer{
+
+            }
+            a:link { text-decoration: none;}
+        </style>
+    </head>
+    <body>
+        <div style="font-size:20px; ;margin-bottom:20px;padding-top: 10px;padding-bottom: 10px;width:100%;font-weight: bolder;background-color: #436EEE;color:#00000;">
+            <a href="javascript:history.back()" style="color: #ffffff" >
+               &nbsp;<
+            </a>
+        </div>
+        <div style="width:100%;">
+            企业形象：
+            <div>
+                <img src="{$introduction.image}" style="width:100%" />
+            </div>
+            企业简介：
+            <div>
+                {$introduction.enterprise}
+            </div>
+            企业证书：
+            <div>
+                <!-- {foreach from=$images item=image} -->
+                <div align="center">
+                    <img src="{$image.image}" style="width:100%" />
+                    <p>
+                        {$image.name}
+                    </p>
+                </div>
+                <!-- {/foreach} -->
+            </div>
+        </div>
+        <footer >
+            <div class="footer" style="padding-top: 30px;">
+                <a href="{url app=category&act=lanyu_store}">
+                    <div class="foot" align="center">
+                        <div class="foot_img" >
+                            <img src="{res file=images/category.png}"/>
+                        </div>
+                        <div class="footer_nav_item_title" style="border-right:1px solid #8C8C8C">
+                            <span>分类</span>
+                        </div>
+                    </div>
+                </a>
+                <a href="?app=my_favorite">
+                    <div class="foot" align="center">
+                        <div class="foot_img" >
+                            <img src="{res file=images/my_favourite.png}"/>
+                        </div>
+                        <div class="footer_nav_item_title" style="border-right:1px solid #8C8C8C">
+                            <span>收藏</span>
+                        </div>
+                    </div>
+                </a>
+                <a href=".">
+                    <div class="foot" align="center" align="center">
+                        <div class="foot_img" >
+                            <img src="{res file=images/home.png}" />
+                        </div>
+                        <div class="footer_nav_item_title" style="border-right:1px solid #8C8C8C">
+                            <span>首页</span>
+                        </div>
+                    </div>
+                </a>
+                <a href="?app=cart">
+                    <div class="foot" align="center">
+                        <div class="foot_img" >
+                            <img src="{res file=images/cart_shopping.png}"/>
+                        </div>
+                        <div class="footer_nav_item_title" style="border-right:1px solid #8C8C8C">
+                            <span>购物车</span>
+                        </div>
+                    </div>
+                </a>
+                <a href="?app=member">
+                    <div class="foot" align="center">
+                        <div class="foot_img" >
+                            <img src="{res file=images/user_center.png}"/>
+                        </div>
+                        <div class="footer_nav_item_title">
+                            <span>中心</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            </footer>
+    </body>
+</html>

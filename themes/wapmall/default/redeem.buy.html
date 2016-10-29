@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <base href="{$site_url}/" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        {$page_seo}
+        <link href="{res file=css/common.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/index.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/main.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/rmc-common.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/bootstrap.min.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/font-awesome.css}" type="text/css" rel="stylesheet" />
+        <script type="text/javascript" src="index.php?act=jslang"></script>
+        <script type="text/javascript" src="{lib file=jquery.js}" charset="utf-8"></script>
+        <script type="text/javascript" src="{lib file=ecmall.js}" charset="utf-8"></script>
+
+        {$_head_tags}
+        <script type="text/javascript">
+            function cancle_order(id) {
+                if (confirm('是否确定取消该订单？')) {
+                    window.location.href = "index.php?app=redeem&act=cancle_order&order_id=" + id;
+                }
+            }
+            function choose_this() {
+                var a = this.val();
+                alert(a);
+            }
+            function check_date(){
+                var address = $(':radio[name="address"]:checked').val();
+                if(typeof(address) == 'undefined'){
+                    alert('请选择收货地址！')
+                }else{
+                    $("#address").val(address);
+                    $("#form").submit();
+                }
+            }
+        </script>
+    </head>
+
+
+    <body id="log-reg">
+
+        <header class="region container-fluid bg_blue fixed"> 
+            <div class="content row header_search" align="center">
+                <a href="javascript:history.back()">
+                    <div class="banner_left col-xs-2 font_white">
+                        <span class="fa fa-angle-left"></span>
+                    </div>
+                </a>
+                <div class="banner_middle col-xs-8">
+                    购买产品
+                </div>
+            </div> 
+        </header>
+        <div class="container-fluid fixed_header_search">
+            <!-- {foreach from=$address item=val} -->
+            <div style="padding-top: 20px;padding-bottom: 20px;">
+                <label style="cursor:pointer" for="{$val.addr_id}">
+                <input type="radio" name="address" value="{$val.addr_id}" id="{$val.addr_id}">
+                    
+                    <p>收货地址：{$val.region_name}{$val.address}</p>
+                    <p>联系人：{$val.consignee}</p>
+                    <p>联系电话:{$val.phone_tel}</p>
+                    </label>
+            </div>
+            <!-- {/foreach} -->
+            <form id='form' action='index.php?app=redeem&act=buy_now' method='post'>
+            <input type="hidden" name="goods_id" value="{$good.goods_id}" />
+            <input type="hidden" name="nums" value="{$nums}" />
+            <input type="hidden" name="total_price" value="{$total_price}" />
+            <input type='hidden' name='address_id' id='address' >
+            </form>
+            <div style="border:2px solid #00B2EE; padding:10px; ">
+                <p>积分兑换商品：</p>
+                <table>
+                    <tr>
+                        <td style="width:100px;">
+                            <img src="{$good.img}" style="width:100px;"/>
+                        </td>
+                        <td>
+                            <div style="float:left;padding-left: 10px;">
+                                <p>{$good.goods_name}</p>
+                                <p>规格（型号）：{$good.spee_qty}</p>
+                                <p>积分：{$good.price}</p>
+                                <p>数量：{$nums}</p>
+                                <p>总积分：{$total_price}</p>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div>
+                给买家留言：
+                <br />
+                <textarea style="width:100%;" id="note" rows="5"></textarea>
+            </div>
+            <br />
+            <input type="button" value="提交" style="width:100%" onclick="check_date();"/>
+            {include file='footer_nav.html'}
+        </div>
+        <div style="height: 100px;">
+
+        </div>
+    </body>
+</html>

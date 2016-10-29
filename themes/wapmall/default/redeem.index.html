@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <base href="{$site_url}/" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        {$page_seo}
+        <link href="{res file=css/common.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/index.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/main.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/rmc-common.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/bootstrap.min.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/font-awesome.css}" type="text/css" rel="stylesheet" />
+        <script type="text/javascript" src="index.php?act=jslang"></script>
+        <script type="text/javascript" src="{lib file=jquery.js}" charset="utf-8"></script>
+        <script type="text/javascript" src="{lib file=ecmall.js}" charset="utf-8"></script>
+        
+        {$_head_tags}
+        <script type="text/javascript">
+            function find_goods() {
+                var keywork = $('#keywork').val();
+                window.location.href = "index.php?app=redeem&keyword=" + keywork;
+            }
+        </script>
+        <style>
+            ul li{
+                width:50%;
+                float:left;
+            }    
+            .redeem_span {
+                float:right;
+                color:#FF6EB4;
+                font-size: 15px;
+            }
+            .font_s{
+                padding-left: 10px;
+            }
+        </style>
+    </head>
+    <body id="log-reg">
+        <header class="region container-fluid bg_blue fixed"> 
+            <div class="content row header_search" align="center">
+                <a href="javascript:history.back()">
+                    <div class="banner_left col-xs-2 font_white">
+                        <span class="fa fa-angle-left"></span>
+                    </div>
+                </a>
+                <div class="banner_middle col-xs-8">
+                    <input placeholder="搜索" name="keyword" id="keywork" value="{$keywork}" class="search_top"/>
+                </div>
+                <div class="banner_right col-xs-2">  
+                    <button type="button" onclick="find_goods();" style="background-color: transparent;border: 0;color: #FFFFFF;font-size: 25px;margin-top: 2px;">
+                        <span class="fa fa-search"></span>
+                    </button>
+                </div>
+            </div> 
+        </header>
+        <div class="container-fluid fixed_header_search">
+            <br/>
+            <a href='index.php?app=redeem&act=order'>
+                <input type='button' value='我的订单' style='width:100%' />
+            </a>
+            <div style="padding-top:20px;padding-bottom: 20px;padding-left: 20px;">
+                <ul>
+                    <!-- {foreach from=$types item=type } -->
+                    <li>
+                        <a href="{url app=redeem&type_id=$type.type_id}">
+                            {$type.name}
+                        </a>
+                    </li>
+                    <!-- {/foreach} -->
+                </ul>
+            </div>
+            <div >
+                <ul style="margin-left:2%">
+                    <!-- {foreach from=$goods item=good } -->
+                    <a href="{url app=redeem&act=detail&goods_id=$good.goods_id}" >
+                        <li>
+                            <div style="padding:10px;">
+                                <img src="{$good.img}" style="width:90%;"/>
+                            </div>
+                            <div class="font_s" >
+                                <p>
+                                    {$good.goods_name}
+                                </p>
+                                <span class="redeem_span">需要积分：{$good.price}</span>
+                            </div>
+                        </li>
+                    </a>
+                    <!-- {/foreach} -->
+
+                </ul>
+            </div>
+
+
+        </div>
+        <div style="padding-bottom: 70px;">
+            
+        </div>
+        {include file='footer_nav.html'}
+    </body>
+</html>

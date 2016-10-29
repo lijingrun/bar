@@ -1,0 +1,322 @@
+<style type="text/css">
+    .p{
+        padding-left:10px;
+        padding-top: 10px;
+    }
+	#args_list p {
+		padding-bottom: 5px;
+	}
+	.args_input, .p input {
+		border: 1px solid silver;
+		border-width: 0 0 1px 0;
+	}
+
+	.rule_table td {
+		font-size: 12px;
+		padding: .5em 1em;
+	}
+
+	input { padding: 0 .5em; }
+	input[type='text'] { width: 180px; font-size: 12px!important; }
+</style>
+{include file=member.header.html}
+
+<script>
+    function findgoods() {
+        $("#goods_list").remove();
+        var goods_name = $.trim($("#goods_name").val());
+        if (goods_name == '') {
+            alert('请输入商品名称');
+        } else {
+            $.ajax({
+                type: 'post',
+                url: 'index.php?app=groupbuy_nums&act=find_goods',
+                data: {'goods_name': goods_name},
+                success: function (data) {
+					$('#goods_area').show();
+                    $("#choose_goods").after(data);
+                }
+            });
+        }
+    }
+    
+    function get_sprice(){
+        var goods_id = $("#goods").val();
+        if(goods_id == 0){
+            return;
+        }else{
+            $.ajax({
+                type : 'post',
+                url : 'index.php?app=order_rule&act=get_spec',
+                data : {'goods_id' : goods_id},
+                success : function(data){
+					$('#spec_area').show();
+                    $("#type").html(data);
+                }
+            });
+        }
+    }
+
+    function get_user(){
+        var user_name = $("#user").val();
+        if(user_name == ''){
+			alert('请输入用户名称')
+        }else{
+            $.ajax({
+                type : 'post',
+                url : 'index.php?app=order_rule&act=get_user',
+                data : {'user_name' : user_name},
+                success : function(data){
+					$('#user_area').show();
+                    $("#users").html(data);
+                }
+            });
+        }
+    }
+
+	$( function() {
+		// init
+		rule_args = {
+		<!-- {foreach from=$rules item=rule} -->
+		<!-- {if $rule.arguments neq ''} -->
+				{$rule.id}: {$rule.arguments},
+		<!-- {/if} -->
+		<!-- {/foreach} -->
+		};	
+
+		$('#rule_id').bind( "change", function() {
+			$('#args_list').empty();
+			$('#arguments').val('');
+
+			if( rule_args[$(this).val()] ) {
+				$.each( rule_args[$(this).val()], 
+					function( name, value ) {
+						if( typeof(value) == "string" ) {
+							$("<p><span>"+value+"</span>"+
+								": <input class='args_input' name='"+name+"' /></p>")
+								.appendTo( $('#args_list') );
+						}
+						else if( typeof(value) == "object" ) {
+							if( value['label'] == '' ) input_label = "input";
+							else input_label = value['label'];
+							$("<p><span>"+value['caption']+"</span>"+
+								": <"+input_label+" type='"+value['type']+
+								"' class='args_input' name='"+name+"' value='"+value['value']+"' /><script>"+value['script']+"<\/script></p>")
+								.appendTo( $('#args_list') );
+						}
+				});
+			}
+		});
+		$('#rule_id').change();
+
+		// default time value
+		$('input[type="date"]').each( function() { 
+			$(this)[0].valueAsDate = new Date() } );
+		//$('input[type="date"]')[1].valueAsDate = new Date(new Date().getTime() + 86400000*365);
+
+		// products adding.
+		$('#add-product').click( function() {
+			if( !( $('input[name="spec"]:checked')[0] === undefined )) {
+				var spec_id = $('input[name="spec"]:checked').val();
+				var exist_spec_id = false;
+				$('#products-list option').each( function() {  
+					if( $(this).val() == spec_id ) exist_spec_id = true;
+				});
+				
+				if( !exist_spec_id ) {
+					$('#products-list').prepend(
+						"<option value='" + spec_id + "'>" + 
+						//'#'+spec_id+': '+
+						$('#goods_list select').find('option:selected').text() + ' - ' + 
+						$('input[name="spec"]:checked').next('span').text()
+						+ "</option>");
+				}
+			}
+		});
+		$('#rm-product').click( function() {
+			$('#products-list option:selected').remove();
+		});
+
+		$('input[name="enabled"]').change( function() { 
+			if( $('input[name="enabled"]').attr("checked") ) $(this).val(1); 
+			else $(this).val(0); 
+		});
+		$('input[name="enabled"]').change();
+	});
+
+	// json object serialize.
+	$.fn.serializeObject = function()  
+	{  
+	   var o = {};  
+	   var a = this.serializeArray();  
+	   $.each(a, function() {  
+		   if (o[this.name]) {  
+			   if (!o[this.name].push) {  
+				   o[this.name] = [o[this.name]];  
+			   }  
+			   o[this.name].push(this.value || '');  
+		   } else {  
+			   o[this.name] = this.value || '';  
+		   }  
+	   });  
+	   return o;  
+	};
+
+	var combine_arguments = function() {
+		$('#arguments').val( JSON.stringify($('#args_form').serializeObject()) );
+	};
+	var combine_products = function() {
+		var products = '';
+		$('#products-list option').each( function() { products += $(this).val() + ','; } );
+		products = products.substring(0, products.length-1);
+		$('#products').val( products );
+	};
+</script>
+
+<div class="content">
+    <div class="totline"></div>
+    <div class="botline"></div>
+    {include file=member.menu.html}
+    <div id="right"> 
+        {include file=member.curlocal.html}
+        <div class="wrap">
+            <form method="post" id="form">
+				<h2>订单规则信息</h2>
+				<div style="width: 100%; border-bottom: 1px solid silver; padding: 0 0 10px 0; margin-bottom: 10px;"></div>
+
+				<table class="rule_table">
+					<tr>
+						<td width="100">主规则选择：</td>
+						<td>
+							<select name="rule_id" id="rule_id">
+								<!-- {foreach from=$rules item=rule} -->
+								<option value="{$rule.id}">{$rule.name}</option>
+								<!-- {/foreach} -->
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>子规则名称：</td>
+						<td>
+							<input type="text" name="name" id="name" />
+						</td>
+					</tr>
+					<tr>
+						<td>优先级：</td>
+						<td>
+							<input type="text" name="priority" id="priority" value="0" />
+						</td>
+					</tr>
+					<tr>
+						<td>规则开始时间：</td>
+						<td>
+							<input type="date" name="start_time" readonly/>
+						</td>
+					</tr>
+					<tr>
+						<td>规则结束时间：</td>
+						<td>
+							<input type="date" name="end_time" readonly />
+						</td>
+					</tr>
+					<tr>
+						<td>启用：</td>
+						<td>
+							<input type="checkbox" name="enabled" checked="checked" />
+						</td>
+					</tr>
+					<tr>
+						<td>搜索用户：</td>
+						<td>
+							<input type="text" id="user" placeholder="请填写用户名称"/>
+							<input type="button" value="搜索" onclick="get_user();"/>
+						</td>
+					</tr>
+					<tr id="user_area" style="display: none;">
+						<td>用户列表：</td>
+						<td>
+							<div id="users"></div>	
+						</td>
+					</tr>
+
+					<tr>
+						<td valign="top">显示文字：</td>
+						<td>
+							<textarea name="display" id="display" rows="5" cols="80" style="resize: both;"></textarea>
+						</td>
+					</tr>	
+				</table>
+
+				<br/>
+				<h2>规则产品列表</h2>
+				<div style="width: 100%; border-bottom: 1px solid silver; padding: 0 0 10px 0; margin-bottom: 10px;"></div>
+
+				<table class="rule_table">
+					<tr>
+						<td width="100">搜索产品：</td>
+						<td>
+							<input type="text" id="goods_name" placeholder="请填写商品的准确名称"/>
+							<input type="button" value="搜索" onclick="findgoods();"/>
+						</td>
+					</tr>
+					<tr id="goods_area" style="display: none;">
+						<td>请选择产品：</td>
+						<td>
+							<span id="choose_goods" />
+						</td>
+					</tr>
+					<tr id="spec_area" style="display: none;">
+						<td>规则产品型号：</td>
+						<td>
+							<div id="type"></div>	
+						</td>
+					</tr>
+					<tr id="products_area">
+						<td valign="top">产品列表：</td>
+						<td>
+							<input id="add-product" value="+" type="button" />
+							<input id="rm-product" value="-" type="button" />
+							<br/>
+							<br/>
+							<select id="products-list" multiple="multiple" 
+								style="width: 400px; min-height: 100px; overflow: auto;"/>
+						</td>
+					</tr>
+				</table>
+
+
+				<input type="hidden" name="arguments" id="arguments" />
+				<input type="hidden" name="products" id="products" />
+            </form>
+			<div id="args_display" style="padding-top: 10px">
+				<br/>
+				<h2>参数列表</h2>
+				<div style="width: 100%; border-bottom: 1px solid silver; padding: 0 0 10px 0;"></div>
+				<br/>
+				<form id="args_form">
+				<div id="args_list" style="padding-left: 1em;">
+				</div>
+				</form>
+			</div>
+
+        <div class="wrap_bottom"></div>
+
+	<br/>
+    </div>
+
+	<br/>
+	<div align="center">
+		<input type="button" value="提交" style="font-size: 18px; width: 80px;" 
+			onclick="combine_arguments(); combine_products(); $('#form').submit();"/>
+	</div>
+	<br/>
+
+    <div class="clear"></div>
+    <div class="adorn_right1"></div>
+    <div class="adorn_right2"></div>
+    <div class="adorn_right3"></div>
+    <div class="adorn_right4"></div>
+</div>
+<div class="clear"></div>
+</div>
+{include file=footer.html}

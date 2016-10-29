@@ -1,0 +1,137 @@
+{include file="member.header.html"}
+{$_head_tags}
+<body class="" style="overflow-x:hidden;">
+    <!--<script type="text/javascript" src="{lib file=jquery.js}" charset="utf-8"></script>-->
+            <script>
+            function under_sure(id){
+                $("#button"+id).hide();
+                $.ajax({
+                    type : "post",
+                    url : "index.php?app=buyer_order&act=under_sure&id="+id,
+                    success : function(data){
+                        if(data == 111){
+                            alert('已确认收货成功,2积分已到账！');
+                            window.location.reload();
+                        }else{
+                            alert('服务器繁忙，请重试！');
+                            window.location.reload();
+                        }
+                    }
+                });
+            }
+            </script>
+    <header class="region container-fluid bg_blue fixed" align="center">
+        <div class="content row header_search" align="center">
+            <a href="javascript:history.back()">
+                <div class="banner_left col-xs-2 font_white">
+                    <span class="fa fa-angle-left"></span>
+                </div>
+            </a>
+            <div class="banner_middle col-xs-8 font_white font_xl" style="margin-top:10px">
+                订单管理
+            </div>
+        </div>
+    </header>
+    <div class="fixed_header_search">
+        <ul class="bm_tab">
+            <li class="<!--{if $type eq pending}--> cur <!--{/if}-->"><a href="{url app=buyer_order&act=index&type=pending}">待付款</a></li>
+            <li class="<!--{if $type eq accepted}--> cur <!--{/if}-->"><a href="{url app=buyer_order&act=index&type=accepted}">待发货</a></li>
+            <li class="<!--{if $type eq shipped}--> cur <!--{/if}-->"><a href="{url app=buyer_order&act=index&type=shipped}">待收货</a></li>
+            <li class="<!--{if $type eq finished}--> cur <!--{/if}-->"><a href="{url app=buyer_order&act=index&type=finished}">已完成</a></li>
+        </ul>
+    </div>
+    <div class="container-fluid">
+
+
+        <!--订单页-->
+
+
+
+
+        <div class="u_order">
+            <!--{foreach from=$orders item=order}-->
+            <div class="orderbox">
+                <h2><span><i></i>{$order.seller_name|escape}</span><b class="font_blue">{$lang.order_status}:<font >{$order.status|modifier:order_status}<!--{if $order.evaluation_status}-->,&nbsp;{$lang.already_evaluate}<!--{/if}--></font></b></h2>
+
+                <!--{foreach from=$order.order_goods item=goods}-->
+                <div class="detail">
+                    <a href="{url app=goods&id=$goods.goods_id}"> <img src="{$goods.goods_image}" /></a>
+                    <p class="title">{$goods.goods_name|escape}</p>
+                    <p>​{$goods.specification|escape}​</p>​
+                    <br/>
+                    <p style="float: right">
+                        单价：
+                        <span style="color:red;">
+                            <!-- {if $goods.point_price !=0} -->
+                            {$goods.point_price}金币
+                            <!-- {else} -->
+                            {$goods.price|price}
+                            <!-- {/if} -->
+                        </span>
+                        <span style="padding-left: 15px;">数量：{$goods.quantity}</span>
+                    </p>
+                </div>
+                <!--{/foreach}-->
+
+                <!--{if $order.payment_name}-->
+
+                <!--{/if}-->
+                <p class="opr bg_grey_light" align="center">
+                    <a class="blue_btn" href="{url app=buyer_order&act=evaluate&order_id=$order.order_id}" id="order{$order.order_id}_evaluate"{if $order.status neq ORDER_FINISHED or $order.evaluation_status neq 0} style="display:none"{/if}>{$lang.evaluate}</a>
+                    <a href="{url app=cashier&order_id=$order.order_id}"  id="order{$order.order_id}_action_pay"{if $order.status neq ORDER_PENDING} style="display:none"{/if} class="blue_btn">{$lang.pay}</a>
+                    <input type="button" value="{$lang.confirm_order}" class="blue_btn" ectype="dialog" dialog_id="buyer_order_confirm_order" dialog_width="100%" dialog_title="{$lang.confirm_order}" uri="index.php?app=buyer_order&amp;act=confirm_order&order_id={$order.order_id}&ajax"  id="order{$order.order_id}_action_confirm"{if $order.status neq ORDER_SHIPPED or $order.payment_code eq 'cod'} style="display:none"{/if} />
+                           <input type="button" value="{$lang.cancel_order}" class="blue_btn" ectype="dialog" dialog_width="100%" dialog_title="{$lang.cancel_order}" dialog_id="buyer_order_cancel_order" uri="index.php?app=buyer_order&amp;act=cancel_order&order_id={$order.order_id}&ajax"  id="order{$order.order_id}_action_cancel"{if $order.status neq ORDER_PENDING and $order.status neq ORDER_SUBMITTED} style="display:none"{/if} />
+                           <a href="{url app=buyer_order&act=view&order_id=$order.order_id}"  class="blue_btn">{$lang.view_order}</a>
+                </p>
+            </div>
+            <!--{foreachelse}-->
+
+            <div class="null" style="display:none; margin-top:120px;">
+                <p><img src="/themes/mall/default/styles/wxmall/images/order_null.png" /></p>
+                <p>你没有订单信息~</p>
+                <p><a href="javascript:history.back(-1);" class="blue_btn">去购物</a></p>
+            </div>
+            <!--{/foreach}-->
+
+            <!-- {if $underline_orders} -->
+            线上确认获取2积分
+            <!-- {foreach from=$underline_orders item=val} -->
+            <div class="orderbox">
+                <h2><span><i></i>{$order.seller_name|escape}</span><b class="font_blue">{$lang.order_status}:<font >已发货<!--{if $order.evaluation_status}-->,&nbsp;{$lang.already_evaluate}<!--{/if}--></font></b></h2>
+                <div class="detail">
+                    <p>物流单号：{$val.logistics_id}</p>
+                    <p>发货时间：{$val.addtime|date}</p>
+                    <p>物流公司：{$val.l_name}</p>
+                    <p>物流电话：{$val.l_phone}</p>
+                    <p>发货箱数：{$val.num}</p>
+                    <p>运费：{$val.freight|price}</p>
+                    <p>送货费：{$val.deliver_price|price}</p>
+                    <p>发货状态:{$val.l_status}</p>
+                    <p>到站点电话：{$val.get_phone}</p>
+                </div>
+                <p class="opr bg_grey_light" align="center">
+                    <!-- {if $val.status==1} -->
+                    <input type="button" class="blue_btn" value="确认收货" id="button{$val.id}" onclick="under_sure({$val.id})" />
+                    <!-- {else} -->
+                    已确认收货
+                    <!-- {/if} -->
+                </p>
+            </div>
+            <!-- {/foreach} -->
+            <!-- {/if} -->
+
+
+            </div>
+
+
+
+            <div class="page">
+                {include file=member.page.bottom.html}
+            </div>
+
+
+
+            <iframe id='iframe_post' name="iframe_post" src="about:blank" frameborder="0" width="0" height="0"></iframe>
+        </div>
+        <div style="height:60px"></div>
+        {include file="footer_nav.html"}

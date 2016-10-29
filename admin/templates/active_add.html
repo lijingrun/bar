@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            div{ 
+                padding-top: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        {include file="header.html"}
+        <div style="padding:50px;">
+            <script>
+                function find_goods() {
+                    var goods_name = $("#goods_name").val().trim();
+                    if (goods_name == "") {
+                        alert("请输入商品名称");
+                    } else {
+                        $.ajax({
+                            type: 'post',
+                            url: "index.php?app=active&act=find_goods",
+                            data: {'goods_name': goods_name},
+                            success: function (data) {
+                                $("#goods").remove();
+                                $("#spec_list").remove();
+                                $("#goods_list").append(data);
+                            }
+                        });
+                    }
+                }
+                function find_spec() {
+                    var goods_id = $("#goods").val();
+                    $.ajax({
+                        type: 'post',
+                        url: 'index.php?app=active&act=find_spec',
+                        data: {'goods_id': goods_id},
+                        success: function (data) {
+                            $("#spec_list").remove();
+                            $("#goods_list").append(data);
+                        }
+                    });
+                }
+            </script>
+            <form method="post" enctype="multipart/form-data">
+                <input type="text" id="goods_name" /><input type="button" value="搜索" Onclick="find_goods();" />
+                <div id="goods_list" style="padding-top: 20px;"></div>
+                <div>
+                    开始时间：<input type="datetime-local" name="start_time" />
+                </div>
+                <div>
+                    结束时间：<input type="datetime-local" name="end_time" />
+                </div>
+                <div>
+                    数量：<input type="text" name="nums">
+                </div>
+                <div>
+                    价格：<input type="text" name="price">
+                </div>
+                <div>
+                    需要积分：<input type='text' name='point'>
+                </div>
+                <div>
+                    每人限购：<input type="text" name="can_buy">
+                </div>
+                <div>
+                    显示图片：<input type="file" name="img" />
+                </div>
+                参加权限：
+                <div>
+                    <!-- {foreach from=$grades item=grade} -->
+                    <p style="padding-top:5px;">
+                        <input type='checkbox' name='grade[]' value='{$grade.grade_id}'>{$grade.grade_name}
+                    </p>        
+                    <!-- {/foreach} -->
+                </div>
+                <div style="padding-top: 20px;">
+                    <input type="submit" value="提交" />
+                </div>
+            </form>
+        </div>
+    </body>
+</html>

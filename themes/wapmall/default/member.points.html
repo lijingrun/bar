@@ -1,0 +1,73 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+{$page_seo}
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<title></title>
+
+<link href="{res file=css/common.css}" type="text/css" rel="stylesheet" />
+<link href="{res file=css/sp_cart.css}" type="text/css" rel="stylesheet" />
+<link href="{res file=css/main.css}" type="text/css" rel="stylesheet" />
+<link href="{res file=css/rmc-common.css}" type="text/css" rel="stylesheet" />
+<link href="{res file=css/bootstrap.min.css}" type="text/css" rel="stylesheet" />
+<link href="{res file=css/font-awesome.css}" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="{res file=js/jquery-1.8.0.min.js}"></script>
+<script type="text/javascript" src="{lib file=ecmall.js}" charset="utf-8"></script>
+<script type="text/javascript" src="{lib file=cart.js}" charset="utf-8"></script>
+<style>
+#point_table th { text-align: center; }
+#point_table td, #point_table th {
+	padding: .2em .5em;
+	border: 1px solid gray;
+	border-width: 1px 0;
+}
+</style>
+</head>
+<body>
+<div class="w320">
+    <header class="region container-fluid bg_blue fixed">
+        <div class="content row header_search" align="center">
+            <a href="javascript:history.back()">
+                <div class="banner_left col-xs-2 font_white">
+                    <span class="fa fa-angle-left"></span>
+                </div>
+            </a>
+            <div class="banner_middle col-xs-8 font_white font_xl" style="margin-top:10px">
+                积分详情
+            </div>
+        </div>
+    </header>
+<div style="height:60px"> </div>
+	<table id="point_table" width="100%">
+	<tr>
+		<th width="30%">订单号</td>
+		<th width="35%">积分</td>
+		<th width="35%">时间</td>
+	</tr>
+	<!--{foreach from=$points item=point}-->
+	<tr>
+		<td align="center"><a href="?app=buyer_order&act=view&order_id={$point.order_id}">{$point.order_sn}</a></td>
+		<td align="right">{$point.point}</td>
+		<td align="center">{$point.add_time|date}</td>
+	</tr>
+	<!-- {/foreach} -->
+
+	<tr>
+		<td align="right">合计：</td>
+		<td align="right">{$total_point.0}</td>
+		<td></td>
+	</tr>
+
+	</table>
+</div>
+
+<div style="height:60px"> </div>
+{include file='footer_nav.html'}
+
+</body>
+
+</html>

@@ -1,0 +1,47 @@
+{include file=member.header.html}
+<div class="content">
+    <div class="totline"></div><div class="botline"></div>
+    {include file=member.menu.html}
+    <div id="right">
+		{include file=member.curlocal.html}
+        {include file=member.submenu.html}
+
+        <div class="wrap">
+            <!-- {if $user_brands} -->
+            <ul>
+                <!-- {foreach from=$user_brands item=brand} -->
+                <li style="float: left" >
+                    <a href="index.php?app=search&act=index&brand={$brand.brand_name}">
+                        <div align="center" style="padding-right: 10px;padding-bottom: 20px;">
+                            <!-- {if $brand.brand_logo} -->
+                            <img src="{$brand.brand_logo}" />
+                            <!-- {else} -->
+                            <img src="brand_logo.png" />
+                            <!-- {/if} -->
+                            <h3>{$brand.brand_name}</h3>
+                        </div>
+                    </a>
+                </li>
+                <!-- {/foreach} -->
+            </ul>
+            <!-- {else} -->
+            <h1 style="color:red">您暂时还没申请任何品牌保护</h1>
+            <!-- {/if} -->
+            
+        </div>
+        <div class="clear"></div>
+        <div class="adorn_right1"></div>
+        <div class="adorn_right2"></div>
+        <div class="adorn_right3"></div>
+        <div class="adorn_right4"></div>
+    </div>
+
+    <div class="clear"></div>
+    
+    
+    
+    
+</div>
+<iframe id='iframe_post' name="iframe_post" frameborder="0" width="0" height="0">
+</iframe>
+{include file=footer.html}

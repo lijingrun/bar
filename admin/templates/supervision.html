@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>蓝羽物流管理</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script type="text/javascript" src="{lib file=jquery-1.4.4.min.js}" charset="utf-8"></script>
+        <script>
+            function find_by_key(){
+                var key = $("#buyer_name").val();
+                var region_id = $("#region").val();
+                window.location.href="index.php?app=logistics&act=supervision&buyer_name="+key+"&region_id="+region_id;
+            }
+            function output(){
+                if(confirm("是否确定导出所有数据？")){
+                    window.location.href="index.php?app=logistics&act=output_supervision_data"
+                }
+            }
+            </script>
+    </head>
+    <body>
+        <div style="color:#00BFFF;padding-left:35px;border-bottom:1px solid #00BFFF;border-top:1px solid #00BFFF" >
+            <h1>蓝羽物流管理统计系统</h1>
+        </div>
+        <div align="center" style="padding: 10px">
+            客户名：<input type="text" id="buyer_name" />
+            地区：
+            <select id="region">
+                <option value="0">全国</option>
+                <!-- {foreach from=$region item=val} -->
+                <option value="{$val.region_id}" <!-- {if $val.region_id==$region_id} -->selected="selected"<!-- {/if} --> >{$val.region_name}</option>    
+                <!-- {/foreach} -->
+            </select>
+            
+            <input type="button" value="查找" onclick="find_by_key();"/>
+        </div>
+        <div align="center">
+            <table border='1'>
+                <tr>
+                    <th>订单号</th>
+                    <th>购货单位</th>
+                    <th>付款日期</th>
+                    <th>物流状态</th>
+                </tr>
+                <!-- {foreach from=$orders item=order} -->
+                <tr>
+                    <th>{$order.order_sn}</th>
+                    <th>{$order.buyer_name}</th>
+                    <th>{$order.pay_time|date:complete}</th>
+                    <th>未发货</th>
+                </tr>
+                <!-- {/foreach} -->
+                <tr>
+                    <td colspan="4">
+                        <a href='index.php?app=logistics&act=supervision&buyer_name={$buyer_name}&region_id={$region_id}&page={$prev_page}'>
+                            上一页
+                        </a>
+                        第{$page}/{$all_pages}页共{$order_count}条
+                        <a href='index.php?app=logistics&act=supervision&buyer_name={$buyer_name}&region_id={$region_id}&page={$next_page}'>
+                            下一页
+                        </a>
+                        <input type="button" value="导出" onclick="output();"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>

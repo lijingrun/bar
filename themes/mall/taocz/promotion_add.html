@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            .spec{width:50px;}
+        </style>
+    </head>
+    <body>
+        <script>
+            function find_goods() {
+                var goods_name = $("#goods").val().trim();
+                if (goods_name != '') {
+                    $("#goods_select").remove();
+                    $("#spec_div").remove();
+                    $.ajax({
+                        type: 'post',
+                        url: 'index.php?app=promotion&act=find_goods',
+                        data: {'goods_name': goods_name},
+                        success: function (data) {
+                            $("#goods_list").append(data);
+                        }
+                    });
+                }
+            }
+            function get_spec() {
+                var goods_id = $("#goods_id").val();
+                if (goods_id != 0) {
+                    $("#goods_id_post").val(goods_id);
+                    $("#spec_div").remove();
+                    $.ajax({
+                        type: 'post',
+                        url: 'index.php?app=promotion&act=get_specs',
+                        data: {'goods_id': goods_id, 'special_sgrade': 5},
+                        success: function (data) {
+                            $("#spec_list").append(data);
+                        }
+                    });
+                }
+            }
+            function del_specialgoods(id){
+                if(confirm('是否从本活动中移除该产品？')){
+                    window.location.href="index.php?app=special&act=del_specialgoods&id="+id;
+                }
+            }
+        </script>
+        {include file=member.header.html}
+        <div class="content">
+            <div class="totline"></div>
+            <div class="botline"></div>
+            {include file=member.menu.html}
+            <div id="right">
+                {include file=member.curlocal.html}
+                {include file=member.submenu.html}
+                <div class="wrap">
+                    <form method="post" >
+                        <input type="hidden" id="goods_id_post" name="goods_id" />
+                        活动时间<input type="date" name="date">
+                        <div style="padding:20px;">
+                            <h3>增加活动商品</h3>
+                            <div>
+                                <input type='text' id='goods' />
+                                <input type='button' value='搜索' onclick='find_goods()' />
+                            </div>
+                            <div id='goods_list'>
+                            </div>
+                            <div id='spec_list'>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+
+        {include file=footer.html}
+    </body>
+</html>

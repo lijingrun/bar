@@ -1,0 +1,84 @@
+{include file=member.header.html}
+<style>
+    .rule_table td,.rule_table th { padding: 5px 1em; }
+</style>
+<div class="content">
+    <div class="totline"></div>
+    <div class="botline"></div>
+    {include file=member.menu.html}
+    <div id="right"> 
+        {include file=member.curlocal.html}
+        <div class="wrap" style="padding-top: 0;">
+            <table style="width: 100%;" class="rule_table">
+                <tr style="background-color: #D4E7FF;">
+                    <th style="width: 10%;">ID</th>
+                    <th style="width: 32%;">名称</th>
+                    <th style="width: 28%;">包含商品</th>
+                    <!--
+<th style="width:100px">开始时间</th>
+<th style="width:100px;">结束时间</th>
+                    -->
+                    <th style="width: 10%;">状态</th>
+                    <th style="width: 20%;">操作</th>
+
+                </tr>
+                <!-- {foreach from=$rules item=num} -->
+                <tr>
+                    <td>
+                        <p>
+                            {$num.id}
+                            </>
+                    </td>
+                    <td>
+                        <a href="#">
+                            {$num.name}
+                        </a>
+                    </td>
+                    <td style="height: 13px;overflow:hidden;display:block;">
+                        <!--                        <a href="#">
+                        
+                                                </a>-->
+                        <!-- {foreach from=$num.goods item=val} -->
+                        <p>{$val.goods_name}</p>
+                        <!-- {/foreach} -->
+                    </td>
+                    <!--
+<td align="center">{$num.start_time|date:Y-m-d}</td>
+<td align="center">{$num.end_time|date:Y-m-d}</td>
+                    -->
+                    <td align="center">
+                        <!-- {if $num.enabled == 1} -->
+                        生效
+                        <!-- {else} -->
+                        失效
+                        <!-- {/if} -->
+                    </td>
+                    <td align="center">
+                        <a href="index.php?app=order_rule&act=edit&rule_id={$num.id}">编辑</a> | 
+                        <!-- {if $num.enabled == 1} -->
+                        <a href="index.php?app=order_rule&act=cancle&rule_id={$num.id}">取消激活</a> | 
+                        <!-- {else} -->
+                        <a href="index.php?app=order_rule&act=activation&rule_id={$num.id}">激活</a> | 
+                        <!-- {/if} -->
+                        <a href="index.php?app=order_rule&act=delete&rule_id={$num.id}">删除</a>
+                    </td>
+                </tr>
+                <!-- {/foreach} -->
+            </table>
+            <div class="wrap_bottom"></div>
+        </div>
+
+        <div class="clear"></div>
+
+        <div style="padding-top: 15px; text-align: center;">
+            <a href="index.php?app=order_rule&act=add"><input type="button" value="新增规则" style=" width: 120px; font-size: 18px;"/></a>
+        </div>
+
+        <div class="adorn_right1"></div>
+        <div class="adorn_right2"></div>
+        <div class="adorn_right3"></div>
+        <div class="adorn_right4"></div>
+    </div>
+    <div class="clear"></div>
+</div>
+{include file=footer.html}

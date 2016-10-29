@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>数据统计</title>
+        <meta charset="utf-8">
+        <style>
+            .table1{
+                border:1px solid #000;
+            }
+            .table1 th{
+                border:1px solid #000;
+                padding:5px;
+            }
+            .table1 td{
+                border:1px solid #000;
+                padding:5px;
+                white-space: nowrap;
+            }
+        </style>
+        <link  href="{res file=css/basic.css}" type="text/css" rel="stylesheet" />
+        <script type="text/javascript" src="{res file=js/enhance.js}"></script>	
+        <script type="text/javascript">
+            // Run capabilities test
+            enhance({
+                loadScripts: [
+                    'js/excanvas.js',
+                    '../_shared/jquery.min.js',
+                    'js/visualize.jQuery.js',
+                    'js/example.js'
+                ],
+                loadStyles: [
+                    'css/visualize.css',
+                    'css/visualize-light.css'
+                ]
+            });
+        </script>
+        <script>
+            function changeyear() {
+                var year = $("#year").val();
+                window.location.href = "index.php?app=seller_order&act=statistics&year=" + year;
+            }
+        </script>
+    </head>
+    <body>
+        {include file=member.header.html}
+        <div class="content">
+            {include file=member.menu.html}
+            {include file=member.curlocal.html}
+            <div id="right">
+                <select onchange="changeyear();" id="year">
+                    <option value="2015" <!-- {if $year==2015} -->selected="selected" <!-- {/if} --> >2015</option>
+                    <option value="2016" <!-- {if $year==2016} --> selected="selected"<!-- {/if} --> >2016</option>
+                    <option value="2017" <!-- {if $year==2017} --> selected="selected"<!-- {/if} --> >2017</option>
+                    <option value="2018" <!-- {if $year==2018} --> selected="selected"<!-- {/if} --> >2018</option>
+                    <option value="2019" <!-- {if $year==2019} --> selected="selected"<!-- {/if} --> >2019</option>
+                    <option value="2020" <!-- {if $year==2020} --> selected="selected"<!-- {/if} --> >2020</option>
+                </select>年度销售统计(本统计只统计交易成功的订单)
+                <table class="table1" >
+                    <tr>
+                        <th>月份</th>
+                        <th>1月</th>
+                        <th>2月</th>
+                        <th>3月</th>
+                        <th>4月</th>
+                        <th>5月</th>
+                        <th>6月</th>
+                        <th>7月</th>
+                        <th>8月</th>
+                        <th>9月</th>
+                        <th>10月</th>
+                        <th>11月</th>
+                        <th>12月</th>
+                        <th>总量</th>
+                    </tr>
+                    <tr>
+                        <td>销量</td>
+                        <!-- {foreach from=$prices item=price} -->
+                        <td>{$price|price}万</td>
+                        <!-- {/foreach} -->
+                        <td>{$total_price|price}万</td>
+                    </tr>
+                </table>
+
+
+
+
+
+                <div style="padding-top: 20px;">
+                    销量top10
+                    <table  class="table1" >
+                        <tr>
+                            <td>排位</td>
+                            <td>产品</td>
+                            <td>总销量</td>
+                        </tr>
+                        <!-- {foreach from=$tops item=top} -->
+                        <tr>
+                            <td>{$top.num}</td>
+                            <td>{$top.goods_name}</td>
+                            <td>{$top.count}件</td>
+                        </tr>
+                        <!-- {/foreach} -->
+                    </table>
+                </div>
+
+                <!--            <div style="padding-top: 20px;">
+                                消费top10客户
+                                <table  class="table1" >
+                                    <tr>
+                                        <td>排位</td>
+                                        <td>客户名</td>
+                                        <td>总购买</td>
+                                    </tr>
+                                 {foreach from=$topbuyers item=top} 
+                                <tr>
+                                    <td>{$top.num}</td>
+                                    <td>{$top.buyer_name}</td>
+                                    <td>{$top.sum(order_amount)}</td>
+                                </tr>
+                                 {/foreach} 
+                                </table>
+                            </div>    -->
+
+                <div style="padding-top: 20px;">
+                    各地区销量情况
+                    <table class="table1" >
+                        <tr>
+                            <td>地区</td>
+                            <td>销量</td>
+                        </tr>
+                        <!-- {foreach from=$province_price item=val } -->
+                        <tr>
+                            <td>{$val.region_name}</td>
+                            <td>{$val.price|price}</td>
+                        </tr>
+                        <!-- {/foreach} -->
+                    </table>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        {include file=footer.html}
+    </body>
+</html>

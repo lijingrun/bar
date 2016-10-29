@@ -1,0 +1,150 @@
+<head>
+    <link type="text/css" rel="stylesheet" href="{res file=css/index.css}"/>
+    <!--左滑样式-->
+    <link type="text/css" rel="stylesheet" href="{res file=css/luara.left.css}"/>
+</head>
+<!--由于主页要改，而且需要将菜单定在左边，但又不能影响其他页面，所以公用头另外做了,不用header.html了-->
+{include file=headi.html}
+<script type="text/javascript" src="{res file=js/jquery-1.8.3.min.js}"></script>
+<script type="text/javascript" src="{res file=js/jquery.luara.0.0.1.min.js}"></script>
+    <div style="position: absolute;width:250px;height: 400px;padding-top: 20px;padding-left: 80%">
+        <img src="{res file=images/index.jpg}" style="width:100%;" />
+    </div>
+<div align=center class="index_img">
+    <!--Luara图片切换骨架begin-->
+    <div class="example2">
+        <ul>
+            <!-- {foreach from=$images item=image} -->
+            <li><img src="{$image.image}" alt="1"/></li>
+            <!-- {/foreach} -->
+        </ul>
+        <ol>
+            <!-- {foreach from=$images item=image} -->
+            <li></li>
+            <!-- {/foreach} -->
+        </ol>
+    </div>
+    <!--Luara图片切换骨架end-->
+    <script>
+        $(function () {
+<!--设置图片的大小-->
+            $(".example2").luara({width: "782", height: "350", interval: 2000, selected: "seleted", deriction: "left"});
+            $("#all_type").show();
+        });
+    </script>
+
+    
+</div>
+
+<!-- {if $c_goods} -->
+<!--<div class="remcommend_div">
+    促销优惠
+</div>
+<div style="padding-left:20px;">
+<div style="padding-bottom: 300px;">
+    <ul style="list-style:none;">
+        {foreach from=$c_goods item=good}
+        <li style="float: left;">
+            <div style="padding:5px;border: 2px solid #FFEFD5;">
+                <a href="index.php?app=goods&id={$good.goods_id}">
+                <div align="center" style="padding:10px;width:180px;">
+                    <image src="{$good.default_image}" style="width:90%;" />
+                </div>
+                    <p style="padding-left: 20px;overflow:hidden;height:18px;width:180px;margin-bottom: 15px;font-size: 16px;">{$good.goods_name}</p>
+                </a>
+                <div style="padding-left:30px;font-size: 18px;">
+                     {if $is_jingxiaoshang} 
+                    <span style="color:red">{$good.price_distributor|price}</span>
+                     {else} 
+                    <span style="color:red">{$good.price|price}</span>
+                     {/if} 
+                </div>
+                <p style="padding-left:30px;padding-top: 10px;padding-bottom: 10px;" >
+                    <a href="index.php?app=store&id={$good.store_id}">
+                    {$good.store_name}
+                    </a>
+                </p>
+            </div>
+        </li>
+        {/foreach}
+    </ul>
+</div>
+</div>-->
+<!-- {/if} -->
+<div class="remcommend_div">
+    商品推荐
+</div>
+<div style="padding-left:20px;">
+<div style="padding-bottom: 600px;">
+    <ul style="list-style:none;">
+        <!--{foreach from=$r_goods item=good}-->
+        <li style="float: left;">
+            <!-- {if $good.recommended neq 0 } -->
+            <img src="{$site_url}/onsale.png" style="width:5%;position:absolute;"> 
+            <!-- {/if} -->
+            <div style="padding:5px;border: 2px solid #FFEFD5;">
+                <a href="index.php?app=goods&id={$good.goods_id}">
+                <div align="center" style="padding:10px;width:180px;">
+                    <!-- {if $good.stock == 0} -->
+                    <img src="{$site_url}/sold_out.jpg" style="width: 90%;" />
+                    <!-- {else} -->
+                    <image src="{$good.default_image}" style="width:90%;" />
+                    <!-- {/if} -->
+                </div>
+                    <p style="padding-left: 20px;overflow:hidden;height:18px;width:180px;margin-bottom: 15px;font-size: 16px;">{$good.goods_name}</p>
+                </a>
+                <div style="padding-left:30px;font-size: 18px;">
+                    <!-- {if $is_jingxiaoshang} -->
+                    <span style="color:red">{$good.price_distributor|price}</span>
+                    <!-- {else} -->
+                    <span style="color:red">{$good.price|price}</span>
+                    <!-- {/if} -->
+                </div>
+                <p style="padding-left:30px;padding-top: 10px;padding-bottom: 10px;" >
+                    <a href="index.php?app=store&id={$good.store_id}">
+                    {$good.store_name}
+                    </a>
+                </p>
+            </div>
+        </li>
+        <!--{/foreach}-->
+    </ul>
+</div>
+</div>
+
+<div class="remcommend_div">
+    最新上市
+</div>
+<div style="padding-left:20px;">
+<div style="padding-bottom: 550px;">
+    <ul style="list-style:none;">
+        <!--{foreach from=$new_goods item=good}-->
+        <li style="float: left;">
+            <div style="padding:5px;border: 2px solid #FFEFD5;">
+                <a href="index.php?app=goods&id={$good.goods_id}">
+                <div align="center" style="padding:10px;width:180px;">
+                    <image src="{$good.default_image}" style="width:90%;" />
+                    <p style="padding-left: 20px;overflow:hidden;height: 18px;width:180px;margin-bottom: 15px;font-size: 16px;">{$good.goods_name}</p>
+                </div>
+                </a>
+                <div style="padding-left:30px;font-size: 18px;">
+                    <!-- {if $is_jingxiaoshang} -->
+                    <span style="color:red">{$good.price_distributor|price}</span>
+                    <!-- {else} -->
+                    <span style="color:red">{$good.price|price}</span>
+                    <!-- {/if} -->
+                </div>
+                <p style="padding-left:30px;padding-top: 10px;padding-bottom: 10px;" >
+                    <a href="index.php?app=store&id={$good.store_id}">
+                    {$good.store_name}
+                    </a>
+                </p>
+            </div>
+        </li>
+        <!--{/foreach}-->
+    </ul>
+</div>
+</div>
+
+{include file=server.html}
+{include file=footer.html}

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <script type="text/javascript" src="{lib file=jquery.js}" charset="utf-8"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <script>
+                    function del_special(id){
+                    if (confirm("是否确定删除该活动？")){
+                    window.location.href = 'index.php?app=special&act=del_special&id=' + id;
+                    }
+                    }
+            function change_show(id){
+            if (id != ''){
+            $.ajax({
+            type : 'post',
+                    url : 'index.php?app=special&act=change_show',
+                    data : {'id' : id},
+                    success : function(data){
+                    alert('操作成功');
+                    }
+            })
+            }
+            }
+        </script>
+        <div>
+            <div>
+                <a href="index.php?app=special&act=special_add">
+                    <input type="button" value="新增专场活动" />
+                </a>
+            </div>
+            <div>
+                <table border="1">
+                    <tr>
+                        <th>专场</th>
+                        <th>开始时间</th>
+                        <th>结束时间</th>
+                        <th>销售对象</th>
+                        <th>是否激活</th>
+                        <th>操作</th>
+                    </tr>
+                    <!-- {foreach from=$specials item=special} -->
+                    <tr>
+                        <td style="width:200px;">
+                            <img src="{$special.image}" style="width:100%" />
+                            <p>{$special.name}</p>
+                        </td>
+                        <td style="width:200px;" align="center">{$special.start|date:complete}</td>
+                        <td style="width:200px;" align="center">{$special.end|date:complete}</td>
+                        <td>
+                            <!-- {foreach from=$sgrade item=grade} -->
+                            <!-- {if $grade.grade_id == $special.sgrade} -->
+                            {$grade.grade_name}
+                            <!-- {/if} -->
+                            <!-- {/foreach} -->
+                        </td>
+                        <td style="width:50px;" align="center">
+                            <!-- {if $special.is_show} -->
+                            <input type="checkbox" checked="checked" Onclick="change_show({$special.special_id})"/>
+                            <!-- {else} -->
+                            <input type="checkbox" Onclick="change_show({$special.special_id})"/>
+                            <!-- {/if} -->
+                        </td>
+                        <td style="width:100px;">
+                            <a href="index.php?app=special&act=edit&id={$special.special_id}">
+                                <input type="button" value="修改" />
+                            </a>
+                            <input type="button" value="删除" onclick="del_special({$special.special_id})" />
+                        </td>
+                    </tr>
+                    <!-- {/foreach} -->
+                </table>
+            </div>
+        </div>
+    </body>
+</html>

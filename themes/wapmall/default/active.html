@@ -1,0 +1,171 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <link href="{res file=css/common.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/sp_cart.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/main.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/rmc-common.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/bootstrap.min.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/font-awesome.css}" type="text/css" rel="stylesheet" />
+        <script type="text/javascript" src="{res file=js/jquery-1.8.0.min.js}"></script>
+        <style>
+            p {
+                padding:10px;
+                font-size: 18px;
+            }
+        </style>
+    </head>
+    <body>
+        <script>
+            function rob(){
+                var active_id = {$active.id};
+                var region = $("#region").val();
+                var address = $("#address").val().trim();
+                var name = $("#name").val().trim();
+                var tel = $("#tel").val().trim();
+                var nums = $("#nums").val();
+                if(region === 0 || address === "" || name === "" || tel === ""){
+                    alert("请填写相关内容！");
+                }else{
+                    $.ajax({
+                        type : 'get',
+                        url :  'index.php?app=active&act=rob',
+                        data : {'nums' : nums ,'active_id' : active_id, 'region' : region, 'address' : address, 'name' : name, 'tel' : tel},
+                        success : function(data){
+                            if(data == 111){
+                                alert("恭喜，您已成功抢到本产品,请到订单界面进行付款操作！");
+                                location.href="index.php?app=buyer_order";
+                            }else if(data == 333){
+                                alert("很遗憾，已经被人抢光了！");
+                                location.reload();
+                            }else if(data == 555){
+                                alert("你积分不够！");
+                            }else if(data == 666){
+                                alert("剩余数量不够！");
+                            }else{
+                                alert("系统繁忙，请稍后重试！");
+                            }
+                        }
+                    });
+                }
+            }
+            function add_address() {
+                $("#to_rob").hide();
+                $("#fill").show();
+            }
+            function sub(){
+                var num = $("#nums").val();
+                if(num > 1){
+                    num --;
+                    $("#nums").val(num);
+                }
+            }
+            function add(){
+                var num = $("#nums").val();
+                var active_id = {$active.id};
+                $.ajax({
+                    type : 'post',
+                    url : 'index.php?app=active&act=add_nums',
+                    data : {'nums' : num, 'active_id' : active_id},
+                    success : function(data){
+                        if(data == 111){
+                            num++;
+                            $("#nums").val(num);
+                        }else{
+                            alert("已达到你可购买上限！");
+                        }
+                    }
+                });
+            }
+        </script>
+        <div class="container-fluid">
+            <header class="region container-fluid bg_blue fixed"> 
+                <div class="content row header_search" align="center">
+                    <a href="javascript:history.back()">
+                        <div class="banner_left col-xs-2 font_white">
+                            <span class="fa fa-angle-left"></span>
+                        </div>
+                    </a>
+                    <div class="banner_middle col-xs-8 font_white font_xl" style="margin-top:10px">
+                        抢购
+                    </div>
+                </div> 
+            </header>
+            <div class="fixed_header_search">
+                <!-- {if $active} -->
+                <div style="padding-top: 10px;">
+                    <img src="{$active.img}" style="width:100%" />
+                </div>
+                <div id="rib">
+                    <!-- {if $has_rob} -->
+                    <div align="center" style="font-size: 30px;" >
+                        你已经抢过了!
+                    </div>
+                    <!-- {else} -->
+                    <!-- {if $active.nums > 0} -->
+                    <div align="center" style="font-size: 30px;color:red" id='to_rob'>
+                        <p>剩余数量：{$active.nums}</p>
+                        <a onclick="add_address();">点击抢</a>
+                    </div>
+                    <!-- {else} -->
+                    <div align="center" style="font-size: 30px;" >
+                        很遗憾，已被抢光了！
+                    </div>
+                    <!-- {/if} -->
+                    <!-- {/if} -->
+                </div>
+                    <div style='display:none;' id='fill'>
+                        <h3>请填写收货地址：</h3>
+                        <p>
+                            所在省份： 
+                            <select id="region">
+                                <option value="0">请选择省份</option>
+                                <!-- {foreach from=$regions item=region} -->
+                                <option value='{$region.region_id}'>{$region.region_name}</option>
+                                <!-- {/foreach} -->
+                            </select>
+                        </p>
+                        <p>
+                            详细地址&nbsp;&nbsp;&nbsp： <input type="text" id="address" />
+                        </p>
+                        <p>
+                            收货人姓名：<input type="text" id="name" />
+                        </p>
+                        <p>
+                            收货人电话：<input type="text" id="tel" />
+                        </p>
+                        <p>
+                            购&nbsp;买&nbsp;数&nbsp;量：
+                            <input type="button" value="-" style="width:40px;" onclick="sub();" />
+                            <input type="text" value="1" id="nums" readonly="true" style="width:40px;"/>
+                            <input type="button" value="+" style="width:40px;" onclick="add();" />
+                        </p>
+                        <p align="center">
+                            <input type="button" value="确&nbsp;    定" onclick="rob();" style='width:50%;height:35px;' />
+                        </p>
+                    </div>
+                <!-- {else} -->
+                <div align='center' style='color:red;'>
+                    <h1>没有活动抢购了。。。</h1>
+                </div>
+                <!-- {/if} -->
+            </div> 
+
+
+        </div>
+
+        <div style="height:60px"> </div>
+        {include file='footer_nav.html'}
+
+
+
+    </body>
+
+</body>
+</html>
+
+

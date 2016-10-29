@@ -1,0 +1,54 @@
+{include file="header.html"}
+<script type="text/javascript">
+function insert_editor(file_name, file_path){
+    tinyMCE.execCommand('mceInsertContent', false, '<img src="'+ SITE_URL +'/' + file_path + '" alt="'+ file_name + '">');
+}
+</script>
+{$build_editor}
+<div id="rightTop">
+    <p>业务员编辑</p>
+    <ul class="subnav">
+        <li><a class="btn1" href="index.php?app=salesman">{$lang.manage}</a></li>
+        {if $saleman.id}
+        <li><a class="btn1" href="index.php?app=salesman&amp;act=add">{$lang.add}</a></li>
+        {else}
+        <li><span>{$lang.add}</span></li>
+        {/if}
+    </ul>
+</div>
+
+<div class="info">
+    <form method="post" enctype="multipart/form-data" id="article_form">
+        <table class="infoTable">
+            <tr>
+                <th class="paddingT15">
+                    Name:</th>
+                <td class="paddingT15 wordSpacing5">
+                    <input class="infoTableInput" id="name" type="text" name="name" value="{$saleman.name|escape}" />
+                </td>
+            </tr>
+            <tr>
+                <th class="paddingT15">
+                    <label for="article">Serial:</label></th>
+                <td class="paddingT15 wordSpacing5">
+					<input class="infoTableInput" id="serial" name="serial" value="{$saleman.serial}" readonly />
+					<script>
+						if( !$('#serial').val() ) { 
+							$('#serial').val(Math.random()); 
+						}
+					</script>
+                </td>
+            </tr>
+            </td>
+            </tr>
+        <tr>
+            <th></th>
+            <td class="ptb20">
+                <input class="formbtn" type="submit" name="Submit" value="{$lang.submit}" />
+                <input class="formbtn" type="reset" name="Submit2" value="{$lang.reset}" />
+            </td>
+        </tr>
+        </table>
+    </form>
+</div>
+{include file="footer.html"}

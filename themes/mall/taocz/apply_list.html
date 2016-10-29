@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>申请审核</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <script>
+            function un_apply(id){
+                if(confirm('是否确定不通过？')){
+                    alert(id);
+                    window.location.href="index.php?app=my_protect&act=un_apply&id="+id;
+                }
+            }
+            function apply(id){
+                $.ajax({
+                    type : 'post',
+                    url : 'index.php?app=my_protect&act=apply',
+                    data : {'id' : id},
+                    success : function(data){
+                        if(data == 333){
+                            alert("请选将客户关联到对应区域！");
+                        }else if(data == 111){
+                            alert('操作成功！');
+                            location.reload();
+                        }else{
+                            alert('该申请不存在');
+                        }
+                    }
+                });
+            }
+            //获取卖场
+            function get_price(id){
+                $("#price_list"+id).children().remove();
+                $.ajax({
+                    type : 'post',
+                    url : 'index.php?app=my_protect&act=get_price',
+                    data : {'id' : id},
+                    success : function(data){
+                        $("#price_list"+id).append(data);
+                    }
+                });
+            }
+            //确定卖场
+            function choose_price(id , user_id){
+                var price_id = $("#"+id).val();
+                if(price_id == 0){
+                    alert('请选择对应区域');
+                }else{
+                    $.ajax({
+                        type : 'post',
+                        url : 'index.php?app=my_protect&act=choose_price',
+                        data : {'user_id' : user_id, 'price_id' : price_id},
+                        success : function(data){
+//                            alert(data);
+                            window.location.reload();
+                        }
+                    });
+                    
+                }
+            }
+        </script>
+        {include file=member.header.html}
+        <div class="content">
+            <div class="totline"></div>
+            <div class="botline"></div>
+            {include file=member.menu.html}
+            <div id="right">
+                {include file=member.curlocal.html}
+                {include file=member.submenu.html}
+                <div class="wrap">
+                    <div class="public_select table">
+                        <table>
+                            <tr class="gray" >
+                                <th>客户名称</th>
+                                <th>所属省份</th>
+                                <th>所属城市</th>
+                                <th>详细地址</th>
+                                <th>申请时间</th>
+                                <!--<th>申请品牌</th>-->
+                                <!--<th>所属区域</th>-->
+                                <th>操作</th>
+                            </tr>
+                            <!-- {foreach from=$applys item=apply} -->
+                            <tr class="sep-row"><td colspan="7"></td></tr>
+                            <tr class="line-hd">
+                                <th colspan="7">
+                                </th>
+                            </tr>
+                            <tr>
+                                <th>{$apply.user_name}</th>
+                                <th>{$apply.province}</th>
+                                <th>{$apply.city}</th>
+                                <th>{$apply.address}</th>
+                                <th>{$apply.add_time|date:complete}</th>
+                                <th>
+                                    <a href="index.php?app=my_protect&act=relation_to_price&id={$apply.id}">关联卖场</a>
+                                </th>
+                            </tr>
+                            <!-- {/foreach} -->
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+
+        {include file=footer.html}
+    </body>
+</html>

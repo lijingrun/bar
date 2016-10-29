@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        {include file=member.header.html}
+        <div class="content">
+            <div class="totline"></div>
+            <div class="botline"></div>
+            {include file=member.menu.html}
+            <div id="right">
+                {include file=member.curlocal.html}
+                {include file=member.submenu.html}
+                <div class="wrap">
+                    <div class="public_select table">
+                        <table>
+                            <tr class="gray">
+                                <th>活动专场</th>
+                                <th>开始时间</th>
+                                <th>结束时间</th>
+                                <th>面向客户</th>
+                                <th>操作</th>
+                            </tr>
+                            <!-- {foreach from=$specials item=special} -->
+                            <tr class="line line-blue">
+                                <td style="width:200px;"  align="center">
+                                    <img src="{$special.image}" style="width:100%;" />
+                                    <p>{$special.name}</p>
+                                </td>
+                                <td align="center" style="width:200px;">
+                                    {$special.start|date:complete}
+                                </td >
+                                <td align="center" style="width:200px;">
+                                    {$special.end|date:complete}
+                                </td>
+                                <td align="center">
+                                    <!-- {foreach from=$sgrades item=sgrade} -->
+                                    <!-- {if $sgrade.grade_id == $special.sgrade} -->
+                                    {$sgrade.grade_name}
+                                    <!-- {/if} -->
+                                    <!-- {/foreach} -->
+                                </td>
+                                <td align="center">
+                                    <a href="index.php?app=special&act=join_special&id={$special.special_id}">
+                                        <input type="button" value="我要参加" />
+                                    </a>
+                                </td>
+                            </tr>
+                            <!-- {/foreach} -->
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+
+        {include file=footer.html}
+    </body>
+</html>

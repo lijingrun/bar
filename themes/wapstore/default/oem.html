@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <base href="{$site_url}/" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <link href="{res file=css/common.css}" rel="stylesheet" type="text/css" />
+        <link href="{res file=css/flexslider.css}" rel="stylesheet" type="text/css" />
+        <link href="{res file=css/main.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/rmc-common.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/bootstrap.min.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/font-awesome.css}" type="text/css" rel="stylesheet" />
+        <script type="text/javascript" src="{res file=js/jquery-1.8.0.min.js}"></script>
+        <script type="text/javascript" src="{res file=js/jquery.flexslider.js}"></script>
+        <script type="text/javascript" src="{res file=js/sub_menu.js}"></script>
+        <script type="text/javascript" src="{lib file=ecmall.js}" charset="utf-8"></script>
+        <style>
+            p{padding:10px;font-size: 20px;}
+            td{padding:10px;font-size: 15px; }
+            .astyle:hover {color:white;} 
+            .astyle:visited {color:white;} 
+            .astyle:link {color:white;} 
+            .astyle {color:white;} 
+        </style>
+        <script>
+            function checkdata(){
+                var customer = $.trim($("#customer").val());
+                var phone = $.trim($("#phone").val());
+                if( customer == ''){
+                    alert("请输入您的称呼！");
+                    return;
+                }
+                if(phone == ''  ){
+                    alert("请输入您的联系方式");
+                    return;
+                }
+                $("#form").submit();
+            }
+        </script>
+    </head>
+    <body>
+        <div style="padding:10px;">
+            <table border="1" style="width:100%;border-color: white;" >
+                <tr>
+                    <td rowspan="2" style='background-color:#1B65A0;' align='center'>
+                        <a class="astyle" target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin={$oem.qq}&site=qq&menu=yes">
+                            <img src='{res file=images/QQ.png}' style="width:30%;" />
+                            <br/>
+                            点击直接QQ联系
+                        </a>
+                    </td>
+                    <td style='background-color:#665199;'>
+                        <a class="astyle" href="tel:{$oem.phone}" >
+                            <img src='{res file=images/phone2.png}' style='width:20%' />{$oem.phone}
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td style='background-color:#665199;'>
+                        <a class="astyle" href="tel:{$oem.telephone}" >
+                            <img src='{res file=images/telephone.png}' style='width:20%' />{$oem.telephone}
+                        </a>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td align='center' style='background-color:#84B132;'>
+                        <a class="astyle">
+                            <img src='{res file=images/weixin.png}' style="width:30%" />
+                            <br/>
+                            微信号：{$oem.weixin}
+                        </a>
+                    </td>
+                    <td class="astyle" align='center' style='background-color:#EAB51D;'>
+                        <a href="Mailto:{$oem.email}">
+                            <img src='{res file=images/email.png}' style="width:30%" />
+                            <br/>
+                            邮箱地址：{$oem.email}
+                        </a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <span style="color:red;padding:10px;">
+            您也可以留下您的联系方式，我们会联系您：
+        </span>
+        <div>
+            <form id="form" method="post" >
+                <table style="width:100%;">
+                    <tr>
+                        <td>您的称呼：</td>
+                        <td><input type="text" id="customer" name="customer" placeholder="必填"/></td>
+                    </tr>
+                    <tr>
+                        <td>公司名称：</td>
+                        <td><input type="text" name="ent" placeholder="选填" /></td>
+                    </tr>
+                    <tr>
+                        <td>联系电话：</td>
+                        <td><input type="text" id="phone" name="phone" placeholder="必填" /></td>
+                    </tr>
+                    <tr>
+                        <td>联系QQ：</td>
+                        <td><input type="text" name="qq" placeholder="选填" /></td>
+                    </tr>
+                    <tr>
+                        <td>联系邮箱：</td>
+                        <td><input type="text" name="email" placeholder="选填" /></td>
+                    </tr>
+                </table>
+                <p align="center">
+                    <input type="button" onclick="checkdata();" value="提交" style="font-size: 15px;width:80%;height: 35px;" />
+                </p>
+            </form>
+        </div>
+        <div style="height:60px"></div>
+        {include file=footer_nav.html}
+    </body>
+</html>

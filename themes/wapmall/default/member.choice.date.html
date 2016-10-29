@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <link href="{res file=css/common.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/user.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/address.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/main.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/rmc-common.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/bootstrap.min.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/font-awesome.css}" type="text/css" rel="stylesheet" />
+        <script type="text/javascript" src="{res file=js/jquery-1.8.0.min.js}"></script>
+        <link rel="stylesheet" href="{res file=css/style.css}" media="screen" type="text/css" />
+    </head>
+    <body>
+        <script>
+            function chose_day(day){
+                $("#"+day).attr('class','selected');
+                $("#"+day).attr('onclick',"");
+                var month = $("#abb").val();
+                var monthday = month+'-'+day;
+                $("#abb").after("<input type='text' id='date"+day+"' name='job_date[]' value='"+monthday+"' onclick='no_chose("+day+")'  readonly='readonly' style='width:80px;'/>");
+            }
+            function no_chose(day){
+                $("#date"+day).remove();
+                $("#"+day).attr('onclick','chose_day('+day+')');
+                $("#"+day).attr("class",'');
+            }
+            function change_month(){
+                var month = $("#the_month").val();
+                window.location.href="index.php?app=member&act=choice_date&time="+month;
+            }
+        </script>
+        <header class="region container-fluid bg_blue fixed" align="center"> 
+            <div class="content row header_search" align="center">
+                <a href="javascript:history.back()">
+                    <div class="banner_left col-xs-2 font_white">
+                        <span class="fa fa-angle-left"></span>
+                    </div>
+                </a>
+                <div class="banner_middle col-xs-6 font_white font_xl" style="margin-top:10px">
+                    
+                </div>
+            </div> 
+        </header>
+        <div style="padding-top: 60px;">
+            <div id="calendar" class="calendar_modern">
+  <div class="calendar">
+      
+        <form method='post' >
+      <div class="month" style='font-size:15px;'>
+          <div align="center"><input type='month' value='{$the_month}' name='month' id='the_month' style='font-size: 15px;width:80px;' />
+                  <input type='button' value='跳到该月' onclick='change_month();' style='font-size: 15px;' />
+                      </div>
+        <div class="body">
+
+          <div class="day_names">
+            <i>一</i>
+            <i>二</i>
+            <i>三</i>
+            <i>四</i>
+            <i>五</i>
+            <i>六</i>
+            <i>日</i>
+          </div>
+
+          <div class="days">
+            <!-- {foreach from=$b_val item=val} -->
+            <b>{$val}</b>
+            <!-- {/foreach} -->
+            <!-- {foreach from=$days item=val} -->
+                <!-- {if $val.day<$today} -->
+                <i>{$val.day}</i>
+                <!-- {else} -->
+                    <!-- {if $val.select == 1} -->
+                <a href="#"  class='selected' >
+                   {$val.day}
+                </a>
+                    <!-- {else} -->
+                    <a href="#"   onclick='chose_day({$val.day})' id='{$val.day}'  >
+                   {$val.day}
+                </a>
+                    <!-- {/if} -->
+                <!-- {/if} -->
+            <!-- {/foreach} -->
+            <!-- {foreach from=$next_val item=val} -->
+            <s>{$val}</s>
+            <!-- {/foreach} -->
+          </div>
+
+        </div>
+        <div style='padding-bottom: 100px;padding-top:20px;'>
+            您已选择的日期：<span style='color:red'>(点击取消选择)</span><br />
+            <input type='hidden' value='{$the_month}' id='abb' />
+            <div style='padding-top:30px;'>
+            <input type="submit" value="提交" style='width:100%;height: 35px;'/>
+            </div>
+        </div>
+      </div>
+        </form>
+  </div>
+</div>
+<div style="text-align:center;clear:both">
+<script src="/gg_bd_ad_720x90.js" type="text/javascript"></script>
+<script src="/follow.js" type="text/javascript"></script>
+</div>
+        </div>
+
+        
+    </body>
+
+{include file="footer_nav.html"}

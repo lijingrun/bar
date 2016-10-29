@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <base href="{$site_url}/" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <link href="{res file=css/common.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/index.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/main.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/rmc-common.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/bootstrap.min.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/font-awesome.css}" type="text/css" rel="stylesheet" />
+        <script type="text/javascript" src="{lib file=jquery.js}" charset="utf-8"></script>
+        <!-- 下面是活动倒计时的样式+js -->
+        <script type="text/javascript" src="{res file=js/jquery.countdown.js}"></script>
+        <!--<script type="text/javascript" src="{res file=js/script.js}"></script>-->
+        <link type="text/css" rel="stylesheet" href="{res file=css/jquery.countdown.css}" />
+        <script>
+            $(function () {
+
+                var note = $('#note'),
+                        ts = new Date(2012, 0, 1),
+                        newYear = true;
+
+                if ((new Date()) > ts) {
+                    // The new year is here! Count towards something else.
+                    // Notice the *1000 at the end - time must be in milliseconds
+                    ts = (new Date()).getTime() + {$the_time} * 1000;
+                    newYear = false;
+                }
+
+                $('#countdown').countdown({
+                    timestamp: ts,
+                    callback: function (days, hours, minutes, seconds) {
+
+                        var message = "";
+
+                        //			message += days + " day" + ( days==1 ? '':'s' ) + ", ";
+                        //			message += hours + " hour" + ( hours==1 ? '':'s' ) + ", ";
+                        //			message += minutes + " minute" + ( minutes==1 ? '':'s' ) + " and ";
+                        //			message += seconds + " second" + ( seconds==1 ? '':'s' ) + " <br />";
+                        //			
+                        //			if(newYear){
+                        //				message += "left until the new year!";
+                        //			}
+                        //			else {
+                        //				message += "left to 10 days from now!";
+                        //			}
+
+                        //note.html(message);
+                    }
+                });
+                new Swipe(document.getElementById('banner_box'), {
+                    speed: 500,
+                    auto: 3000,
+                    callback: function () {
+                        var lis = $(this.element).next("ol").children();
+                        lis.removeClass("on").eq(this.index).addClass("on");
+                    }
+                });
+
+            });
+            function to_begin(){
+                alert("活动还未开始，敬请期待！");
+            }
+        </script>
+        <title></title>
+    </head>
+    <body>
+
+        <header class="region container-fluid bg_blue fixed"> 
+            <div class="content row header_search" align="center">
+                <a href="javascript:history.back()">
+                    <div class="banner_left col-xs-2 font_white">
+                        <span class="fa fa-angle-left"></span>
+                    </div>
+                </a>
+                <!--<div class="banner_middle col-xs-8">-->
+                    <!--<input placeholder="搜索" name="keyword" id="keywork" value="{$keywork}" class="search_top"/>-->
+                <!--</div>-->
+                <!--<div class="banner_right col-xs-2">  -->
+                    <!--<button type="button" onclick="find_goods();" style="background-color: transparent;border: 0;color: #FFFFFF;font-size: 25px;margin-top: 2px;">-->
+                        <!--<span class="fa fa-search"></span>-->
+                    <!--</button>-->
+                <!--</div>-->
+            </div> 
+        </header>
+        <div style="padding-top:80px;">
+
+            <div align="center">
+                <img src="{$special.image}" style="width:100%;" />
+                <div>
+
+                    <!-- {if $s_status == 1} -->
+                    <div align="center" style="color:red">
+                        <span style="font-size:20px;">距离活动开始时间还有</span>
+                    </div>
+                    <div id="countdown"></div>
+                    <!-- {elseif $s_status == 2} -->
+                    <div align="center" style="color:red">
+                        <span style="font-size:20px;">距离活动结束时间还有</span>
+                    </div>
+                    <div id="countdown"></div>
+                    <!-- {else} -->
+                    <div align="center" style="color:red">
+                        <span style="font-size:20px;">活动已结束!</span>
+                    </div>
+                    <!-- {/if} -->
+                </div>
+            </div>
+        </div>
+        <div style="padding:20px;font-size: 20px;" align="center">
+            <!-- {foreach from=$goods item=good} -->
+            <!-- {if $is_start} -->
+            <a href="index.php?app=goods&id={$good.goods_id}">
+              <!-- {else} -->
+              <div Onclick="to_begin();">
+                <!-- {/if} -->
+                <div style="background-color: #fff;margin-top:40px;">
+                    <!-- {if $good.stock == 0} -->
+                    <img src="{$site_url}/sold_out.jpg" style="width:300px;" />
+                    <!-- {else} -->
+                    <img src="{$good.default_image}" />
+                    <!-- {/if} -->
+                    <p>{$good.goods_name}</p>
+                    <p>
+                        原价：{$good.spec.original_price}
+                    </p>
+                    <p style="color:red">
+                        活动价：{$good.price|price}
+                    </p>
+                </div>
+                <!-- {if $is_start} -->
+            </a>
+            <!-- {else} -->
+              </div>
+            <!-- {/if} -->
+            <!-- {/foreach} -->
+        </div>
+        <div style="padding-bottom: 70px;">
+
+        </div>
+        {include file='footer_nav.html'}
+    </body>
+</html>

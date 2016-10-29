@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {include file=public_header.html}
+    <script type="text/javascript" src="{res file=js/posfixed.js}">
+    </script>
+</head>
+
+<body>
+<header class="ly-header2">
+    <div class="ly-header-bar">
+        <div id="m_common_header_goback" class="ly-header-icon-back">
+            <a href="javascript:;" onclick="javascript:history.back(-1);">
+            <span>
+            </span>
+            </a>
+        </div>
+        <div class="ly-header-title">
+            限时促销
+        </div>
+    </div>
+</header>
+<section class="topfixed" id="topfixed" style="display: block;">
+    <ul class="tap-list">
+        <!-- {foreach from=$all_specials item=all_special} -->
+        <a href="index.php?app=special_buyer&special_id={$all_special.special_id}">
+            <!-- {if $all_special.special_id == $special.special_id} -->
+            <li class="cur" >
+            <!-- {else} -->
+            <li >
+            <!-- {/if} -->
+                <p>
+                    {$all_special.start_day}
+                </p>
+                <p>
+                    <!-- {if $all_special.begin == 1} -->
+                    抢购中
+                    <!-- {else} -->
+                    未开始
+                    <!-- {/if} -->
+                </p>
+            </li>
+        </a>
+        <!-- {/foreach} -->
+    </ul>
+</section>
+<script>
+    $(function() {
+        $('.topfixed').posfixed({
+            distance: 0,
+            pos: 'top',
+            type: 'while',
+            hide: false
+        });
+    });
+    function GetRTime(){
+        var EndTime= new Date("{$the_time}");
+        var NowTime = new Date();
+        if(EndTime.getTime() > NowTime.getTime()){
+            var t =EndTime.getTime() - NowTime.getTime();
+        }else{
+            var t =NowTime.getTime() - EndTime.getTime();
+        }
+        var d=Math.floor(t/1000/60/60/24);
+        var h=Math.floor(t/1000/60/60%24);
+        var m=Math.floor(t/1000/60%60);
+        var s=Math.floor(t/1000%60);
+
+        document.getElementById("t_d").innerHTML = d + "天";
+        document.getElementById("t_h").innerHTML = h + "时";
+        document.getElementById("t_m").innerHTML = m + "分";
+        document.getElementById("t_s").innerHTML = s + "秒";
+    }
+    setInterval(GetRTime,0);
+</script>
+<div class="mod-sdq-countdown" data-ing-text="距离本场结束" data-start-text="距离本场开始">
+    <div class="countdown">
+        <span class="txt">
+            <!-- {if $s_status == 1} -->
+            距离本场开始
+            <!-- {else} -->
+            距离本场结束
+            <!-- {/if} -->
+        </span>
+        <span class="left_time">
+          <span id="t_d">
+            00天
+          </span>
+          <span id="t_h">
+            00时
+          </span>
+          <span id="t_m">
+            00分
+          </span>
+          <span id="t_s">
+            00秒
+          </span>
+        </span>
+    </div>
+    <h3 class="title">
+        {$special.name}
+    </h3>
+</div>
+<section>
+    <ul class="good-list bdr-b">
+        <!-- {foreach from=$goods item=good} -->
+        <li class="bdr-bom">
+            <!-- {if $s_status == 2} -->
+            <a href="index.php?app=goods&id={$good.goods_id}">
+            <span class="skill-count">
+              去抢购
+            </span>
+            <!-- {else} -->
+            <span class="skill-count wait-kill">
+              未开始
+            </span>
+            <!-- {/if} -->
+                <div class="skill-pic">
+                    <div class="img">
+                        <img src="{$good.default_image}"
+                             style="animation: fade 400ms 0s;">
+                    </div>
+                    <em class="bskill-arrow arrow-red ">超值</em>
+                </div>
+                <p class="g-title">
+                    {$good.goods_name}
+                </p>
+                <p class="g-type">
+                    规格:{$good.spec.spec_1}
+                </p>
+                <p class="g-price">
+                    <i class="doller">
+                        ￥
+                    </i>
+                    {$good.price}
+                    <!--  <span class="f-s-12"> </span> -->
+                </p>
+                <div class="skill-price">
+                    <div class="skill-lod">
+                <!-- {if $s_status == 2} -->
+                <span class="sale-count">
+                  <!--已抢购件-->
+                </span>
+                <!-- {/if} -->
+                    </div>
+                    <p class="g-price-odd">
+                        <del>
+                            {$good.spec.original_price}
+                        </del>
+                    </p>
+
+                </div>
+            <!-- {if $s_status == 2} -->
+            </a>
+            <!-- {/if} -->
+        </li>
+        <!-- {/foreach} -->
+
+    </ul>
+</section>
+
+<div id="topcontrol" style="width:3.333rem; height:3.333rem; border:0; bottom:4.333rem;right: 0.7407rem;position: fixed;display: block; opacity: 0; cursor: pointer;border-radius:50px;">
+    <img totop="" src="/topback.png" style="width:3.333rem; height:3.333rem; border-radius:50px; border:0;"
+         title="返回顶部" />
+</div>
+
+{include file='footer_nav.html'}
+</body>
+
+</html>

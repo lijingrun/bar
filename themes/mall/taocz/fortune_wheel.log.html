@@ -1,0 +1,56 @@
+{include file=member.header.html}
+<script>
+    function find_logs(){
+        var fw_id = $("#fw_id").val();
+        if(fw_id != 0){
+            location.href="index.php?app=fortune_wheel&act=log&fw_id="+fw_id;
+        }else{
+            location.href="index.php?app=fortune_wheel&act=log";
+        }
+    }
+</script>
+<div class="content">
+    <div class="totline"></div>
+    <div class="botline"></div>
+    {include file=member.menu.html}
+    <div id="right"> 
+        {include file=member.curlocal.html}
+		{include file=member.submenu.html}
+        <div class="wrap">
+            <select id="fw_id" onchange="find_logs();">
+                <option value="0">所有活动</option>
+                <!-- {foreach from=$fws item=fw} -->
+                <option value="{$fw.id}" <!-- {if $fw.id == $fw_id} -->selected<!-- {/if} --> >{$fw.name}</option>
+                <!-- {/foreach} -->
+            </select>
+			 <table style="width: 100%;" class="rule_table">
+                <tr style="background-color: #D4E7FF;">
+                    <th style="width: 5%;">ID</th>
+                    <th style="width: 5%;">活动id</th>
+                    <th style="width: 15%;">中奖者</th>
+                    <th style="width: 15%;">中奖产品</th>
+                    <th style="width: 15%;">中奖参数</th>
+                    <th style="width: 25%;">发货地址</th>
+                    <th style="width: 15%;">时间</th>
+                </tr>
+                <!-- {foreach from=$fw_logs item=fwl} -->
+                <tr>
+                    <td><p>{$fwl.id}</p></td>
+                    <td>{$fwl.fw_id}</td>
+					<td align="center">{$fwl.sign.name}</td>
+					<td align="center">{$fwl.prize.name}</td>
+					<td align="center">{$fwl.print_rate}</td>
+					<td align="center">{$fwl.sign.address}</td>
+					<td align="center">{$fwl.create_time}</td>
+                </tr>
+                <!-- {/foreach} -->
+            </table>
+            <div class="wrap_bottom"></div>
+
+		</div>
+
+	</div>
+	<div class="clear"></div>
+</div>
+{include file=footer.html}
+

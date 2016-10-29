@@ -1,0 +1,119 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+{$page_seo}
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+
+<link href="{res file=css/common.css}" type="text/css" rel="stylesheet" />
+<link href="{res file=css/sp_cart.css}" type="text/css" rel="stylesheet" />
+<link href="{res file=css/main.css}" type="text/css" rel="stylesheet" />
+<link href="{res file=css/rmc-common.css}" type="text/css" rel="stylesheet" />
+<link href="{res file=css/bootstrap.min.css}" type="text/css" rel="stylesheet" />
+<link href="{res file=css/font-awesome.css}" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="{res file=js/jquery-1.8.0.min.js}"></script>
+<script type="text/javascript" src="{lib file=ecmall.js}" charset="utf-8"></script>
+<script type="text/javascript" src="{lib file=cart.js}" charset="utf-8"></script>
+<script>
+        function get_count(){
+            var province = $("#province").val();
+            if(province == 0){
+                alert('请选择省份！');
+            }else{
+                $.ajax({
+                    type : 'post',
+                    url : 'index.php?app=brand_protect&act=get_count',
+                    data : {'province_id' : province},
+                    success : function(data){
+                        $("#city").remove();
+                        $("#count_list").append(data);
+                    }
+                });
+            }
+        }
+        function check_data(){
+            var province = $("#province").val();
+            var city = $("#city").val();
+            var address = $("#address").val();
+            var store_id = {$store_id};
+            if(address == '' || province == 0 || city == 0){
+                alert("请填写相关内容");
+            }else{
+                $.ajax({
+                    type : 'post',
+                    url : 'index.php?app=brand_protect&act=add',
+                    data : {'province' : province, 'city' : city, 'address' : address, 'store_id' : store_id},
+                    success : function(data){
+                        if(data == 111){
+                            alert('申请成功，正在等待店主审核！');
+                            location.href='index.php?app=store&id='+store_id;
+                        }else if(data == 222){
+                            alert("您的申请已经在审核，请耐心等待，如有疑问请联系店主！");
+                        }else{
+                            alert('服务器繁忙，请稍后再试!');
+                        }
+                    }
+                });
+            }
+        }
+    </script>
+</head>
+<body>
+    
+<div class="w320">
+    <header class="region container-fluid bg_blue fixed"> 
+        <div class="content row header_search" align="center">
+            <a href="javascript:history.back()">
+                <div class="banner_left col-xs-2 font_white">
+                    <span class="fa fa-angle-left"></span>
+                </div>
+            </a>
+            <div class="banner_middle col-xs-8 font_white font_xl" style="margin-top:10px">
+                关联卖场
+            </div>
+        </div> 
+    </header>   
+    <!--购物车为空时-->
+    <div class="null" style="font-size: 20px;">
+        <form method="post">
+            请填写相关店铺信息：
+            <div style="padding-top:20px;">
+                <select id="province" onchange="get_count();">
+                    <option value="0">请选择所在省份</option>
+                    <!-- {foreach from=$provinces item=province} -->
+                    <option value="{$province.id}">{$province.name}</option>
+                    <!-- {/foreach} -->
+                </select>
+            </div>
+            <div id="count_list" style="padding-top:10px;">
+                
+            </div>
+            <div style="padding-top:10px;">
+            <input type="text" id="address" placeholder="请填写您的详细地址" />
+            </div>
+            <div align="center" style="padding-top:10px;">
+                <input type="button" value="提交" onclick="check_data();"/>
+            </div>
+        </form>
+        
+   </div>
+    
+    
+</div>
+
+<div style="height:60px"> </div>
+{include file='footer_nav.html'}
+    
+    
+    
+    
+</body>
+    
+</body>
+</html>
+
+    

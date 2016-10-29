@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {include file=public_header.html}
+    <script type="text/javascript" src="{res file=js/mui.js}"></script>
+    <script type="text/javascript" src="{res file=js/sub_menu_2016\.js}"></script>
+
+
+    <script type="text/javascript">
+        function CloseDiv(show_div)
+        {
+            document.getElementById(show_div).style.display='none';
+            document.getElementById(bg_div).style.display='none';
+        };
+        function searchShop(){
+            var keyword = $("#keyword").val();
+            location.href='index.php?app=store&act=search&id={$store.store_id}&keyword='+keyword;
+        }
+    </script>
+
+</head>
+<body>
+
+<header class="seaTop2">
+    <article class="topBox">
+        <a href="javascript:;" onClick="javascript:history.back(-1);" class="backrow"></a>
+        <div class="seaBox">
+            <input id="keyword" type="text" placeholder="请输入关键词进行店内搜索" >
+            <em onclick="searchShop();"></em>
+        </div>
+        <a class="topMore" href="javascript:;"><br>
+            <span>本店分类</span> </a>
+
+
+
+        <div class="sub_menu" style="height: 700px;">
+            <div class="font_white font_l" style="padding: 15px 0px 10px 28px; height:25px; border-bottom:1px solid #cccccc;">本店商品分类</div>
+            <ul class="font_m" style="padding:10px;">
+                <!--{foreach from=$store.store_gcates item=gcategory}-->
+                <li>
+                    <!--{if $gcategory.children}-->
+                    <h2>{$gcategory.value|escape}</h2>
+                    <ol class="sub_menu_list">
+                        <!--{foreach from=$gcategory.children item=child_gcategory}-->
+                        <a href="index.php?app=store&id={$store.store_id}&act=search&cate_id={$child_gcategory.id}">
+                            <li>{$child_gcategory.value|escape}</li>
+                        </a>
+                        <!-- {/foreach} -->
+                    </ol>
+                    <!-- {/if} -->
+                </li>
+                <!-- {/foreach} -->
+
+
+            </ul>
+
+        </div>
+        <script>
+            $(function () {
+                publicmain();
+            });
+
+            $(window).resize(function () {
+                publicmain();
+            });
+
+            function publicmain() {
+                var h = document.documentElement.clientHeight - 45;
+                $('.sub_menu').css({'height': h});
+            }
+        </script>
+
+
+
+
+    </article>
+</header>
+
+<!--
+<div id="J_page_title" class="page-header-title">
+       <span id="J_pre_step" class="page-pre-step u-iconfont"><</span>
+       <span class="page-title-top" id="J_title_top">蓝羽</span>
+   </div> -->
+
+
+<div class="index-header pdt44 J_hide_logo">
+    <div class="archives-link" id="J_archives">
+        <img class="storepic" src="{$store.store_banner}">
+        <!-- <span class="g-collect"><i class="u-iconfont i-love"></i><em class="J_favor"></em></span> -->
+        <div class="lucency"></div>
+        <div class="click-pic" id="J_click_pic"></div>
+        <a class="store-message" href="index.php?app=store&act=store_detail&id={$store.store_id}">
+            <img class="ih-logo" src="{$store.store_logo}" alt="{$store.store_name}">
+            <p class="ih-tt"><span class="store-name">{$store.store_name}</span>
+
+                <!-- <img src="" alt=""/> -->
+            </p>
+            <p class="sh-addr"><span>公司详情>></span></p>
+        </a>
+            <!--<span class="store-act J_actionFavor J_isInApp_hide gz-love J_addFavor" >-->
+                <!--<a href="javascript:collect_store({$store.store_id});">-->
+                <!--<em class="cellove-num  J_favor321739">收藏本店</em>-->
+                <!--</a>-->
+                <!--<span class="st-icon" id="J_share"></span>-->
+            <!--</span>-->
+        <!-- <span class="store-act J_actionFavor J_isInApp_hide aboutus J_addFavor" >
+             <em class="cellove-num  J_favor321739">关于我们</em>
+             <span class="st-icon" id="J_share"></span>
+         </span> -->
+    </div>
+
+
+</div>
+
+
+<!--
+<div class="x-view company-view" data-x-type="company/view" ><div class="m-body ">
+
+
+ <div class="m-content">
+
+<div class="company-box ">
+
+
+   <div class="x-view topNav-view" >
+<div class="top-nav-bar">
+   <ul class="fd-clr">
+       <li class="nav-item  active js-is-index">
+           <a class="nav-item-btn" data-href="//m.1688.com/winport/alongbiaowei.html" data-mtrace="wp_page_privatezone_index">
+               <span class="nav-btn-icon nav-icon-index"></span>
+               <span class="nav-btn-txt">店铺首页</span>
+           </a>
+       </li>
+       <li class="nav-item  js-is-all">
+           <a class="nav-item-btn" data-href="//m.1688.com/page/offerlist.html?show_search=false&amp;memberId=alongbiaowei">
+               <span class="nav-btn-icon nav-icon-all"></span>
+               <span class="nav-btn-txt">全部商品</span>
+           </a>
+       </li>
+       <li class="nav-item ">
+           <a class="nav-item-btn" data-href="http://winport.m.1688.com/page/newarrivals.html?memberId=alongbiaowei">
+               <span class="nav-btn-icon nav-icon-new"></span>
+               <span class="nav-btn-txt">新品上市</span>
+           </a>
+       </li>
+       <li class="nav-item  js-is-dynamic">
+     <a class="nav-item-btn" data-href="//mp.1688.com/feed/view.html?platform=wap&amp;userId=992328815">
+               <span class="nav-btn-icon nav-icon-dynamic"></span>
+               <span class="nav-btn-txt">促销商品</span>
+           </a>
+       </li>
+   </ul>
+</div>
+
+
+
+
+</div>
+
+</div>
+ </div>
+</div>
+</div>-->
+
+<section data-query="subnav1" class="titBox">
+
+    <dl data-query="subShopnav1" style="top: 0px; left: 0px; z-index: 5555; width: 100%; position: static;">
+        <dd class="Current">
+            <span><a href="index.php?app=store&id={$store.store_id}">店铺首页</a></span>
+        </dd>
+        <dd>
+            <span><a href="index.php?app=store&act=search&id={$store.store_id}&type=all">全部产品</a></span>
+        </dd>
+        <dd  {if $c_type=='new'}class="Current"{/if} >
+            <span><a href="index.php?app=store&act=search&id={$store.store_id}&order=add_time%20desc&type=new">新品上市</a></span>
+            <em>new</em>
+        </dd>
+        <dd {if $c_type=='recommended'}class="Current"{/if}>
+            <span><a href="index.php?app=store&act=search&id={$store.store_id}&recommended=1&order=recommended%20desc&type=recommended">促销商品</a></span>
+            <em>sale</em>
+        </dd>
+
+    </dl>
+
+
+    <script type="text/javascript">
+        var w,h,className;
+        function getSrceenWH(){
+            w = $(window).width();
+            h = $(window).height();
+            $('#dialogBg').width(w).height(h);
+        }
+
+        window.onresize = function(){
+            getSrceenWH();
+        }
+        $(window).resize();
+
+        $(function(){
+            getSrceenWH();
+
+            //显示弹框
+            $('#box a').click(function(){
+                className = $(this).attr('class');
+                $('#dialogBg').fadeIn(300);
+                $('#dialog').removeAttr('class').addClass('animated '+className+'').fadeIn();
+            });
+
+            //关闭弹窗
+            $('.claseDialogBtn').click(function(){
+                $('#dialogBg').fadeOut(300,function(){
+                    $('#dialog').addClass('bounceOutUp').fadeOut();
+                });
+            });
+        });
+    </script>
+    <ul class="list_link" >
+        <!-- {if $oem} -->
+        <li  id="box"><a href="javascript:;"  class="flipInX" >OEM定制</a></li>
+        <!-- {/if} -->
+        <!-- {if $band_protect} -->
+        <li><a href="index.php?app=brand_protect&store_id={$store.store_id}" >品牌保护</a></li>
+        <!-- {/if} -->
+    </ul>
+    <div id="dialogBg"></div>
+    <div id="dialog" class="animated">
+        <img class="dialogIco" width="50" height="50" src="{res file=images/ico.png}" alt="" />
+        <div class="dialogTop">
+            <a href="javascript:;" class="claseDialogBtn">关闭</a>
+        </div>
+        <form action="index.php?app=store&act=oem&store_id={$store.store_id}" method="post" id="editForm">
+            <ul class="editInfos">
+                <li><label><font color="#ff0000">* </font>您的称呼：<input type="text" name="customer" required value="" class="ipt" /></label></li>
+                <li><label><font color="#ffffff">* </font>公司名称：<input type="text" name="ent"  class="ipt" /></label></li>
+                <li><label><font color="#ff0000">* </font>联系电话：<input type="text" name="phone" required value="" class="ipt" /></label></li>
+
+                <li><label><font color="#ffffff">* </font>联系QQ：<input type="text" name="qq" class="ipt" /></label></li>
+                <li><label><font color="#ffffff">* </font>联系邮箱：<input type="text" name="email"  class="ipt" /></label></li>
+
+                <li><input type="submit" value="确认提交" class="submitBtn" /></li>
+
+                <li><a href="index.php?app=store&act=contact_oem&store_id={$store.store_id}">或：点此联系我们>></a></li>
+            </ul>
+        </form>
+    </div>
+
+
+    <div class="clear space10 "></div>
+
+    <div style="background:#ffffff;">
+
+        <!--效果html开始-->
+        <!-- {if !empty($lunbo)} -->
+        <div class="mslider">
+            <ul>
+                <!--{foreach from=$lunbo item=val}-->
+                <li>
+                    <a href="{$val.url}" target="_blank">
+                        <img src="{$val.img}" alt="{$val.pic_slides_wap_1}" />
+                    </a>
+                </li>
+                <!-- {/foreach} -->
+                <!--<li><a href="#" target="_blank"><img src="{res file=images/1.jpg}" alt="蓝蝶乳胶漆"></a></li>-->
+                <!--<li><a href="#" target="_blank"><img src="images/2.jpg" alt="蓝蝶乳胶漆"></a></li>-->
+                <!--<li><a href="#" target="_blank"><img src="images/3.jpg" alt="蓝蝶乳胶漆"></a></li>-->
+            </ul>
+        </div>
+        <!-- {/if} -->
+        <script type="text/javascript" src="{res file=js/Slider.js}"></script>
+        <script>
+            $(".mslider").yxMobileSlider({width:640,height:320,during:3000})
+        </script>
+        <!--效果html结束-->
+
+    </div>
+    <article class="jpBox">
+        <!-- {if $recommended_goods} -->
+        <div class="jpTitle">
+            <h3 style="color:red;">优惠促销</h3>
+            <a href="index.php?app=store&act=search&id={$store.store_id}&type=all">更多</a>
+        </div>
+        <ul class="proList">
+            <!-- {foreach from=$recommended_goods item=h_good} -->
+            <li>
+                <div class="jpImgBox">
+                    <a href="index.php?app=goods&id={$h_good.goods_id}">
+                        <span class="off-ico2">促销</span>
+                        <!-- {if $h_good.stock == 0} -->
+                        <img src="{$site_url}/sold_out.jpg"  />
+                        <!-- {else} -->
+                        <image src="{$h_good.default_image}"/>
+                        <!-- {/if} -->
+                    </a>
+                </div>
+                <p class="jpName"><a href="index.php?app=goods&id={$h_good.goods_id}">{$h_good.goods_name}</a></p>
+                <p class="jpPrice">
+                    <!-- {if $is_jingxiaoshang} -->
+                    {$h_good.price_distributor|price}
+                    <!-- {else} -->
+                    {$h_good.spec_price|price}
+                    <!-- {/if} -->
+                    <span style="color:red;">[促销]</span>
+                </p>
+            </li>
+            <!-- {/foreach} -->
+            <!-- {/if} -->
+
+        </ul>
+    </article>
+
+    <article class="jpBox">
+        <div class="jpTitle">
+            <h3>新品上市</h3>
+            <a href="index.php?app=store&act=search&id={$store.store_id}&order=add_time%20desc&type=new">更多</a>
+        </div>
+        <ul class="proList">
+            <!-- {foreach from=$new_goods item=new_good} -->
+            <li>
+                <div class="jpImgBox">
+                    <a href="index.php?app=goods&id={$new_good.goods_id}">
+                        <img src="{$new_good.default_image}">
+                    </a>
+                </div>
+                <p class="jpName"><a href="index.php?app=goods&id={$new_good.goods_id}">{$new_good.goods_name}</a></p>
+                <p class="jpPrice">
+                    <!-- {if $is_jingxiaoshang} -->
+                    {$new_good.price_distributor|price}
+                    <!-- {else} -->
+                    {$new_good.spec_price|price}
+                    <!-- {/if} -->
+                </p>
+            </li>
+            <!-- {/foreach} -->
+            <!--<li>-->
+                <!--<div class="jpImgBox">-->
+                    <!--<a href="#">-->
+                        <!--<img src="http://www.126wallpaper.com/data/files/store_7/goods_93/small_201512101138137010.jpg">-->
+                    <!--</a>-->
+                <!--</div>-->
+                <!--<p class="jpName"><a href="#">蓝蝶乳胶漆墙面专用基膜1L</a></p>-->
+                <!--<p class="jpPrice">¥128.00</p>-->
+            <!--</li>-->
+        </ul>
+    </article>
+
+
+    <div class="BotMore">
+        <a href="index.php?app=store&act=search&id={$store.store_id}&type=all">查看全部产品</a>
+    </div>
+
+    <!--<article class="jpBox">-->
+        <!--<div class="jpTitle">-->
+            <!--&lt;!&ndash;<h3>热门搜索</h3>&ndash;&gt;-->
+        <!--</div>-->
+        <!--<div class="ListBotCon">-->
+            <!--&lt;!&ndash;<a href="#" title="脱水湿胶">脱水湿胶</a>&ndash;&gt;-->
+            <!--&lt;!&ndash;<a href="#" title="脱水湿胶">脱水湿胶</a>&ndash;&gt;-->
+            <!--&lt;!&ndash;<a href="#" title="脱水湿胶">脱水湿胶</a>&ndash;&gt;-->
+            <!--&lt;!&ndash;<a href="#" title="脱水湿胶">脱水湿胶</a>&ndash;&gt;-->
+            <!--&lt;!&ndash;<a href="#" title="脱水湿胶">脱水湿胶</a>&ndash;&gt;-->
+            <!--&lt;!&ndash;<a href="#" title="脱水湿胶">脱水湿胶</a>&ndash;&gt;-->
+            <!--&lt;!&ndash;<a href="#" title="脱水湿胶">脱水湿胶</a>&ndash;&gt;-->
+            <!--&lt;!&ndash;<a href="#" title="脱水湿胶">脱水湿胶</a>&ndash;&gt;-->
+        <!--</div>-->
+    <!--</article>-->
+
+
+</section>
+<div class="clear space10"></div>
+
+<!--<div class="foot_text">-->
+    <!--Copyright@2016 蓝羽 维涅斯126墙纸商城版权所有-->
+<!--</div>-->
+
+<!--<a href="http://wpa.qq.com/msgrd?v=3&amp;uin={$store.im_qq}&amp;site=qq&amp;menu=yes"  onclick="sendUserlogsElement('UserBehavior_m_detail_qq_tell?detailuserid=49879524')" class="fPurchase" id="fPurchase" style="display: block;"></a>-->
+<a href="javascript:void(0)" onclick="get_customer({$store.store_id});" class="fPurchase" id="fPurchase" style="display: block;"></a>
+
+<div id="topcontrol" style="width:3.333rem; height:3.333rem; border:0; bottom:4.333rem;right: 0.7407rem;position: fixed;display: block; opacity: 0; cursor: pointer;border-radius:50px;">
+    <img totop="" src="topback.png" style="width:3.333rem; height:3.333rem; border-radius:50px; border:0;" title="返回顶部" />
+</div>
+
+
+{include file=footer_nav.html}
+
+
+
+
+</body>
+</html>

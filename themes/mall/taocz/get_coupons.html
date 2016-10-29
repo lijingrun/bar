@@ -1,0 +1,39 @@
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+{include file=member.header.html}
+<div class="content">
+    <div class="totline"></div>
+    <div class="botline"></div>
+    {include file=member.menu.html}
+    <div id="right">
+        {include file=member.curlocal.html}
+        {include file=member.submenu.html}
+        <div class="wrap">
+            <div class="public_select table">
+                <form method="post">
+                    <div align="center">
+                        <div>
+                            <p><img src="{$coupon.img}" /></p>
+                            <p style="padding: 10px;font-size: 15px;">使用时间：{$coupon.start_time|date:complete}--{$coupon.end_time|date:complete}</p>
+                            <!-- {if $coupon_get.stime} -->
+                            <p style="padding: 10px;font-size: 15px;">领取时间：{$coupon_get.stime|date:complete}--{$coupon_get.etime|date:complete}</p>
+                            <!-- {/if} -->
+                            领取开始时间：<input type="date" name="stime" />
+                            领取结束时间:<input type="date"  name="etime" />
+                            <br />
+                            <input type="hidden" value="{$coupon.coupon_id}" name="coupon_id"/>
+                            <input type="hidden" value="{$coupon.img}"  name="coupon_img" />
+                            <input type="submit" value="确认发布" />
+                            
+                        </div>
+                    </div>
+                    
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+
+
+<iframe name="iframe_post" id="iframe_post" width="0" height="0"></iframe>
+{include file=footer.html}

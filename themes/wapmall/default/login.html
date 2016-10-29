@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+        <link href="{res file=css/common.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/wxlog-reg.css}" rel="stylesheet" type="text/css" />
+        <link href="{res file=css/index.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/main.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/rmc-common.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/bootstrap.min.css}" type="text/css" rel="stylesheet" />
+        <link href="{res file=css/font-awesome.css}" type="text/css" rel="stylesheet" />
+        <script type="text/javascript" src="index.php?act=jslang"></script>
+        <script type="text/javascript" src="{lib file=jquery.js}" charset="utf-8"></script>
+        <script type="text/javascript" src="{lib file=ecmall.js}" charset="utf-8"></script>
+        <title>328墙纸商城</title>
+    </head>
+
+    <script type="text/javascript">
+        $(function() {
+            $('#login_form').validate({
+                errorPlacement: function(error, element) {
+                    $(element).parent('td').append(error);
+                },
+                success: function(label) {
+                    label.addClass('validate_right').text('OK!');
+                },
+                onkeyup: false,
+                rules: {
+                    user_name: {
+                        required: true
+                    },
+                    password: {
+                        required: true
+                    },
+                    captcha: {
+                        required: true,
+                        remote: {
+                            url: 'index.php?app=captcha&act=check_captcha',
+                            type: 'get',
+                            data: {
+                                captcha: function() {
+                                    return $('#captcha1').val();
+                                }
+                            }
+                        }
+                    }
+                },
+                messages: {
+                    user_name: {
+                        required: '{$lang.user_name_required}'
+                    },
+                    password: {
+                        required: '{$lang.password_required}'
+                    },
+                    captcha: {
+                        required: '{$lang.captcha_required}',
+                        remote: '{$lang.captcha_error}'
+                    }
+                }
+            });
+        });
+    </script>
+    <body id="log-reg">
+        <header class="region container-fluid login_top">
+            <div class="content row header_search" align="center">
+                <a href="javascript:history.back()">
+                    <div class="banner_left col-xs-2 font_white">
+                        <span class="fa fa-angle-left"></span>
+                    </div>
+                </a>
+            </div> 
+        </header>
+
+        <!--登录-->
+        <div class="login_panel">
+            <form class="login_box"  method="post" id="login_form">
+                <div>
+                    <input placeholder="用户名" type="text" id="user_name" name="user_name" value="{$user_name}" class="text"/>
+                    <label class="field_message"><span class="field_notice"></span></label>
+                    <input placeholder="密 码" type="password" name="password" value="{$password}"  class="text"/>
+                    <input  value="登录" name="Submit"  type="submit" class=" blue_btn sub_btn"/>
+                    <input type="hidden" name="ret_url" value="{$ret_url}" /></table>
+                    <p>还不是会员？<a href="{url app=member&act=register&ret_url=$ret_url}" >立即注册</a></p>
+                    <p>忘记密码？<a href="index.php?app=reset_password">重置密码</a></p>
+                </div>
+            </form>
+        </div>
+		<div style="height:60px"></div>
+		{include file='footer_nav.html'}
+
+    </body>
+</html>
