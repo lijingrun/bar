@@ -52,7 +52,7 @@ and open the template in the editor.
         <div>
             <!-- {foreach from=$images item=image} -->
             <div style="padding:10px;" id="{$image.id}">
-                <img src="http://120.24.156.120/{$image.image}" style="width:200px;"/> </br>
+                <img src="/{$image.image}" style="width:200px;"/> </br>
                 连接:<input type="text" value="{$image.url}" id="url{$image.id}" onblur="changeurl({$image.id});"/>
                 排序<input type="text" value="{$image.the_order}" id="order{$image.id}" onblur="changeorder({$image.id})">
                 <a href="index.php?app=index_img&act=changeimg&id={$image.id}">
@@ -63,7 +63,7 @@ and open the template in the editor.
             <!-- {/foreach} -->
             <br />
             <div style="padding:30px;">
-                <span>请上传1563x699的图片</span>
+                <span>排除小鱼100的是上面大图，大于等于100的是中间图</span>
                 <form method="post" enctype="multipart/form-data">
                     <input type="file" name="index_img" />
                     连接:<input type="text" name="the_url"/>

@@ -14,10 +14,6 @@ class SearchApp extends MallbaseApp {
     /* 搜索商品 */
 
     function index() {
-        if($_GET['cate_id'] == 463){
-            $this->show_message('店铺正在筹划中，敬请期待！');
-            return;
-        }
         // tyioocom 过滤非法参数
         if (!$this->_check_query_param_by_props()) {
             header('Location: index.php');
@@ -76,10 +72,10 @@ class SearchApp extends MallbaseApp {
             'fields' => 's.praise_rate,s.im_qq,s.im_ww,', // tyioocom
             'limit' => $page['limit'],
         ));
-
+        $cate_id = $_GET['cate_id'];
         if (!$goods_list) {
             $goods_list = $goods_mod->get_list(array(
-                'conditions' => 'if_show=1 AND closed=0 ',
+                'conditions' => 'if_show=1 AND closed=0 AND cate_id = '.$cate_id,
                 'order' => 'order_by, add_time desc',
                 'fields' => 's.praise_rate,s.im_qq,s.im_ww,',
                 'limit' => 45,

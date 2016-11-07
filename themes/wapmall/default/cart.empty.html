@@ -14,10 +14,8 @@
     <script type="text/javascript" src="{res file=js/jquery-1.8.3.min.js}"></script>
     <script type="text/javascript" src="{res file=js/jquery.SuperSlide.js}"></script>
     <script type="text/javascript" src="{res file=js/scrolltopcontrol.js}"></script>
-
-
-
 </head>
+{include file='bar_head.html'}
 <body>
 <header class="ly-header">    <div class="ly-header-bar">        <div id="m_common_header_goback" class="ly-header-icon-back"><span></span></div>        <div class="ly-header-title">购物车</div>            </div>    </header>
 
@@ -31,54 +29,27 @@
 </div>
 
 
-<div class="mui-chaoshi-item-columns">
-    <!-- {foreach from=$interest item=int} -->
-    <div class="mui-chaoshi-item-column">
-        <a class="mui-chaoshi-item-column-inner" href="index.php?app=goods&id={$int.goods_id}">
-            <div class="img-wrapper">
-                <img class="item-img img-ks-lazyload" src="{$int.default_image}">
-            </div>
-            <div class="item-main">
-                <div class="item-info">
-                    <div class="item-title">
-                        {$int.goods_name}
-                    </div>
-                    <div class="item-desc">
-            <!--<span class="plain-text">-->
-              <!--&lt;!&ndash;<p>&ndash;&gt;-->
-                  <!--&lt;!&ndash;<label>&ndash;&gt;-->
-                      <!--&lt;!&ndash;零售价格：&ndash;&gt;-->
-                  <!--&lt;!&ndash;</label>&ndash;&gt;-->
-                  <!--&lt;!&ndash;<label class="hui">&ndash;&gt;-->
-
-                  <!--&lt;!&ndash;</label>&ndash;&gt;-->
-              <!--&lt;!&ndash;</p>&ndash;&gt;-->
-            <!--</span>-->
-                    </div>
+<div class="container">
+    <!-- 产品列表 -->
+    <div style="padding-top: 15px;">
+        <div class="row">
+            <!-- {foreach from=$interest item=good } -->
+            <a href="index.php?app=goods&id={$good.goods_id}">
+                <div class="col-xs-6" >
+                    <img src="{$good.default_image}" style="width: 100%;" />
+                    <p style="padding-top: 5px;">
+                        <strong>{$good.goods_name}</strong>
+                    </p>
+                    <p>
+                        <strong style="color:red;">{$good.spec_price|price}元/{$good.spec}</strong>
+                        &nbsp;&nbsp;<s style="font-size:6px;color:#CDC9C9">{$good.original_price|price}</s>
+                    </p>
+                    <p style="border-bottom:1px solid #EEEEE0;"></p>
                 </div>
-                <div class="item-imp">
-                    <div class="price-box">
-                        <div class="promotion-price no-referPrice">
-              <span class="price">
-                <span class="rmb">
-                  ¥
-                </span>
-                  <!-- {if $sgrade == 1 || $sgrade == 0} -->
-                    {$int.price}
-                  <!-- {else} -->
-                    {$int.price_distributor}
-                  <!-- {/if} -->
-              </span>
-                        </div>
-                    </div>
-                    <button class="j_AddCart">
-                        点击选购
-                    </button>
-                </div>
-            </div>
-        </a>
+            </a>
+            <!-- {/foreach} -->
+        </div>
     </div>
-    <!-- {/foreach} -->
 </div>
 
 <div class="clear space10"></div>

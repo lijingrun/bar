@@ -70,6 +70,16 @@ class GoodsApp extends StorebaseApp
         //同类型产品（同品牌）
         $brand_goods = $goods_model->find("brand = '" . $find_good['brand'] . "' AND if_show = 1 AND store_id =" . $find_good['store_id'] . " AND goods_id !=" . $find_good['goods_id']);
 
+        foreach($brand_goods as $key => $good){
+            $spec = $spec_model->get(array(
+                'conditions' => "goods_id =" . $good['goods_id'] . " AND spec_2 =" . $sgrade,
+            ));
+            $brand_goods[$key]['spec'] = $spec['spec_1'];
+            $brand_goods[$key]['spec_price'] = $spec['price'];
+            $brand_goods[$key]['spec_id'] = $spec['spec_id'];
+            $brand_goods[$key]['original_price'] = $spec['original_price'];
+        }
+
         //查看本商品是否在限时优惠活动期内
         $special_model = &m('special');
         $special_goods_model = &m('special_goods');

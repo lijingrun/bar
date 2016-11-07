@@ -216,7 +216,20 @@ class MemberApp extends MemberbaseApp {
         /* 当前用户中心菜单 */
         $this->_curitem('overview');
         $this->_config_seo('title', Lang::get('member_center'));
-        $this->display('member.index.html');
+//        $this->display('member.index.html');
+        $member_model = & m('member');
+        $user_id = $_SESSION['user_info']['user_id'];
+        $member = $member_model->get("user_id =".$user_id);
+        $order_model = & m('order');
+        $my_orders = $order_model->find('buyer_id ='.$user_id);
+        $order_goods_model = & m('ordergoods');
+        foreach($my_orders as $key=>$order){
+            $my_orders[$key]['goods'] = $order_goods_model->find("order_id =".$order['order_id']);
+        }
+//        print_r($my_orders);exit;
+        $this->assign('my_orders',$my_orders);
+        $this->assign('member',$member);
+        $this->display('bar_member.html');
     }
 
 	function point_details () {

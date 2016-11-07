@@ -1,0 +1,184 @@
+{include file='bar_head.html'}
+<style>
+    #carousel-example-generic{
+        margin-left: -15px;
+        margin-right: -15px;
+    }
+    #carousel-example-generic2{
+        margin-left: -15px;
+        margin-right: -15px;
+    }
+</style>
+<div class="container">
+    <div class="row" style="padding-bottom: 3px;padding-top: 3px;">
+        <div class="col-xs-4">
+            <img src="{res file=images/logo.png}" style="width: 100%;" />
+        </div>
+        <div class="col-xs-8">
+            <!--<div align="right" >-->
+                <!--<button class="btn btn-default" type="button">-->
+                <!--<span class="glyphicon glyphicon-search" ></span>-->
+                <!--</button>-->
+            <!--</div>-->
+        </div>
+    </div>
+
+    <!-- 最顶端轮播 -->
+    <!-- {if $images} -->
+    <div id="carousel-example-generic" class="carousel slide both" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <!-- {foreach from=$images key=key item=image} -->
+            <li data-target="#carousel-example-generic" data-slide-to="{$key}" <!-- {if $key == 0} -->class="active" <!-- {/if} -->></li>
+            <!-- {/foreach} -->
+        </ol>
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner" role="listbox">
+            <!-- {foreach from=$images key=key item=image} -->
+            <div <!-- {if $key == 0} -->class="item active" <!-- {else} --> class="item" <!-- {/if} --> >
+                <a href="{$image.url}">
+                    <img src="{$image.image}" >
+                </a>
+                <div class="carousel-caption">
+                </div>
+            </div>
+            <!-- {/foreach} -->
+        </div>
+
+        <!-- Controls -->
+        <a id="carleft"  href="#carousel-example-generic" role="button" data-slide="prev">
+            <!--<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>-->
+            <!--<span class="sr-only">Previous</span>-->
+        </a>
+        <a id="carright"  href="#carousel-example-generic" role="button" data-slide="next">
+            <!--<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>-->
+            <!--<span class="sr-only">Next</span>-->
+        </a>
+    </div>
+    <!-- {/if} -->
+
+    <!-- 分类 -->
+    <div class="row" style="padding-top: 15px;  "  >
+        <div class="col-xs-4" align="center">
+            <a href="index.php?app=search&cate_id=806">
+                <img src="{res file=images/type.png}" class="img-circle" style="width: 80%;">
+            </a>
+            <p>洋酒</p>
+        </div>
+        <div class="col-xs-4" align="center">
+            <a href="index.php?app=search&cate_id=804">
+                <img src="{res file=images/type.png}" class="img-circle" style="width: 80%;">
+            </a>
+            <p>啤酒</p>
+        </div>
+        <div class="col-xs-4" align="center">
+            <a href="index.php?app=search&cate_id=805">
+                <img src="{res file=images/type.png}" class="img-circle" style="width: 80%;">
+            </a>
+            <p>葡萄酒</p>
+        </div>
+    </div>
+    <div class="row" style="padding-bottom: 15px;margin-left:15%;" >
+        <div class="col-xs-5" align="center">
+            <a href="index.php?app=search&cate_id=807">
+                <img src="{res file=images/type.png}" class="img-circle" style="width: 80%;">
+            </a>
+            <p>鸡尾酒</p>
+        </div>
+        <div class="col-xs-5" align="center">
+            <a href="index.php?app=search&cate_id=809">
+                <img src="{res file=images/type.png}" class="img-circle" style="width: 80%;">
+            </a>
+            <p>饮料</p>
+        </div>
+    </div>
+
+    <!-- 下方轮播 -->
+<!-- {if $under_images} -->
+    <div id="carousel-example-generic2" class="carousel slide both" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <!-- {foreach from=$under_images key=u_key item=u_image} -->
+            <li data-target="#carousel-example-generic2" data-slide-to="{$u_key}" <!-- {if $u_key == 0} -->class="active" <!-- {/if} -->></li>
+            <!-- {/foreach} -->
+        </ol>
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner" role="listbox">
+            <!-- {foreach from=$under_images key=u_key item=u_image} -->
+            <div <!-- {if $u_key == 0} -->class="item active" <!-- {else} --> class="item" <!-- {/if} --> >
+                <img src="{$u_image.image}" >
+                <div class="carousel-caption">
+                </div>
+            </div>
+            <!-- {/foreach} -->
+        </div>
+        <!-- Controls -->
+        <a id="carleft2"  href="#carousel-example-generic2" role="button" data-slide="prev">
+            <!--<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>-->
+            <!--<span class="sr-only">Previous</span>-->
+        </a>
+        <a id="carright2"  href="#carousel-example-generic2" role="button" data-slide="next">
+            <!--<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>-->
+            <!--<span class="sr-only">Next</span>-->
+        </a>
+    </div>
+<!-- {/if} -->
+
+    <!-- 产品列表 -->
+    <div style="padding-top: 15px;">
+        <div class="row">
+            <!-- {foreach from=$goods item=good } -->
+            <a href="index.php?app=goods&id={$good.goods_id}">
+                <div class="col-xs-6" >
+                    <img src="{$good.default_image}" style="width: 100%;" />
+                    <p style="padding-top: 5px;">
+                        <strong>{$good.goods_name}</strong>
+                    </p>
+                    <p>
+                        <strong style="color:red;">{$good.spec.price|price}元/{$good.spec.spec_1}</strong>
+                        &nbsp;&nbsp;<s style="font-size:6px;color:#CDC9C9">{$good.spec.original_price|price}</s>
+                    </p>
+                    <p style="border-bottom:1px solid #EEEEE0;"></p>
+                </div>
+            </a>
+            <!-- {/foreach} -->
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{include file='bar_foot.html'}
+</div>
+<script>
+    var myTouch = util.toucher(document.getElementById('carousel-example-generic'));
+
+    myTouch.on('swipeLeft',function(e){
+        $('#carright').click();
+    }).on('swipeRight',function(e){
+        $('#carleft').click();
+    });
+
+    var myTouch2 = util.toucher(document.getElementById('carousel-example-generic2'));
+    myTouch2.on('swipeLeft',function(e){
+        $('#carright2').click();
+    }).on('swipeRight',function(e){
+        $('#carleft2').click();
+    });
+
+</script>

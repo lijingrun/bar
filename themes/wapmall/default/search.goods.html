@@ -128,12 +128,12 @@
 					<a href="javascript:void(0);"><img src="{$goods.default_image}" alt="" /></a>
 				</div>
 				<div class="goods_info">
-					<h2 class="title"><i>{$goods.store_name}</i> <span>{$goods.goods_name}</span></h2>
+					<p style="font-size: 18px;"><strong>{$goods.goods_name}</strong></p>
 					<i class="price_i">
-						<!-- {if $goods.spec_price != 0} -->
-						{$goods.spec_price|price}
-						<!-- {else} -->
+						<!-- {if $goods.spec_price == 0 && $goods.point_price > 0} -->
 						{$goods.point_price}金币
+						<!-- {else} -->
+						{$goods.spec_price|price}
 						<!-- {/if} -->
 					</i>
        <span class="pos_span">

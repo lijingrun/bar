@@ -2,6 +2,7 @@
 <html>
 <head>
     {include file=public_header.html}
+    {include file='bar_head.html'}
 </head>
 <body>
 <script>
@@ -169,7 +170,8 @@
     function searchShop(){
         var key_word = $("#skeyword").val();
         var store_id = {$store.store_id};
-        location.href="index.php?app=store&act=search&id="+store_id+"&keyword="+key_word;
+//        location.href="index.php?app=store&act=search&id="+store_id+"&keyword="+key_word;
+        location.href="index.php?app=search&keyword="+key_word;
     }
     $(function(){
         $("#spec_list").find("a").first().click();
@@ -182,7 +184,7 @@
             <input id="skeyword" type="text" placeholder="请输入关键词进行店内搜索" />
             <em onclick="searchShop()"></em>
         </div>
-        <a class="topMore3" href="index.php?app=store&id={$store.store_id}"><br /> <span>本店首页</span> </a>
+        <!--<a class="topMore3" href="index.php?app=store&id={$store.store_id}"><br /> <span>本店首页</span> </a>-->
     </article>
 </header>
 <div style="background:#ffffff;">
@@ -247,13 +249,12 @@
             <!--<span class="payAfter"><em>包运费</em></span></span>-->
             </span>
         </div>
-        <a href="#jump2" class="pd_favorable-comment">
+        <!--<a href="#jump2" class="pd_favorable-comment">-->
             <span class="item">
-            近期销量：
-                <span class="num"> {$goods_statistics.sales}件 </span>
+                <span class="num"> </span>
             </span>
-            <span class="item"> {$goods_statistics.comments}条评论 </span>
-            <span class="icon_arrow icon-right_arrow"></span> </a>
+            <span class="item">  </span>
+        <!--</a>-->
     </div>
 </div>
 <!--<div class="pd_product-medal-deals" style="display: block;">-->
@@ -362,80 +363,25 @@
         </div>
     </div>
 </div>
-<div class="store-info">
-    <div class="store-logo">
-        <a class="store-link href_chang" href="#">
-            <div>
-                <div class="logo">
-                    <img src="{$store.store_logo}"/>
-                </div>
-                <div class="store-name-addr">
-                    <p class="s-name"><span>{$store.store_name}</span></p>
-                    <div class="more-info">
-                        <p class="goods-info-extend goods-info-extend2">
-                            <span class="bx-label">
-                                <em>正</em>
-                                <span>正品保证</span>
-                            </span>
-                        </p>
-                        <p class="goods-info-extend goods-info-extend2">
-                            <span class="bx-label">
-                                <em>验</em>
-                                <span>验证厂家</span>
-                            </span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <p class="address-detail">
-                <i class="u-iconfont i-location"></i>
-                <span>{$store.address}</span>
-            </p>
-        </a>
-        <a href="index.php?app=store&id={$store.store_id}">
-            <div id="J_attention" class="attention J_isInApp_hide noAttention">
-                <span class="a-txt">店铺</span>
-                <span class="a-num">首页</span>
-            </div>
-        </a>
-    </div>
-    <p class="btn-item">
-        <a class="href_chang" href="tel:{$store.tel}">
-            <span class="zheng">拨打客服</span>
-        </a>
-        <a class="href_chang" href="index.php?app=store&id={$find_good.store_id}">
-            <span>所有产品（{$goods_count}）</span>
-        </a>
-    </p>
-</div>
 <!-- {if $brand_goods} -->
-<div class="pro-list1">
-    <div class="daily-deals">
-        <div class="pro-tit">
-            同品牌产品
-        </div>
-        <div class="pro-box">
-            <ul>
-                <!-- {foreach from=$brand_goods item=good} -->
-                <li class="swiper-slide">
-                    <a href="index.php?app=goods&id={$good.goods_id}">
-                        <div class="pro-img">
-                            <img src="{$good.default_image}"/>
-                        </div>
-                        <div class="pro-text">
-                            <p class="pro-piece">{$good.goods_name}</p>
-                            <p class="pro-piece2">
-                                <!-- {if $sgrade == 1 || $sgrade == 0} -->
-                                {$good.price|price}
-                                <!-- {else} -->
-                                {$good.price_distributor|price}
-                                <!-- {/if} -->
-                            </p>
-                        </div>
-                    </a>
-                </li>
-                <!-- {/foreach} -->
-            </ul>
+<div class="container">
+    <div style="padding-top: 15px;">
+        <div class="row">
+            <!-- {foreach from=$brand_goods item=good } -->
+            <a href="index.php?app=goods&id={$good.goods_id}">
+                <div class="col-xs-6" >
+                    <img src="{$good.default_image}" style="width: 100%;" />
+                    <p style="padding-top: 5px;">
+                        <strong>{$good.goods_name}</strong>
+                    </p>
+                    <p>
+                        <strong style="color:red;">{$good.price|price}元/{$good.spec}</strong>
+                        &nbsp;&nbsp;<s style="font-size:6px;color:#CDC9C9">{$good.original_price|price}</s>
+                    </p>
+                    <p style="border-bottom:1px solid #EEEEE0;"></p>
+                </div>
+            </a>
+            <!-- {/foreach} -->
         </div>
     </div>
 </div>
@@ -542,14 +488,14 @@
 <!--<a href="javascript:void(0)"-->
    <!--onclick="javascript:window.location.href='#?url='+window.location.href;sendUserlogsElement('#');" class="fPurchase"-->
    <!--id="fPurchase" style="display: block;">QQ</a>-->
-<a href="javascript:void(0)" onclick="get_customer();" class="fPurchase">
-</a>
+<!--<a href="javascript:void(0)" onclick="get_customer();" class="fPurchase">-->
+<!--</a>-->
 <div id="topcontrol"
      style="width:3.333rem; height:3.333rem; border:0; bottom:4.333rem;right: 0.7407rem;position: fixed;display: block; opacity: 0; cursor: pointer;border-radius:50px;">
     <img totop="" src="images/topback.png" style="width:3.333rem; height:3.333rem; border-radius:50px; border:0;"
          title="返回顶部"/>
 </div>
 
-{include file=footer_nav.html}
+{include file=bar_foot.html}
 </body>
 </html>

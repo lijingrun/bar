@@ -2,6 +2,8 @@
 <html>
 <head>
     {include file=public_header.html}
+    {include file='bar_head.html'}
+
     <script type="text/javascript" src="{lib file=cart.js}" charset="utf-8"></script>
     <script>
         function add(spec_id) {
@@ -169,7 +171,7 @@
                     <!--（2）-->
                 <!--</label>-->
             </a>
-            <a class="btn_white fl" style=" margin-left:20px;" href="index.php?app=store&id={$store_id}">
+            <a class="btn_white fl" style=" margin-left:20px;" href="index.php">
                 继续购物
             </a>
         </p>
@@ -184,52 +186,27 @@
 </div>
 <!-- {/if} -->
 
-<div class="mui-chaoshi-item-columns">
-    <!--{foreach from=$interest item=goods}-->
-    <div class="mui-chaoshi-item-column">
-        <div class="mui-chaoshi-item-column-inner" href="#">
-            <a href="index.php?app=goods&id={$goods.goods_id}">
-                <div class="img-wrapper">
-                    <img class="item-img img-ks-lazyload"
-                         src="{$goods.default_image}">
+<div class="container">
+    <!-- 产品列表 -->
+    <div style="padding-top: 15px;">
+        <div class="row">
+            <!-- {foreach from=$interest item=good } -->
+            <a href="index.php?app=goods&id={$good.goods_id}">
+                <div class="col-xs-6" >
+                    <img src="{$good.default_image}" style="width: 100%;" />
+                    <p style="padding-top: 5px;">
+                        <strong>{$good.goods_name}</strong>
+                    </p>
+                    <p>
+                        <strong style="color:red;">{$good.spec_price|price}元/{$good.spec}</strong>
+                        &nbsp;&nbsp;<s style="font-size:6px;color:#CDC9C9">{$good.original_price|price}</s>
+                    </p>
+                    <p style="border-bottom:1px solid #EEEEE0;"></p>
                 </div>
             </a>
-            <div class="item-main">
-                <div class="item-info">
-                    <div class="item-title">
-                        {$goods.goods_name}
-                    </div>
-                    <div class="item-desc">
-            <span class="plain-text">
-              <p>
-                  <label>
-                      型号规格：
-                  </label>
-                  <label class="hui">
-                      {$goods.spec}
-                  </label>
-              </p>
-            </span>
-                    </div>
-                </div>
-                <div class="item-imp">
-                    <div class="price-box">
-                        <div class="promotion-price no-referPrice">
-              <span class="price">
-                <span class="rmb">
-                </span>
-                {$goods.spec_price|price}
-              </span>
-                        </div>
-                    </div>
-                    <button class="j_AddCart" onclick="add({$goods.spec_id});">
-                        加入购物车
-                    </button>
-                </div>
-            </div>
+            <!-- {/foreach} -->
         </div>
     </div>
-    <!-- {/foreach} -->
 </div>
 
 <div class="clear space10"></div>

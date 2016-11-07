@@ -902,10 +902,10 @@ class MemberbaseApp extends MallbaseApp {
                 'name' => 'my_store',
                 'icon' => 'ico11',
             );
-            $menu['im_seller']['submenu']['seals'] = array(
+            $menu['im_seller']['submenu']['saless'] = array(
                 'text' => '业务员设置',
-                'url' => 'index.php?app=seals',
-                'name' => 'seals',
+                'url' => 'index.php?app=sales',
+                'name' => 'sales',
                 'icon' => 'ico11',
             );
 //            $menu['im_seller']['submenu']['wallpaper'] = array(

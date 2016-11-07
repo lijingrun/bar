@@ -96,6 +96,17 @@ function drop_uploadedfile(file_id)
             </tr>
             <tr>
                 <th class="paddingT15">
+                    横幅:
+                </th>
+                <td class="paddingT15 wordSpacing5">
+                    <!-- {if $article.banner} -->
+                    <img src="/{$article.banner}"  />
+                    <!-- {/if} -->
+                    <input type="file" name="banner"/>
+                </td>
+            </tr>
+            <tr>
+                <th class="paddingT15">
                     {$lang.link}:</th>
                 <td class="paddingT15 wordSpacing5">
                     <input class="infoTableInput" id="link" type="text" name="link" value="{$article.link|escape}" />

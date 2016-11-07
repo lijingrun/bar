@@ -137,11 +137,12 @@ class CartApp extends MallbaseApp {
                 unset($interest[$key]);
             } else {
                 $spec = $spec_model->get(array(
-                    'conditions' => "goods_id =" . $good['goods_id'] . " AND spec_2 =" . $sgrade . " AND stock != 0",
+                    'conditions' => "goods_id =" . $good['goods_id'] . " AND spec_2 =" . $sgrade,
                 ));
                 $interest[$key]['spec'] = $spec['spec_1'];
                 $interest[$key]['spec_price'] = $spec['price'];
                 $interest[$key]['spec_id'] = $spec['spec_id'];
+                $interest[$key]['original_price'] = $spec['original_price'];
             }
         endforeach;
         $this->assign('interest', $interest);
@@ -558,6 +559,7 @@ class CartApp extends MallbaseApp {
      */
     function _cart_empty() {
         $goods_mod = &m('goods');
+        $sgrade = $_SESSION['user_info']['sgrade'];
         $gst_mod = &m('goodsstatistics');
         $interest = $goods_mod->find(array(
             'conditions' => 'if_show = 1',
@@ -566,7 +568,19 @@ class CartApp extends MallbaseApp {
             'fields' => 'g.goods_id,goods_name,price,sales,default_image,price_distributor',
             'limit' => 6
         ));
-        $sgrade = $_SESSION['user_info']['sgrade'];
+        array_unique($interest);
+        $spec_model = & m('goodsspec');
+        //遍历推荐产品，查出账号权限下面对应的价钱以及规格
+        foreach ($interest as $key => $good):
+            //如果推荐产品包含已买产品，则删除
+                $spec = $spec_model->get(array(
+                    'conditions' => "goods_id =" . $good['goods_id'] . " AND spec_2 =" . $sgrade,
+                ));
+                $interest[$key]['spec'] = $spec['spec_1'];
+                $interest[$key]['spec_price'] = $spec['price'];
+                $interest[$key]['spec_id'] = $spec['spec_id'];
+                $interest[$key]['original_price'] = $spec['original_price'];
+        endforeach;
         $this->assign('sgrade', $sgrade);
         $this->assign('interest', $interest);
         $this->display('cart.empty.html');

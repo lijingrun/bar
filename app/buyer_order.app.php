@@ -99,6 +99,27 @@ class Buyer_orderApp extends MemberbaseApp {
         $this->display('buyer_order.view.html');
     }
 
+    function cancel_bar_order(){
+        $order_id = isset($_GET['order_id']) ? intval($_GET['order_id']) : 0;
+        $model_order = & m('order');
+        $model_order->edit($order_id, array('status' => ORDER_CANCELED));
+        /* 加回商品库存 */
+        $model_order->change_stock('+', $order_id);
+        $cancel_reason = (!empty($_POST['remark'])) ? $_POST['remark'] : $_POST['cancel_reason'];
+        /* 记录订单操作日志 */
+        $order_log = & m('orderlog');
+        $order_log->add(array(
+            'order_id' => $order_id,
+            'operator' => addslashes($this->visitor->get('user_name')),
+            'order_status' => order_status($order_info['status']),
+            'changed_status' => order_status(ORDER_CANCELED),
+            'remark' => $cancel_reason,
+            'log_time' => gmtime(),
+        ));
+        echo 111;
+        exit;
+    }
+
     /**
      *    取消订单
      *

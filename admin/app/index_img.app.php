@@ -31,7 +31,7 @@ class Index_imgApp extends BackendApp {
                 $uploader->addFile($file);
                 $url = "data/indeximages";
                 $name = 'indeximg'.time();
-                
+                $suffix = end(explode('.', $file['name']));
                 if ($uploader->file_info() == false) {
                     $this->show_warning($uploader->get_error());
                     return false;
@@ -39,7 +39,7 @@ class Index_imgApp extends BackendApp {
                 $uploader->root_dir(ROOT_PATH); //设置根目录，必须要设置，否则会找不到文件夹
                 $uploader->save($url, $name);
                 $image = array(
-                    'image' => $url."/".$name,
+                    'image' => $url."/".$name.".".$suffix,
                     'url'   => $the_url,
                     'the_order' => $the_order,
                 );

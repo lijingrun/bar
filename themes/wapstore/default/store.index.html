@@ -14,7 +14,7 @@
         };
         function searchShop(){
             var keyword = $("#keyword").val();
-            location.href='index.php?app=store&act=search&id={$store.store_id}&keyword='+keyword;
+            location.href='index.php?app=search&keyword='+keyword;
         }
     </script>
 
@@ -28,8 +28,8 @@
             <input id="keyword" type="text" placeholder="请输入关键词进行店内搜索" >
             <em onclick="searchShop();"></em>
         </div>
-        <a class="topMore" href="javascript:;"><br>
-            <span>本店分类</span> </a>
+        <!--<a class="topMore" href="javascript:;"><br>-->
+            <!--<span>本店分类</span> </a>-->
 
 
 

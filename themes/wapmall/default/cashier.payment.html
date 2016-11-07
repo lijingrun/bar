@@ -8,18 +8,18 @@
 <header  class="ly-header2">    <div class="ly-header-bar">        <div id="m_common_header_goback" class="ly-header-icon-back"><a href="javascript:;" onclick="javascript:history.back(-1);" ><span> </span></a></div>        <div class="ly-header-title">支付</div>            </div>    </header>
 
 
-<h6 class="receive-tips distant " id="J_errorMsg2">请于24小时内完成付款，否则订单可能会被商城自动取消！</h6>
+<!--<h6 class="receive-tips distant " id="J_errorMsg2">请于24小时内完成付款，否则订单可能会被商城自动取消！</h6>-->
 <form action="index.php?app=cashier&act=goto_pay&order_id={$order.order_id}" method="POST" id="goto_pay">
 <div class="order_total order-amount-total">
     <h2 class="total-title">应付金额<span>{$order.order_amount|price}</span></h2>
-    <p style="color:red;">
-        app会员线上支付专享优惠(您当前等级是{$type})：
-    </p>
-    <p class="fabric">
-        <span>VIP会员：<em>9.9折</em></span>
-        <span>金卡会员：<em>9.85折</em></span>
-        <span>铂金会员：<em>9.8折</em></span>
-    </p>
+    <!--<p style="color:red;">-->
+        <!--app会员线上支付专享优惠(您当前等级是{$type})：-->
+    <!--</p>-->
+    <!--<p class="fabric">-->
+        <!--<span>VIP会员：<em>9.9折</em></span>-->
+        <!--<span>金卡会员：<em>9.85折</em></span>-->
+        <!--<span>铂金会员：<em>9.8折</em></span>-->
+    <!--</p>-->
     <p class="cl">
         <span class="sp1">订单编号</span>
         <span class="sp2">{$order.order_sn}</span>
@@ -29,10 +29,10 @@
         <span class="sp1">订单总额</span>
         <span class="sp2">{$order.order_amount|price}</span>
     </p>
-    <p class="cl" style=" color:#ff464e">
-        <span class="sp1">您的线上支付价</span>
-        <span class="sp2">{$online_pay_discount|price}</span>
-    </p>
+    <!--<p class="cl" style=" color:#ff464e">-->
+        <!--<span class="sp1">您的线上支付价</span>-->
+        <!--<span class="sp2">{$online_pay_discount|price}</span>-->
+    <!--</p>-->
     <!--<p class="cl">-->
         <!--<span class="sp1">总运费</span>-->
         <!--<span class="sp2">￥0.00</span>-->

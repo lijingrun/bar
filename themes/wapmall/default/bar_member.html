@@ -1,0 +1,90 @@
+{include file='bar_head.html'}
+<script>
+    function cancel_order(id){
+        if(confirm("是否确定取消订单？")){
+            $.ajax({
+                type : 'get',
+                url : 'index.php?app=buyer_order&act=cancel_bar_order',
+                data : {'order_id':id},
+                success : function(data){
+                    if(data == 111){
+                        alert('操作成功');
+                        location.reload();
+                    }
+                }
+            });
+        }
+    }
+</script>
+<div class="container" style="margin-left: -15px;margin-right: -15px;background-color: #EDEDED;">
+    <div class="row" style="padding-top: 20px;padding-bottom:20px;background:url({res file=images/bar_background.jpg}) no-repeat center">
+        <div class="col-xs-4"></div>
+        <div class="col-xs-4">
+            <img src="{res file=images/member.jpg}"  class="img-circle" style="width: 100%;" />
+            <p style="color:white;font-size: 20px;" align="center">
+                {$visitor.user_name}
+            </p>
+        </div>
+        <div class="col-xs-4"></div>
+    </div>
+    <!-- {foreach from=$my_orders item=order} -->
+    <div style="margin-top: 10px;background-color: white;border-top:solid 1px #E0E0E0">
+        <div class="bs-example bs-example-bg-classes">
+            <p style="padding: 10px;font-size: 18px;">
+                <span>{$order.order_sn}</span>
+                <span style="float: right;font-size: 14px;color:red">
+                    <!-- {if $order.status == 11} -->
+                        等待买家付款
+                    <!-- {elseif $order.status == 20} -->
+                        等待卖家发货
+                    <!-- {elseif $order.status == 30} -->
+                        等待买家收货
+                    <!-- {elseif $order.status == 40} -->
+                        交易完成
+                    <!-- {elseif $order.status == 0} -->
+                        交易取消
+                    <!-- {/if} -->
+                </span>
+            </p>
+        </div>
+        <!-- {foreach from=$order.goods item=goods} -->
+        <div class="row" style="background-color:#EDEDED;padding: 10px;margin-top: -10px;">
+            <div class="col-xs-4">
+                <a href="index.php?app=goods&id={$goods.goods_id}">
+                    <img src="{$goods.goods_image}" style="width: 100%" />
+                </a>
+            </div>
+            <div class="col-xs-8">
+                <div>
+                    <p>
+                        <span><strong>{$goods.goods_name}</strong></span>
+                        <span style="float: right">{$goods.price|price}</span>
+                    </p>
+                    <p style="float: right">
+                        X{$goods.quantity}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!-- {/foreach} -->
+        <div style="background-color: white;padding: 10px 20px 10px 10px;border-bottom:solid 1px #E0E0E0" align="right">
+            合计：&nbsp;{$order.order_amount|price}
+        </div>
+        <div style="background-color: white;padding: 10px 20px 10px 10px;border-bottom:solid 1px #E0E0E0" align="right">
+            <!-- {if $order.status == 11} -->
+            <a href="index.php?app=cashier&order_id={$order.order_id}">
+                <button type="submit" class="btn btn-default">付款</button>
+            </a>
+            <button type="submit" class="btn btn-default" onclick="cancel_order(<!-- {$order.order_id} -->);" >取消</button>
+            <!-- {elseif $order.status == 30} -->
+            <button type="submit" class="btn btn-default">确认收货</button>
+            <!-- {elseif $order.status == 40} -->
+            <button type="submit" class="btn btn-default">查看订单</button>
+            <!-- {elseif $order.status == 0} -->
+            <button type="submit" class="btn btn-default"><span style="color:red;">已取消</span></button>
+            <!-- {/if} -->
+        </div>
+    </div>
+    <!-- {/foreach} -->
+</div>
+{include file='bar_foot.html'}

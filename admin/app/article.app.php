@@ -180,6 +180,24 @@ class ArticleApp extends BackendApp
         }
         else
         {
+            import('uploader.lib');
+            $file = $_FILES['banner'];
+            if ($file['error'] == 0) {
+                $uploader = new Uploader();
+                $uploader->allowed_type(IMAGE_FILE_TYPE);
+                $uploader->allowed_size(SIZE_STORE_LOGO); // 2M
+                $uploader->addFile($file);
+                $url = "data/indeximages/banner";
+                $file_name = $this->get_extension($file['name']);
+                $name = 'sales'.time();
+                if ($uploader->file_info() == false) {
+                    $this->show_warning($uploader->get_error());
+                    return false;
+                }
+                $uploader->root_dir(ROOT_PATH); //设置根目录，必须要设置，否则会找不到文件夹
+                $uploader->save($url, $name);
+                $img = $url."/".$name.".".$file_name;
+            }
             $data = array();
             $data['title']      =   $_POST['title'];
             $data['cate_id']    =   $_POST['cate_id'];
@@ -188,7 +206,9 @@ class ArticleApp extends BackendApp
             $data['sort_order'] =   $_POST['sort_order'];
             $data['content'] =   $_POST['content'];
             $data['add_time']   =   gmtime();
-
+            if(!empty($img)){
+                $data['banner'] = $img;
+            }
             if (!$article_id = $this->_article_mod->add($data))  //获取article_id
             {
                 $this->show_warning($this->_article_mod->get_error());
@@ -210,6 +230,12 @@ class ArticleApp extends BackendApp
             );
         }
     }
+
+    function get_extension($file)
+    {
+        return end(explode('.', $file));
+    }
+
      /**
      *    编辑文章
      *
@@ -248,7 +274,7 @@ class ArticleApp extends BackendApp
             $this->assign('parents', $this->_get_options());
             $this->assign('files_belong_article', $files_belong_article);
             $this->assign('article', $article);
-            
+
             $template_name = $this->_get_template_name();
             $style_name    = $this->_get_style_name();
             $this->assign('build_editor', $this->_build_editor(array(
@@ -261,6 +287,24 @@ class ArticleApp extends BackendApp
         }
         else
         {
+            import('uploader.lib');
+            $file = $_FILES['banner'];
+            if ($file['error'] == 0) {
+                $uploader = new Uploader();
+                $uploader->allowed_type(IMAGE_FILE_TYPE);
+                $uploader->allowed_size(SIZE_STORE_LOGO); // 2M
+                $uploader->addFile($file);
+                $url = "data/indeximages/banner";
+                $file_name = $this->get_extension($file['name']);
+                $name = 'sales'.time();
+                if ($uploader->file_info() == false) {
+                    $this->show_warning($uploader->get_error());
+                    return false;
+                }
+                $uploader->root_dir(ROOT_PATH); //设置根目录，必须要设置，否则会找不到文件夹
+                $uploader->save($url, $name);
+                $img = $url."/".$name.".".$file_name;
+            }
             $data = array();
             $data['title']          =   $_POST['title'];
             if (!empty($_POST['cate_id']))
@@ -271,6 +315,9 @@ class ArticleApp extends BackendApp
             $data['if_show']        =   $_POST['if_show'];
             $data['sort_order']     =   $_POST['sort_order'];
             $data['content']        =   $_POST['content'];
+            if(!empty($img)){
+                $data['banner'] = $img;
+            }
 
             $rows=$this->_article_mod->edit($article_id, $data);
             if ($this->_article_mod->has_error())
